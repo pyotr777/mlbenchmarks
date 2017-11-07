@@ -5,12 +5,16 @@
 
 usage=$(cat <<USAGEBLOCK
 Usage:
-$0 [-d <docker command>] [-n/--num_gpus <int>] [--batch_size <int>]
+$0 [-d <docker command>] [-n/--num_gpus <int>] [--batch_size <int>] [...]
 
 Options:
-	-d					Docker command: docker / nvidia/docker.
+	-d					Docker command: docker / nvidia-docker.
 	-n, --num_gpus 		Number of GPUs to use for tests. 0 - use CPU only.
-    -b, --batch_size	Batch size
+	-b, --batch_size	Batch size
+	--model				resnet50, inception3, vgg16, alexnet
+	--local_parameter_device gpu/cpu
+	--variable_update	The method for managing variables: parameter_server ,replicated, distributed_replicated, independent
+	--use_nccl			True/False
 	-h, --help			This help info.
 	--debug				Print debug info.
 USAGEBLOCK
@@ -22,8 +26,9 @@ DOCKER_COMMAND=docker
 NUM_GPUS=0
 BATCH=32
 CONT_NAME=tf
-
-
+TMP_INSTALL="setup.sh"
+TMP_FILE="run_benchmarks.sh"
+OTHER_OPTIONS=""
 
 while test $# -gt 0; do
 	case "$1" in
@@ -46,10 +51,9 @@ while test $# -gt 0; do
 		--)
 			shift
 			break;;
-		-*)
-			echo "Invalid option: $1"
-			echo "$usage"
-			exit 1;;
+		--*)
+			OTHER_OPTIONS="$OTHER_OPTIONS $1=$2";shift;
+			;;
 	esac
 	shift
 done	
@@ -67,11 +71,11 @@ fi
 
 cont_number=$(docker ps -a -q -f name=$CONT_NAME)
 if [ -n "$cont_number" ]; then
-    if [ -n "$debug" ]; then
-        echo "Removing existing container $CONT_NAME"
-    fi
-    docker kill $CONT_NAME
-    docker rm $CONT_NAME
+	if [ -n "$debug" ]; then
+		echo "Removing existing container $CONT_NAME"
+	fi
+	docker kill $CONT_NAME
+	docker rm $CONT_NAME
 fi
 
 echo "Starting $CONT_NAME container using $DOCKER_COMMAND command using $IMAGE image."
@@ -81,28 +85,42 @@ if [ -n "$debug" ]; then
 	CHECK="set -x"
 fi
 
-# CREATE COMMAND FILE
-commands=$(cat <<COMBLOCK
+
+# CREATE COMMAND FILES
+# Second one only runs benchmarks with no installations.
+commands=$(cat <<COMBLOCK1
 #!/bin/bash
 apt-get update && apt-get install -y git
 pip install -U $PIP
 cd /root
-git clone https://github.com/pyotr777/benchmarks.git
-cd benchmarks/scripts/tf_cnn_benchmarks/
+git clone https://github.com/tensorflow/benchmarks.git
+COMBLOCK1
+)
+echo "$commands" > $TMP_INSTALL
+chmod +x $TMP_INSTALL
+
+commands=$(cat <<COMBLOCK2
+#!/bin/bash
+cd /root/benchmarks/scripts/tf_cnn_benchmarks/
 pwd && ls -l
 $CHECK
-python tf_cnn_benchmarks.py $GPU_OPTION --batch_size=$BATCH --model=resnet50 --variable_update=parameter_server
+python tf_cnn_benchmarks.py $GPU_OPTION --batch_size=$BATCH $OTHER_OPTIONS
 
-COMBLOCK
+COMBLOCK2
 )
-
-echo "$commands" > run_benchmarks.sh
-chmod +x run_benchmarks.sh
+echo "$commands" > $TMP_FILE
+chmod +x $TMP_FILE
 
 if [ -n "$debug" ]; then
 	set -ex
 fi
 
 $DOCKER_COMMAND run -td --name $CONT_NAME $IMAGE 
-$DOCKER_COMMAND cp run_benchmarks.sh $CONT_NAME:/root/
-$DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/run_benchmarks.sh
+$DOCKER_COMMAND cp $TMP_FILE $CONT_NAME:/root/
+$DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/$TMP_INSTALL
+$DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/$TMP_FILE
+
+if [ -z "$debug" ]; then
+	rm $TMP_FILE
+	rm $TMP_INSTALL
+fi
