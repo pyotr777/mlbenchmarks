@@ -8,10 +8,11 @@ Usage:
 $0 [-d <docker command>] [-n/--num_gpus <int>] [--batch_size <int>]
 
 Options:
-	-d				Docker command: docker / nvidia/docker.
-	-n, --num_gpus 	Number of GPUs to use for tests. 0 - use CPU only.
-	-h, --help		This help info.
-	--debug			Print debug info.
+	-d					Docker command: docker / nvidia/docker.
+	-n, --num_gpus 		Number of GPUs to use for tests. 0 - use CPU only.
+    -b, --batch_size	Batch size
+	-h, --help			This help info.
+	--debug				Print debug info.
 USAGEBLOCK
 )
 
@@ -20,6 +21,7 @@ USAGEBLOCK
 DOCKER_COMMAND=docker
 NUM_GPUS=0
 BATCH=32
+CONT_NAME=tf
 
 
 
@@ -34,6 +36,9 @@ while test $# -gt 0; do
 			;;
 		-n | --num_gpus)
 			NUM_GPUS=$2;shift;
+			;;
+		-b | --batch_size)
+			BATCH=$2;shift;
 			;;
 		--debug)
 			debug=YES
@@ -56,12 +61,20 @@ if [ "$NUM_GPUS" -gt 0 ]; then
 else
 	IMAGE="tensorflow/tensorflow:latest"
 	PIP="tf-nightly"
-	GPU_OPTION=""
+	GPU_OPTION="--device=cpu --data_format=NHWC"
 fi
 
 
+cont_number=$(docker ps -a -q -f name=$CONT_NAME)
+if [ -n "$cont_number" ]; then
+    if [ -n "$debug" ]; then
+        echo "Removing existing container $CONT_NAME"
+    fi
+    docker kill $CONT_NAME
+    docker rm $CONT_NAME
+fi
 
-echo "Starting TF container using $DOCKER_COMMAND command using $IMAGE image."
+echo "Starting $CONT_NAME container using $DOCKER_COMMAND command using $IMAGE image."
 
 CHECK=""
 if [ -n "$debug" ]; then
@@ -74,7 +87,7 @@ commands=$(cat <<COMBLOCK
 apt-get update && apt-get install -y git
 pip install -U $PIP
 cd /root
-git clone https://github.com/tensorflow/benchmarks.git
+git clone https://github.com/pyotr777/benchmarks.git
 cd benchmarks/scripts/tf_cnn_benchmarks/
 pwd && ls -l
 $CHECK
@@ -90,6 +103,6 @@ if [ -n "$debug" ]; then
 	set -ex
 fi
 
-$DOCKER_COMMAND run -td --name tf $IMAGE 
-$DOCKER_COMMAND cp run_benchmarks.sh tf:/root/
-$DOCKER_COMMAND exec -t tf /bin/bash -c /root/run_benchmarks.sh
+$DOCKER_COMMAND run -td --name $CONT_NAME $IMAGE 
+$DOCKER_COMMAND cp run_benchmarks.sh $CONT_NAME:/root/
+$DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/run_benchmarks.sh
