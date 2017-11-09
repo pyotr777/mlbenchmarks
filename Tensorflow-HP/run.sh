@@ -36,7 +36,7 @@ while test $# -gt 0; do
 			echo $usage
 			exit 0
 			;;
-		-d) 
+		-d)
 			DOCKER_COMMAND="$2";shift;
 			;;
 		-n | --num_gpus)
@@ -56,7 +56,7 @@ while test $# -gt 0; do
 			;;
 	esac
 	shift
-done	
+done
 
 if [ "$NUM_GPUS" -gt 0 ]; then
 	IMAGE="tensorflow/tensorflow:latest-gpu"
@@ -115,7 +115,8 @@ if [ -n "$debug" ]; then
 	set -ex
 fi
 
-$DOCKER_COMMAND run -td --name $CONT_NAME $IMAGE 
+$DOCKER_COMMAND run -td --name $CONT_NAME $IMAGE
+$DOCKER_COMMAND cp $TMP_INSTALL $CONT_NAME:/root/
 $DOCKER_COMMAND cp $TMP_FILE $CONT_NAME:/root/
 $DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/$TMP_INSTALL
 $DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/$TMP_FILE
