@@ -14,6 +14,6 @@ mv cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb cuda-repo-ubuntu1604-9-0-l
 sudo dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 #sudo apt-key add /var/cuda-repo-<version>/7fa2af80.pub
 sudo apt-get update
-sudo apt-get install -y cuda
+sudo apt-get install -y --allow-unauthenticated cuda
 echo "export PATH=/usr/local/cuda-9.0/bin/:$PATH" >> $HOME/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib:$LD_LIBRARY_PATH" >> $HOME/.bashrc
