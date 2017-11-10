@@ -3,5 +3,4 @@
 *.
 *.tar
 /Tensorflow-HP/benchmarks/
-hpcg/
 
