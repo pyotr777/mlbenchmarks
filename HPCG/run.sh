@@ -2,7 +2,16 @@
 #location of HPL
 HPCG_DIR=`pwd`
 
+usage="$0 <MPI procs>"
 
+PROCS=2  # Default MPI proccesses
+if [ $# -ge 1 ]; then
+	PROCS=$1
+else
+	echo "$usage"
+fi
+
+echo "Running HPCG for $PROCS MPI processes"
 
 nvcc --version
 mpirun --version
@@ -56,7 +65,7 @@ MPIFLAGS="--mca btl tcp,sm,self"   # just to get rid of warning on psg cluster n
 HPCG_BIN=xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_8_17
 
 echo " ****** running HPCG binary=$HPCG_BIN on 2 GPUs ***************************** "
-mpirun -np 2 $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_2_gpu-$DATETIME-output.txt
+mpirun -np $PROCS $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_2_gpu-$DATETIME-output.txt
 echo " ****** running HPCG binary=$HPCG_BIN on 4 GPUs ***************************** "
 #mpirun -np 4 $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_4_gpu-$DATETIME-output.txt
 echo " ****** running HPCG binary=$HPCG_BIN on 8 GPUs ***************************** "
