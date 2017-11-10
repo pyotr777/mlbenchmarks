@@ -13,10 +13,14 @@ if [[ $# -lt 1 ]]; then
 	echo "$usage"
 	exit 1
 fi
-set -ex
+
 echo "Installing HPCG on $1"
-scp *.sh $1:
-ssh $1 ./install1.sh
+scp install-prereq.sh install-hpcg3.1.sh $1:
+set -ex
+ssh $1 ./install-prereq.sh
+set +e
 ssh $1 sudo reboot
-sleep 35
-ssh $1 ./install2.sh
+sleep 45
+set -e
+ssh $1 ./install-hpcg3.1.sh
+scp run.sh $1:hpcg3.1/
