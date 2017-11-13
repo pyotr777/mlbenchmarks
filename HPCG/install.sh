@@ -20,7 +20,7 @@ set -ex
 ssh $1 ./install-prereq.sh
 set +e
 ssh $1 sudo reboot
-sleep 45
+sleep 60
 set -e
 ssh $1 ./install-hpcg3.1.sh
 scp run.sh $1:hpcg3.1/
