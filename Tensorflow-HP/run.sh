@@ -30,10 +30,15 @@ TMP_INSTALL="setup.sh"
 TMP_FILE="run_benchmarks.sh"
 OTHER_OPTIONS=""
 
+if [[ $# -lt 1 ]]; then
+	echo "$usage"
+	exit 1
+fi
+
 while test $# -gt 0; do
 	case "$1" in
 		-h | --help)
-			echo $usage
+			echo "$usage"
 			exit 0
 			;;
 		-d)
@@ -78,7 +83,7 @@ if [ -n "$cont_number" ]; then
 	docker rm $CONT_NAME
 fi
 
-echo "Starting $CONT_NAME container using $DOCKER_COMMAND command using $IMAGE image."
+echo "Starting $CONT_NAME container using $DOCKER_COMMAND command from $IMAGE image."
 
 CHECK=""
 if [ -n "$debug" ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install MPI and HPCG on remote machine
+# HPCG on remote machine
 
 usage=$(cat <<USAGEBLOCK
 Usage:
