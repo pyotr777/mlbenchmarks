@@ -10,7 +10,6 @@ $0 [-d <docker command>] [-n/--num_gpus <int>] [--batch_size <int>] [...]
 Options:
 	-d					Docker command: docker / nvidia-docker.
 	-n, --num_gpus 		Number of GPUs to use for tests. 0 - use CPU only.
-	-b, --batch_size	Batch size
 	-h, --help			This help info.
 	--debug				Print debug info.
 USAGEBLOCK
@@ -20,7 +19,6 @@ USAGEBLOCK
 # Default parameteres
 DOCKER_COMMAND=docker
 NUM_GPUS=0
-BATCH=32
 CONT_NAME=mxnet
 TMP_INSTALL="setup.sh"
 TEST_FILE="test.py"
@@ -42,9 +40,6 @@ while test $# -gt 0; do
 			;;
 		-n | --num_gpus)
 			NUM_GPUS=$2;shift;
-			;;
-		-b | --batch_size)
-			BATCH=$2;shift;
 			;;
 		--debug)
 			debug=YES
@@ -84,10 +79,10 @@ COMBLOCK2
 )
 if [ "$NUM_GPUS" -gt 0 ]; then
 	IMAGE="mxnet/python:gpu"
-	echo "$gpu_command" > $TEST_FILE
+	echo "$gpu_commands" > $TEST_FILE
 else
 	IMAGE="mxnet/python:latest"
-	echo "$cpu_command" > $TEST_FILE
+	echo "$cpu_commands" > $TEST_FILE
 fi
 
 if [ -n "$debug" ]; then
@@ -102,5 +97,5 @@ if [[ -n $(docker ps -a -q -f "name=$CONT_NAME") ]]; then
 fi
 $DOCKER_COMMAND run -td --name $CONT_NAME $IMAGE
 $DOCKER_COMMAND cp $TEST_FILE $CONT_NAME:/root/
-$DOCKER_COMMAND exec -t $CONT_NAME /bin/bash -c /root/$TEST_FILE
+$DOCKER_COMMAND exec -ti $CONT_NAME python /root/$TEST_FILE
 
