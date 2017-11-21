@@ -23,4 +23,5 @@ ssh $1 sudo reboot
 sleep 60
 set -e
 ssh $1 ./install-hpcg3.1.sh
+scp ../TAU/install_tau.sh $1:
 scp run.sh $1:hpcg3.1/

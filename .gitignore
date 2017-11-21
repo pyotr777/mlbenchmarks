@@ -2,5 +2,8 @@
 !.gitignore
 *.
 *.tar
+*.tgz
+*.edf
+*.trc
 /Tensorflow-HP/benchmarks/
 
