@@ -66,9 +66,9 @@ HPCG_BIN=xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_
 
 echo " ****** running HPCG binary=$HPCG_BIN on $PROCS GPUs ***************************** "
 mpirun -np $PROCS $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_2_gpu-$DATETIME-output.txt
-echo " ****** running HPCG binary=$HPCG_BIN on 4 GPUs ***************************** "
+#echo " ****** running HPCG binary=$HPCG_BIN on 4 GPUs ***************************** "
 #mpirun -np 4 $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_4_gpu-$DATETIME-output.txt
-echo " ****** running HPCG binary=$HPCG_BIN on 8 GPUs ***************************** "
+#echo " ****** running HPCG binary=$HPCG_BIN on 8 GPUs ***************************** "
 #mpirun -np 8 $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_8_gpu-$DATETIME-output.txt
 
 

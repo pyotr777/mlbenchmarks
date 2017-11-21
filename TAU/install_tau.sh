@@ -3,7 +3,7 @@
 # Install TAU with MPI and CUDA support for Dynamic instrumentation with tau_exec.
 # For use in EC2 instances.
 
-sudo apt-get update && sudo apt-get install openmpi-bin openmpi-doc libopenmpi-dev gfortran zlib1g-dev
+sudo apt-get update && sudo apt-get install gfortran zlib1g-dev
 
 TAU_DIR="$HOME/TAU"
 echo "Installing TAU into $TAU_DIR"
