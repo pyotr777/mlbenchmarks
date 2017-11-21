@@ -41,9 +41,6 @@ Options:
 	-n, --num_gpus 		Number of GPUs to use for tests. 0 - use CPU only.
 	-b, --batch_size	Batch size
 	--model				resnet50, inception3, vgg16, alexnet
-	--local_parameter_device gpu/cpu
-	--variable_update	The method for managing variables: parameter_server ,replicated, distributed_replicated, independent
-	--use_nccl			True/False
 	-h, --help			This help info.
 	--debug				Print debug info.
 ```	
@@ -51,8 +48,8 @@ Options:
 For example, to run the benchmark for 2 GPUs using batch size 64 execute:
 
 ```
-./run.sh --debug -n 2 -d nvidia-docker -b 64
+./run.sh --debug -n 2 -d nvidia-docker -b 64 --model resnet50
 ```
 
-By default the benchmark will use resnet50 model with synthetic data.
+
 
