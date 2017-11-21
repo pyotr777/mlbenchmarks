@@ -34,7 +34,7 @@ Copy run.sh to the remote machine. Use the script to install and run benchmarks.
 
 ```
 Usage:
-$0 [-d <docker command>] [-n/--num_gpus <int>] [--batch_size <int>] [...]
+./run.sh [-d <docker command>] [-n/--num_gpus <int>] [--batch_size <int>] [...]
 
 Options:
 	-d					Docker command: docker / nvidia-docker.

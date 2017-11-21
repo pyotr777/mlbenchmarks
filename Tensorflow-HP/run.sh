@@ -95,10 +95,14 @@ fi
 # Second one only runs benchmarks with no installations.
 commands=$(cat <<COMBLOCK1
 #!/bin/bash
-apt-get update && apt-get install -y git
+if [[ -z \$(dpkg --get-selections | grep git) ]]; then
+	apt-get update && apt-get install -y git
+fi
 pip install -U $PIP
 cd /root
-git clone https://github.com/tensorflow/benchmarks.git
+if [[ ! -d benchmarks || ! -f benchmarks/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py ]]; then
+	git clone https://github.com/tensorflow/benchmarks.git
+fi
 COMBLOCK1
 )
 echo "$commands" > $TMP_INSTALL
@@ -120,6 +124,12 @@ if [ -n "$debug" ]; then
 	set -ex
 fi
 
+if [[ -n $(docker ps -q -f "name=$CONT_NAME") ]]; then
+	docker kill $CONT_NAME
+fi
+if [[ -n $(docker ps -a -q -f "name=$CONT_NAME") ]]; then
+	docker rm $CONT_NAME
+fi
 $DOCKER_COMMAND run -td --name $CONT_NAME $IMAGE
 $DOCKER_COMMAND cp $TMP_INSTALL $CONT_NAME:/root/
 $DOCKER_COMMAND cp $TMP_FILE $CONT_NAME:/root/
