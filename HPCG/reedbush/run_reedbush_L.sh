@@ -1,15 +1,14 @@
 #!/bin/sh
-#PBS -q h-short
+#PBS -q l-regular
 #PBS -l select=1:mpiprocs=2:ompthreads=1
 #PBS -W group_list=gi96
 #PBS -l walltime=00:15:00
 cd $PBS_O_WORKDIR
 . /etc/profile.d/modules.sh
 module load cuda9/9.0.176 openmpi/1.10.2/gnu
-PROCS=2
-DATETIME="$(date +%F_%H%M%S)"
-echo "Reedbush-H $(hostname). P100x$PROCS $DATETIME"
-
+PROCS=4
+DATETIME="$(date +%F_%H:%M:%S)"
+echo "Reedbush-L $(hostname). P100x$PROCS $DATETIME"
 cp hpcg.dat_128x128x128_60 hpcg.dat
 #cp hpcg.dat_256x256x256_60 hpcg.dat        # 60 sec run
 #cp hpcg.dat_256x256x256_3660 hpcg.dat      # 3660 sec run - use for official submission

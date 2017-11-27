@@ -7,6 +7,6 @@
 *.trc
 HPCG/**/results/
 HPCG/**/results/*
-HPCG/**/*.sh.*
+HPCG/**/*.sh.e*
 /Tensorflow-HP/benchmarks/
 

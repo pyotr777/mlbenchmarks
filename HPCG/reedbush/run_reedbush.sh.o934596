@@ -1,0 +1,226 @@
+Reedbush-H a083. P100x2 2017-11-27_150047
+[1511762448.669103] [a083:10382:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2600.80
+[1511762448.669103] [a083:10383:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2600.80
+
+start of application (1 OMP threads)...
+2017-11-27 15:00:50.448
+
+Problem setup...
+Setup time: 0.084417 sec 
+
+GPU: 'Tesla P100-SXM2-16GB' 
+Memory use: 1353 MB / 16276 MB
+2x1x1 process grid
+128x128x128 local domain
+
+Reference SpMV+MG...
+
+Reference CG...
+Initial Residual: 3.660532e+03 Max_err: 1.000000e+00 tot_err: 2.048000e+03
+REF  Iter = 1 Scaled Residual: 1.878557e-01 Max error: 1.000000e+00 tot_error: 9.499507e-01 
+REF  Iter = 2 Scaled Residual: 1.032629e-01 Max error: 9.999999e-01 tot_error: 9.037848e-01 
+REF  Iter = 3 Scaled Residual: 7.118554e-02 Max error: 9.999996e-01 tot_error: 8.587611e-01 
+REF  Iter = 4 Scaled Residual: 5.424593e-02 Max error: 9.999990e-01 tot_error: 8.144208e-01 
+REF  Iter = 5 Scaled Residual: 4.371159e-02 Max error: 9.999980e-01 tot_error: 7.706658e-01 
+REF  Iter = 6 Scaled Residual: 3.651339e-02 Max error: 9.999961e-01 tot_error: 7.274904e-01 
+REF  Iter = 7 Scaled Residual: 3.128491e-02 Max error: 9.999923e-01 tot_error: 6.848973e-01 
+REF  Iter = 8 Scaled Residual: 2.732372e-02 Max error: 9.999848e-01 tot_error: 6.429036e-01 
+REF  Iter = 9 Scaled Residual: 2.422447e-02 Max error: 9.999697e-01 tot_error: 6.015199e-01 
+REF  Iter = 10 Scaled Residual: 2.172978e-02 Max error: 9.999386e-01 tot_error: 5.607531e-01 
+REF  Iter = 11 Scaled Residual: 1.966709e-02 Max error: 9.998725e-01 tot_error: 5.205953e-01 
+REF  Iter = 12 Scaled Residual: 1.791815e-02 Max error: 9.997273e-01 tot_error: 4.810275e-01 
+REF  Iter = 13 Scaled Residual: 1.640240e-02 Max error: 9.993945e-01 tot_error: 4.420149e-01 
+REF  Iter = 14 Scaled Residual: 1.507271e-02 Max error: 9.985984e-01 tot_error: 4.035020e-01 
+REF  Iter = 15 Scaled Residual: 1.391331e-02 Max error: 9.966275e-01 tot_error: 3.653844e-01 
+REF  Iter = 16 Scaled Residual: 1.296603e-02 Max error: 9.916756e-01 tot_error: 3.273654e-01 
+REF  Iter = 17 Scaled Residual: 1.242789e-02 Max error: 9.792751e-01 tot_error: 2.884242e-01 
+REF  Iter = 18 Scaled Residual: 1.273857e-02 Max error: 9.482278e-01 tot_error: 2.454357e-01 
+REF  Iter = 19 Scaled Residual: 1.382626e-02 Max error: 8.715873e-01 tot_error: 1.929526e-01 
+REF  Iter = 20 Scaled Residual: 1.258770e-02 Max error: 7.240768e-01 tot_error: 1.383115e-01 
+REF  Iter = 21 Scaled Residual: 8.038366e-03 Max error: 5.711228e-01 tot_error: 1.083624e-01 
+REF  Iter = 22 Scaled Residual: 6.033049e-03 Max error: 4.501302e-01 tot_error: 9.509267e-02 
+REF  Iter = 23 Scaled Residual: 5.863342e-03 Max error: 3.437366e-01 tot_error: 8.275447e-02 
+REF  Iter = 24 Scaled Residual: 4.604387e-03 Max error: 2.816304e-01 tot_error: 7.248192e-02 
+REF  Iter = 25 Scaled Residual: 3.951406e-03 Max error: 2.246140e-01 tot_error: 6.442339e-02 
+REF  Iter = 26 Scaled Residual: 3.430445e-03 Max error: 1.923029e-01 tot_error: 5.751635e-02 
+REF  Iter = 27 Scaled Residual: 2.856463e-03 Max error: 1.611428e-01 tot_error: 5.121854e-02 
+REF  Iter = 28 Scaled Residual: 2.781903e-03 Max error: 1.418506e-01 tot_error: 4.549938e-02 
+REF  Iter = 29 Scaled Residual: 2.281673e-03 Max error: 1.256472e-01 tot_error: 3.991606e-02 
+REF  Iter = 30 Scaled Residual: 2.296039e-03 Max error: 1.089213e-01 tot_error: 3.434082e-02 
+REF  Iter = 31 Scaled Residual: 1.964193e-03 Max error: 9.529203e-02 tot_error: 2.955654e-02 
+REF  Iter = 32 Scaled Residual: 1.757265e-03 Max error: 8.153354e-02 tot_error: 2.461686e-02 
+REF  Iter = 33 Scaled Residual: 1.670228e-03 Max error: 7.487211e-02 tot_error: 2.037961e-02 
+REF  Iter = 34 Scaled Residual: 1.444972e-03 Max error: 6.705409e-02 tot_error: 1.637210e-02 
+REF  Iter = 35 Scaled Residual: 1.304842e-03 Max error: 5.824666e-02 tot_error: 1.288440e-02 
+REF  Iter = 36 Scaled Residual: 1.090572e-03 Max error: 4.943210e-02 tot_error: 9.844914e-03 
+REF  Iter = 37 Scaled Residual: 9.822928e-04 Max error: 4.143855e-02 tot_error: 7.436309e-03 
+REF  Iter = 38 Scaled Residual: 7.651163e-04 Max error: 3.336009e-02 tot_error: 5.773872e-03 
+REF  Iter = 39 Scaled Residual: 5.508694e-04 Max error: 2.496497e-02 tot_error: 4.582300e-03 
+REF  Iter = 40 Scaled Residual: 4.538335e-04 Max error: 1.747236e-02 tot_error: 3.775036e-03 
+REF  Iter = 41 Scaled Residual: 3.772199e-04 Max error: 1.086156e-02 tot_error: 3.119217e-03 
+REF  Iter = 42 Scaled Residual: 3.260359e-04 Max error: 7.632340e-03 tot_error: 2.468579e-03 
+REF  Iter = 43 Scaled Residual: 2.646145e-04 Max error: 6.673091e-03 tot_error: 1.909535e-03 
+REF  Iter = 44 Scaled Residual: 1.980305e-04 Max error: 5.798525e-03 tot_error: 1.513423e-03 
+REF  Iter = 45 Scaled Residual: 1.618186e-04 Max error: 4.640950e-03 tot_error: 1.211418e-03 
+REF  Iter = 46 Scaled Residual: 1.347007e-04 Max error: 3.721789e-03 tot_error: 9.641580e-04 
+REF  Iter = 47 Scaled Residual: 1.055428e-04 Max error: 2.895243e-03 tot_error: 7.739242e-04 
+REF  Iter = 48 Scaled Residual: 8.510786e-05 Max error: 2.183323e-03 tot_error: 6.057925e-04 
+REF  Iter = 49 Scaled Residual: 6.727718e-05 Max error: 2.034193e-03 tot_error: 4.662133e-04 
+REF  Iter = 50 Scaled Residual: 5.872544e-05 Max error: 1.743838e-03 tot_error: 3.588990e-04 
+
+Optimization...
+Optimization time: 2.727509e-02 sec 
+
+Validation...
+
+Optimized CG Setup...
+Initial Residual: 3.660532e+03 Max_err: 1.000000e+00 tot_err: 2.048000e+03
+Iteration = 1 Scaled Residual: 2.204497e-01 Max error: 1.000000e+00 tot_error: 9.498183e-01 
+Iteration = 2 Scaled Residual: 1.191815e-01 Max error: 9.999999e-01 tot_error: 9.030058e-01 
+Iteration = 3 Scaled Residual: 8.094419e-02 Max error: 9.999998e-01 tot_error: 8.575471e-01 
+Iteration = 4 Scaled Residual: 6.115323e-02 Max error: 9.999991e-01 tot_error: 8.129246e-01 
+Iteration = 5 Scaled Residual: 4.909911e-02 Max error: 9.999971e-01 tot_error: 7.689015e-01 
+Iteration = 6 Scaled Residual: 4.093398e-02 Max error: 9.999915e-01 tot_error: 7.254694e-01 
+Iteration = 7 Scaled Residual: 3.503771e-02 Max error: 9.999775e-01 tot_error: 6.826030e-01 
+Iteration = 8 Scaled Residual: 3.057381e-02 Max error: 9.999439e-01 tot_error: 6.403224e-01 
+Iteration = 9 Scaled Residual: 2.705961e-02 Max error: 9.998668e-01 tot_error: 5.986329e-01 
+Iteration = 10 Scaled Residual: 2.421843e-02 Max error: 9.996971e-01 tot_error: 5.575505e-01 
+Iteration = 11 Scaled Residual: 2.186960e-02 Max error: 9.993358e-01 tot_error: 5.170624e-01 
+Iteration = 12 Scaled Residual: 1.988951e-02 Max error: 9.985891e-01 tot_error: 4.771648e-01 
+Iteration = 13 Scaled Residual: 1.820320e-02 Max error: 9.970840e-01 tot_error: 4.378183e-01 
+Iteration = 14 Scaled Residual: 1.676032e-02 Max error: 9.941206e-01 tot_error: 3.989462e-01 
+Iteration = 15 Scaled Residual: 1.554768e-02 Max error: 9.884135e-01 tot_error: 3.603623e-01 
+Iteration = 16 Scaled Residual: 1.460286e-02 Max error: 9.776314e-01 tot_error: 3.216488e-01 
+Iteration = 17 Scaled Residual: 1.402425e-02 Max error: 9.575030e-01 tot_error: 2.818923e-01 
+Iteration = 18 Scaled Residual: 1.392465e-02 Max error: 9.200318e-01 tot_error: 2.394839e-01 
+Iteration = 19 Scaled Residual: 1.415007e-02 Max error: 8.511669e-01 tot_error: 1.928182e-01 
+Iteration = 20 Scaled Residual: 1.361719e-02 Max error: 7.363090e-01 tot_error: 1.448968e-01 
+Iteration = 21 Scaled Residual: 1.077798e-02 Max error: 5.923874e-01 tot_error: 1.087575e-01 
+Iteration = 22 Scaled Residual: 7.002171e-03 Max error: 4.708630e-01 tot_error: 9.114596e-02 
+Iteration = 23 Scaled Residual: 5.318712e-03 Max error: 3.768957e-01 tot_error: 8.213873e-02 
+Iteration = 24 Scaled Residual: 5.646855e-03 Max error: 2.944021e-01 tot_error: 7.270558e-02 
+Iteration = 25 Scaled Residual: 4.466583e-03 Max error: 2.395815e-01 tot_error: 6.305827e-02 
+Iteration = 26 Scaled Residual: 3.571272e-03 Max error: 1.991596e-01 tot_error: 5.697432e-02 
+Iteration = 27 Scaled Residual: 3.550759e-03 Max error: 1.679948e-01 tot_error: 5.018634e-02 
+Iteration = 28 Scaled Residual: 2.741925e-03 Max error: 1.449357e-01 tot_error: 4.474214e-02 
+Iteration = 29 Scaled Residual: 2.846452e-03 Max error: 1.262752e-01 tot_error: 3.884086e-02 
+Iteration = 30 Scaled Residual: 2.332711e-03 Max error: 1.129202e-01 tot_error: 3.382959e-02 
+Iteration = 31 Scaled Residual: 2.196570e-03 Max error: 9.564822e-02 tot_error: 2.827074e-02 
+Iteration = 32 Scaled Residual: 2.043985e-03 Max error: 8.251808e-02 tot_error: 2.396176e-02 
+Iteration = 33 Scaled Residual: 1.617555e-03 Max error: 6.890872e-02 tot_error: 1.951261e-02 
+Iteration = 34 Scaled Residual: 1.631729e-03 Max error: 6.106589e-02 tot_error: 1.558619e-02 
+Iteration = 35 Scaled Residual: 1.377777e-03 Max error: 5.614954e-02 tot_error: 1.241458e-02 
+Iteration = 36 Scaled Residual: 1.095673e-03 Max error: 4.408835e-02 tot_error: 9.481816e-03 
+Iteration = 37 Scaled Residual: 9.952353e-04 Max error: 3.673471e-02 tot_error: 7.182083e-03 
+Iteration = 38 Scaled Residual: 8.211844e-04 Max error: 2.951329e-02 tot_error: 5.550511e-03 
+Iteration = 39 Scaled Residual: 6.184327e-04 Max error: 2.297169e-02 tot_error: 4.343368e-03 
+Iteration = 40 Scaled Residual: 4.703485e-04 Max error: 1.723169e-02 tot_error: 3.471559e-03 
+Iteration = 41 Scaled Residual: 3.930578e-04 Max error: 1.181521e-02 tot_error: 2.826963e-03 
+Iteration = 42 Scaled Residual: 3.335203e-04 Max error: 7.766572e-03 tot_error: 2.310206e-03 
+Iteration = 43 Scaled Residual: 2.714100e-04 Max error: 5.281213e-03 tot_error: 1.847590e-03 
+Iteration = 44 Scaled Residual: 2.174650e-04 Max error: 4.731291e-03 tot_error: 1.439275e-03 
+Iteration = 45 Scaled Residual: 1.729802e-04 Max error: 4.339838e-03 tot_error: 1.123701e-03 
+Iteration = 46 Scaled Residual: 1.378083e-04 Max error: 3.702228e-03 tot_error: 9.003655e-04 
+Iteration = 47 Scaled Residual: 1.112295e-04 Max error: 2.870217e-03 tot_error: 7.280826e-04 
+Iteration = 48 Scaled Residual: 9.045360e-05 Max error: 2.184791e-03 tot_error: 5.763364e-04 
+Iteration = 49 Scaled Residual: 7.190977e-05 Max error: 1.759942e-03 tot_error: 4.435578e-04 
+Iteration = 50 Scaled Residual: 5.633507e-05 Max error: 1.734443e-03 tot_error: 3.418905e-04 
+
+Starting Benchmarking Phase... 
+Performing 145 CG sets	 expected time:   60.0 seconds	 expected Perf:     182.1 GF (91.1 GF_per)
+2017-11-27 15:01:26.410
+progress = 1.4% 	    0.8 /   60.0 sec elapsed 	   59.2 sec remain 	   182.175 GF 	 91.088 GF_per
+progress = 2.8% 	    1.7 /   60.0 sec elapsed 	   58.3 sec remain 	   182.185 GF 	 91.092 GF_per
+progress = 4.1% 	    2.5 /   60.0 sec elapsed 	   57.5 sec remain 	   182.192 GF 	 91.096 GF_per
+progress = 5.5% 	    3.3 /   60.0 sec elapsed 	   56.7 sec remain 	   182.199 GF 	 91.100 GF_per
+progress = 6.9% 	    4.1 /   60.0 sec elapsed 	   55.9 sec remain 	   182.204 GF 	 91.102 GF_per
+progress = 8.3% 	    5.0 /   60.0 sec elapsed 	   55.0 sec remain 	   182.205 GF 	 91.103 GF_per
+progress = 9.7% 	    5.8 /   60.0 sec elapsed 	   54.2 sec remain 	   182.209 GF 	 91.105 GF_per
+progress = 11.1% 	    6.6 /   60.0 sec elapsed 	   53.4 sec remain 	   182.203 GF 	 91.101 GF_per
+progress = 12.4% 	    7.5 /   60.0 sec elapsed 	   52.5 sec remain 	   182.207 GF 	 91.104 GF_per
+progress = 13.8% 	    8.3 /   60.0 sec elapsed 	   51.7 sec remain 	   182.206 GF 	 91.103 GF_per
+progress = 15.2% 	    9.1 /   60.0 sec elapsed 	   50.9 sec remain 	   182.209 GF 	 91.104 GF_per
+progress = 16.6% 	   10.0 /   60.0 sec elapsed 	   50.0 sec remain 	   182.208 GF 	 91.104 GF_per
+progress = 18.0% 	   10.8 /   60.0 sec elapsed 	   49.2 sec remain 	   182.208 GF 	 91.104 GF_per
+progress = 19.4% 	   11.6 /   60.0 sec elapsed 	   48.4 sec remain 	   182.210 GF 	 91.105 GF_per
+progress = 20.7% 	   12.4 /   60.0 sec elapsed 	   47.6 sec remain 	   182.209 GF 	 91.104 GF_per
+progress = 22.1% 	   13.3 /   60.0 sec elapsed 	   46.7 sec remain 	   182.210 GF 	 91.105 GF_per
+progress = 23.5% 	   14.1 /   60.0 sec elapsed 	   45.9 sec remain 	   182.211 GF 	 91.105 GF_per
+progress = 24.9% 	   14.9 /   60.0 sec elapsed 	   45.1 sec remain 	   182.211 GF 	 91.106 GF_per
+progress = 26.3% 	   15.8 /   60.0 sec elapsed 	   44.2 sec remain 	   182.212 GF 	 91.106 GF_per
+progress = 27.6% 	   16.6 /   60.0 sec elapsed 	   43.4 sec remain 	   182.212 GF 	 91.106 GF_per
+progress = 29.0% 	   17.4 /   60.0 sec elapsed 	   42.6 sec remain 	   182.212 GF 	 91.106 GF_per
+progress = 30.4% 	   18.2 /   60.0 sec elapsed 	   41.8 sec remain 	   182.213 GF 	 91.106 GF_per
+progress = 31.8% 	   19.1 /   60.0 sec elapsed 	   40.9 sec remain 	   182.212 GF 	 91.106 GF_per
+progress = 33.2% 	   19.9 /   60.0 sec elapsed 	   40.1 sec remain 	   182.213 GF 	 91.106 GF_per
+progress = 34.6% 	   20.7 /   60.0 sec elapsed 	   39.3 sec remain 	   182.213 GF 	 91.106 GF_per
+progress = 35.9% 	   21.6 /   60.0 sec elapsed 	   38.4 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 37.3% 	   22.4 /   60.0 sec elapsed 	   37.6 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 38.7% 	   23.2 /   60.0 sec elapsed 	   36.8 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 40.1% 	   24.1 /   60.0 sec elapsed 	   35.9 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 41.5% 	   24.9 /   60.0 sec elapsed 	   35.1 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 42.9% 	   25.7 /   60.0 sec elapsed 	   34.3 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 44.2% 	   26.5 /   60.0 sec elapsed 	   33.5 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 45.6% 	   27.4 /   60.0 sec elapsed 	   32.6 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 47.0% 	   28.2 /   60.0 sec elapsed 	   31.8 sec remain 	   182.215 GF 	 91.107 GF_per
+progress = 48.4% 	   29.0 /   60.0 sec elapsed 	   31.0 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 49.8% 	   29.9 /   60.0 sec elapsed 	   30.1 sec remain 	   182.214 GF 	 91.107 GF_per
+progress = 51.2% 	   30.7 /   60.0 sec elapsed 	   29.3 sec remain 	   182.172 GF 	 91.086 GF_per
+progress = 52.5% 	   31.5 /   60.0 sec elapsed 	   28.5 sec remain 	   182.172 GF 	 91.086 GF_per
+progress = 53.9% 	   32.4 /   60.0 sec elapsed 	   27.6 sec remain 	   182.174 GF 	 91.087 GF_per
+progress = 55.3% 	   33.2 /   60.0 sec elapsed 	   26.8 sec remain 	   182.175 GF 	 91.087 GF_per
+progress = 56.7% 	   34.0 /   60.0 sec elapsed 	   26.0 sec remain 	   182.175 GF 	 91.088 GF_per
+progress = 58.1% 	   34.8 /   60.0 sec elapsed 	   25.2 sec remain 	   182.176 GF 	 91.088 GF_per
+progress = 59.5% 	   35.7 /   60.0 sec elapsed 	   24.3 sec remain 	   182.176 GF 	 91.088 GF_per
+progress = 60.8% 	   36.5 /   60.0 sec elapsed 	   23.5 sec remain 	   182.177 GF 	 91.088 GF_per
+progress = 62.2% 	   37.3 /   60.0 sec elapsed 	   22.7 sec remain 	   182.177 GF 	 91.089 GF_per
+progress = 63.6% 	   38.2 /   60.0 sec elapsed 	   21.8 sec remain 	   182.179 GF 	 91.089 GF_per
+progress = 65.0% 	   39.0 /   60.0 sec elapsed 	   21.0 sec remain 	   182.179 GF 	 91.089 GF_per
+progress = 66.4% 	   39.8 /   60.0 sec elapsed 	   20.2 sec remain 	   182.179 GF 	 91.090 GF_per
+progress = 67.7% 	   40.6 /   60.0 sec elapsed 	   19.4 sec remain 	   182.179 GF 	 91.090 GF_per
+progress = 69.1% 	   41.5 /   60.0 sec elapsed 	   18.5 sec remain 	   182.180 GF 	 91.090 GF_per
+progress = 70.5% 	   42.3 /   60.0 sec elapsed 	   17.7 sec remain 	   182.181 GF 	 91.090 GF_per
+progress = 71.9% 	   43.1 /   60.0 sec elapsed 	   16.9 sec remain 	   182.151 GF 	 91.076 GF_per
+progress = 73.3% 	   44.0 /   60.0 sec elapsed 	   16.0 sec remain 	   182.152 GF 	 91.076 GF_per
+progress = 74.7% 	   44.8 /   60.0 sec elapsed 	   15.2 sec remain 	   182.154 GF 	 91.077 GF_per
+progress = 76.1% 	   45.6 /   60.0 sec elapsed 	   14.4 sec remain 	   182.154 GF 	 91.077 GF_per
+progress = 77.4% 	   46.5 /   60.0 sec elapsed 	   13.5 sec remain 	   182.156 GF 	 91.078 GF_per
+progress = 78.8% 	   47.3 /   60.0 sec elapsed 	   12.7 sec remain 	   182.157 GF 	 91.079 GF_per
+progress = 80.2% 	   48.1 /   60.0 sec elapsed 	   11.9 sec remain 	   182.158 GF 	 91.079 GF_per
+progress = 81.6% 	   48.9 /   60.0 sec elapsed 	   11.1 sec remain 	   182.159 GF 	 91.079 GF_per
+progress = 83.0% 	   49.8 /   60.0 sec elapsed 	   10.2 sec remain 	   182.160 GF 	 91.080 GF_per
+progress = 84.3% 	   50.6 /   60.0 sec elapsed 	    9.4 sec remain 	   182.161 GF 	 91.081 GF_per
+progress = 85.7% 	   51.4 /   60.0 sec elapsed 	    8.6 sec remain 	   182.163 GF 	 91.081 GF_per
+progress = 87.1% 	   52.3 /   60.0 sec elapsed 	    7.7 sec remain 	   182.164 GF 	 91.082 GF_per
+progress = 88.5% 	   53.1 /   60.0 sec elapsed 	    6.9 sec remain 	   182.164 GF 	 91.082 GF_per
+progress = 89.9% 	   53.9 /   60.0 sec elapsed 	    6.1 sec remain 	   182.165 GF 	 91.082 GF_per
+progress = 91.3% 	   54.8 /   60.0 sec elapsed 	    5.2 sec remain 	   182.166 GF 	 91.083 GF_per
+progress = 92.6% 	   55.6 /   60.0 sec elapsed 	    4.4 sec remain 	   182.166 GF 	 91.083 GF_per
+progress = 94.0% 	   56.4 /   60.0 sec elapsed 	    3.6 sec remain 	   182.167 GF 	 91.084 GF_per
+progress = 95.4% 	   57.2 /   60.0 sec elapsed 	    2.8 sec remain 	   182.168 GF 	 91.084 GF_per
+progress = 96.8% 	   58.1 /   60.0 sec elapsed 	    1.9 sec remain 	   182.169 GF 	 91.084 GF_per
+progress = 98.2% 	   58.9 /   60.0 sec elapsed 	    1.1 sec remain 	   182.169 GF 	 91.085 GF_per
+progress = 99.6% 	   59.7 /   60.0 sec elapsed 	    0.3 sec remain 	   182.170 GF 	 91.085 GF_per
+
+Completed Benchmarking Phase... elapsed time:   60.1 seconds 
+2017-11-27 15:02:26.562
+
+Number of CG sets:	145 
+Iterations per set:	50 
+scaled res mean:	5.633507e-05 
+scaled res variance:	0.000000e+00 
+
+Total Time: 6.014517e+01 sec 
+Setup        Overhead: 1.99%
+Optimization Overhead: 0.65%
+Convergence  Overhead: 0.00%
+
+2x1x1 process grid
+128x128x128 local domain
+SpMV  =  160.2 GF (1009.5 GB/s Effective)   80.1 GF_per ( 504.8 GB/s Effective)
+SymGS =  200.9 GF (1550.6 GB/s Effective)  100.4 GF_per ( 775.3 GB/s Effective)
+total =  187.1 GF (1419.0 GB/s Effective)   93.5 GF_per ( 709.5 GB/s Effective)
+final =  182.2 GF (1381.8 GB/s Effective)   91.1 GF_per ( 690.9 GB/s Effective)
+
+end of application...
+2017-11-27 15:02:26.593

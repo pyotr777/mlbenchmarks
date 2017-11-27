@@ -1,0 +1,231 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red59\green208\blue29;\red255\green255\blue255;\red153\green179\blue184;
+\red85\green85\blue255;\red249\green11\blue38;}
+{\*\expandedcolortbl;;\cssrgb\c26275\c83137\c14902;\cssrgb\c100000\c100000\c100000;\cssrgb\c66043\c75226\c77258;
+\cssrgb\c40938\c44486\c100000;\cssrgb\c99216\c16471\c19216;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww12600\viewh9000\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs20 \cf2 \cb3 ubuntu@ip-172-31-63-60\cf4 :\cf5 ~/hpcg3.1\cf4 $ ./run.sh\
+nvcc: NVIDIA (R) Cuda compiler driver\
+Copyright (c) 2005-2017 NVIDIA Corporation\
+Built on Fri_Sep__1_21:08:03_CDT_2017\
+Cuda compilation tools, release 9.0, V9.0.176\
+mpirun (Open MPI) 1.10.2\
+\
+Report bugs to http://www.open-mpi.org/community/help/\
+Results in ./results/xhpcg_x_gpu-ip-172-31-63-60.1110.062735-output.txt\
+Fri Nov 10 06:27:38 2017\
++-----------------------------------------------------------------------------+\
+| NVIDIA-SMI 384.90                 Driver Version: 384.90                    |\
+|-------------------------------+----------------------+----------------------+\
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\
+|===============================+======================+======================|\
+|   0  Tesla M60           Off  | 00000000:00:1D.0 Off |                    0 |\
+| N/A   35C    P0    38W / 150W |      0MiB /  7613MiB |      0%      Default |\
++-------------------------------+----------------------+----------------------+\
+|   1  Tesla M60           Off  | 00000000:00:1E.0 Off |                    0 |\
+| N/A   30C    P0    38W / 150W |      0MiB /  7613MiB |     98%      Default |\
++-------------------------------+----------------------+----------------------+\
+\
++-----------------------------------------------------------------------------+\
+| Processes:                                                       GPU Memory |\
+|  GPU       PID   Type   Process name                             Usage      |\
+|=============================================================================|\
+|  No running processes found                                                 |\
++-----------------------------------------------------------------------------+\
+ ****** running HPCG binary=xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_8_17 on 2 GPUs *****************************\
+\
+start of application (1 OMP threads)...\
+2017-11-10 06:27:43.271\
+\
+Problem setup...\
+Setup time: 0.117052 sec\
+\
+GPU: 'Tesla M60'\
+Memory use: 1118 MB / 7613 MB\
+2x1x1 process grid\
+128x128x128 local domain\
+\
+Reference SpMV+MG...\
+\
+Reference CG...\
+Initial Residual: 3.660532e+03 Max_err: 1.000000e+00 tot_err: 2.048000e+03\
+REF  Iter = 1 Scaled Residual: 1.878557e-01 Max \cf6 error\cf4 : 1.000000e+00 tot_\cf6 error\cf4 : 9.499507e-01\
+REF  Iter = 2 Scaled Residual: 1.032629e-01 Max \cf6 error\cf4 : 9.999999e-01 tot_\cf6 error\cf4 : 9.037848e-01\
+REF  Iter = 3 Scaled Residual: 7.118554e-02 Max \cf6 error\cf4 : 9.999996e-01 tot_\cf6 error\cf4 : 8.587611e-01\
+REF  Iter = 4 Scaled Residual: 5.424593e-02 Max \cf6 error\cf4 : 9.999990e-01 tot_\cf6 error\cf4 : 8.144208e-01\
+REF  Iter = 5 Scaled Residual: 4.371159e-02 Max \cf6 error\cf4 : 9.999980e-01 tot_\cf6 error\cf4 : 7.706658e-01\
+REF  Iter = 6 Scaled Residual: 3.651339e-02 Max \cf6 error\cf4 : 9.999961e-01 tot_\cf6 error\cf4 : 7.274904e-01\
+REF  Iter = 7 Scaled Residual: 3.128491e-02 Max \cf6 error\cf4 : 9.999923e-01 tot_\cf6 error\cf4 : 6.848973e-01\
+REF  Iter = 8 Scaled Residual: 2.732372e-02 Max \cf6 error\cf4 : 9.999848e-01 tot_\cf6 error\cf4 : 6.429036e-01\
+REF  Iter = 9 Scaled Residual: 2.422447e-02 Max \cf6 error\cf4 : 9.999697e-01 tot_\cf6 error\cf4 : 6.015199e-01\
+REF  Iter = 10 Scaled Residual: 2.172978e-02 Max \cf6 error\cf4 : 9.999386e-01 tot_\cf6 error\cf4 : 5.607531e-01\
+REF  Iter = 11 Scaled Residual: 1.966709e-02 Max \cf6 error\cf4 : 9.998725e-01 tot_\cf6 error\cf4 : 5.205953e-01\
+REF  Iter = 12 Scaled Residual: 1.791815e-02 Max \cf6 error\cf4 : 9.997273e-01 tot_\cf6 error\cf4 : 4.810275e-01\
+REF  Iter = 13 Scaled Residual: 1.640240e-02 Max \cf6 error\cf4 : 9.993945e-01 tot_\cf6 error\cf4 : 4.420149e-01\
+REF  Iter = 14 Scaled Residual: 1.507271e-02 Max \cf6 error\cf4 : 9.985984e-01 tot_\cf6 error\cf4 : 4.035020e-01\
+REF  Iter = 15 Scaled Residual: 1.391331e-02 Max \cf6 error\cf4 : 9.966275e-01 tot_\cf6 error\cf4 : 3.653844e-01\
+REF  Iter = 16 Scaled Residual: 1.296603e-02 Max \cf6 error\cf4 : 9.916756e-01 tot_\cf6 error\cf4 : 3.273654e-01\
+REF  Iter = 17 Scaled Residual: 1.242789e-02 Max \cf6 error\cf4 : 9.792751e-01 tot_\cf6 error\cf4 : 2.884242e-01\
+REF  Iter = 18 Scaled Residual: 1.273857e-02 Max \cf6 error\cf4 : 9.482278e-01 tot_\cf6 error\cf4 : 2.454357e-01\
+REF  Iter = 19 Scaled Residual: 1.382626e-02 Max \cf6 error\cf4 : 8.715873e-01 tot_\cf6 error\cf4 : 1.929526e-01\
+REF  Iter = 20 Scaled Residual: 1.258770e-02 Max \cf6 error\cf4 : 7.240768e-01 tot_\cf6 error\cf4 : 1.383115e-01\
+REF  Iter = 21 Scaled Residual: 8.038366e-03 Max \cf6 error\cf4 : 5.711228e-01 tot_\cf6 error\cf4 : 1.083624e-01\
+REF  Iter = 22 Scaled Residual: 6.033049e-03 Max \cf6 error\cf4 : 4.501302e-01 tot_\cf6 error\cf4 : 9.509267e-02\
+REF  Iter = 23 Scaled Residual: 5.863342e-03 Max \cf6 error\cf4 : 3.437366e-01 tot_\cf6 error\cf4 : 8.275447e-02\
+REF  Iter = 24 Scaled Residual: 4.604387e-03 Max \cf6 error\cf4 : 2.816304e-01 tot_\cf6 error\cf4 : 7.248192e-02\
+REF  Iter = 25 Scaled Residual: 3.951406e-03 Max \cf6 error\cf4 : 2.246140e-01 tot_\cf6 error\cf4 : 6.442339e-02\
+REF  Iter = 26 Scaled Residual: 3.430445e-03 Max \cf6 error\cf4 : 1.923029e-01 tot_\cf6 error\cf4 : 5.751635e-02\
+REF  Iter = 27 Scaled Residual: 2.856463e-03 Max \cf6 error\cf4 : 1.611428e-01 tot_\cf6 error\cf4 : 5.121854e-02\
+REF  Iter = 28 Scaled Residual: 2.781903e-03 Max \cf6 error\cf4 : 1.418506e-01 tot_\cf6 error\cf4 : 4.549938e-02\
+REF  Iter = 29 Scaled Residual: 2.281673e-03 Max \cf6 error\cf4 : 1.256472e-01 tot_\cf6 error\cf4 : 3.991606e-02\
+REF  Iter = 30 Scaled Residual: 2.296039e-03 Max \cf6 error\cf4 : 1.089213e-01 tot_\cf6 error\cf4 : 3.434082e-02\
+REF  Iter = 31 Scaled Residual: 1.964193e-03 Max \cf6 error\cf4 : 9.529203e-02 tot_\cf6 error\cf4 : 2.955654e-02\
+REF  Iter = 32 Scaled Residual: 1.757265e-03 Max \cf6 error\cf4 : 8.153354e-02 tot_\cf6 error\cf4 : 2.461686e-02\
+REF  Iter = 33 Scaled Residual: 1.670228e-03 Max \cf6 error\cf4 : 7.487211e-02 tot_\cf6 error\cf4 : 2.037961e-02\
+REF  Iter = 34 Scaled Residual: 1.444972e-03 Max \cf6 error\cf4 : 6.705409e-02 tot_\cf6 error\cf4 : 1.637210e-02\
+REF  Iter = 35 Scaled Residual: 1.304842e-03 Max \cf6 error\cf4 : 5.824666e-02 tot_\cf6 error\cf4 : 1.288440e-02\
+REF  Iter = 36 Scaled Residual: 1.090572e-03 Max \cf6 error\cf4 : 4.943210e-02 tot_\cf6 error\cf4 : 9.844914e-03\
+REF  Iter = 37 Scaled Residual: 9.822928e-04 Max \cf6 error\cf4 : 4.143855e-02 tot_\cf6 error\cf4 : 7.436309e-03\
+REF  Iter = 38 Scaled Residual: 7.651163e-04 Max \cf6 error\cf4 : 3.336009e-02 tot_\cf6 error\cf4 : 5.773872e-03\
+REF  Iter = 39 Scaled Residual: 5.508694e-04 Max \cf6 error\cf4 : 2.496497e-02 tot_\cf6 error\cf4 : 4.582300e-03\
+REF  Iter = 40 Scaled Residual: 4.538335e-04 Max \cf6 error\cf4 : 1.747236e-02 tot_\cf6 error\cf4 : 3.775036e-03\
+REF  Iter = 41 Scaled Residual: 3.772199e-04 Max \cf6 error\cf4 : 1.086156e-02 tot_\cf6 error\cf4 : 3.119217e-03\
+REF  Iter = 42 Scaled Residual: 3.260359e-04 Max \cf6 error\cf4 : 7.632340e-03 tot_\cf6 error\cf4 : 2.468579e-03\
+REF  Iter = 43 Scaled Residual: 2.646145e-04 Max \cf6 error\cf4 : 6.673091e-03 tot_\cf6 error\cf4 : 1.909535e-03\
+REF  Iter = 44 Scaled Residual: 1.980305e-04 Max \cf6 error\cf4 : 5.798525e-03 tot_\cf6 error\cf4 : 1.513423e-03\
+REF  Iter = 45 Scaled Residual: 1.618186e-04 Max \cf6 error\cf4 : 4.640950e-03 tot_\cf6 error\cf4 : 1.211418e-03\
+REF  Iter = 46 Scaled Residual: 1.347007e-04 Max \cf6 error\cf4 : 3.721789e-03 tot_\cf6 error\cf4 : 9.641580e-04\
+REF  Iter = 47 Scaled Residual: 1.055428e-04 Max \cf6 error\cf4 : 2.895243e-03 tot_\cf6 error\cf4 : 7.739242e-04\
+REF  Iter = 48 Scaled Residual: 8.510786e-05 Max \cf6 error\cf4 : 2.183323e-03 tot_\cf6 error\cf4 : 6.057925e-04\
+REF  Iter = 49 Scaled Residual: 6.727718e-05 Max \cf6 error\cf4 : 2.034193e-03 tot_\cf6 error\cf4 : 4.662133e-04\
+REF  Iter = 50 Scaled Residual: 5.872544e-05 Max \cf6 error\cf4 : 1.743838e-03 tot_\cf6 error\cf4 : 3.588990e-04\
+\
+Optimization...\
+Optimization time: 1.185541e-01 sec\
+\
+Validation...\
+\
+Optimized CG Setup...\
+Initial Residual: 3.660532e+03 Max_err: 1.000000e+00 tot_err: 2.048000e+03\
+Iteration = 1 Scaled Residual: 2.204497e-01 Max \cf6 error\cf4 : 1.000000e+00 tot_\cf6 error\cf4 : 9.498183e-01\
+Iteration = 2 Scaled Residual: 1.191815e-01 Max \cf6 error\cf4 : 9.999999e-01 tot_\cf6 error\cf4 : 9.030058e-01\
+Iteration = 3 Scaled Residual: 8.094419e-02 Max \cf6 error\cf4 : 9.999998e-01 tot_\cf6 error\cf4 : 8.575471e-01\
+Iteration = 4 Scaled Residual: 6.115323e-02 Max \cf6 error\cf4 : 9.999991e-01 tot_\cf6 error\cf4 : 8.129246e-01\
+Iteration = 5 Scaled Residual: 4.909911e-02 Max \cf6 error\cf4 : 9.999971e-01 tot_\cf6 error\cf4 : 7.689015e-01\
+Iteration = 6 Scaled Residual: 4.093398e-02 Max \cf6 error\cf4 : 9.999915e-01 tot_\cf6 error\cf4 : 7.254694e-01\
+Iteration = 7 Scaled Residual: 3.503771e-02 Max \cf6 error\cf4 : 9.999775e-01 tot_\cf6 error\cf4 : 6.826030e-01\
+Iteration = 8 Scaled Residual: 3.057381e-02 Max \cf6 error\cf4 : 9.999439e-01 tot_\cf6 error\cf4 : 6.403224e-01\
+Iteration = 9 Scaled Residual: 2.705961e-02 Max \cf6 error\cf4 : 9.998668e-01 tot_\cf6 error\cf4 : 5.986329e-01\
+Iteration = 10 Scaled Residual: 2.421843e-02 Max \cf6 error\cf4 : 9.996971e-01 tot_\cf6 error\cf4 : 5.575505e-01\
+Iteration = 11 Scaled Residual: 2.186960e-02 Max \cf6 error\cf4 : 9.993358e-01 tot_\cf6 error\cf4 : 5.170624e-01\
+Iteration = 12 Scaled Residual: 1.988951e-02 Max \cf6 error\cf4 : 9.985891e-01 tot_\cf6 error\cf4 : 4.771648e-01\
+Iteration = 13 Scaled Residual: 1.820320e-02 Max \cf6 error\cf4 : 9.970840e-01 tot_\cf6 error\cf4 : 4.378183e-01\
+Iteration = 14 Scaled Residual: 1.676032e-02 Max \cf6 error\cf4 : 9.941206e-01 tot_\cf6 error\cf4 : 3.989462e-01\
+Iteration = 15 Scaled Residual: 1.554768e-02 Max \cf6 error\cf4 : 9.884135e-01 tot_\cf6 error\cf4 : 3.603623e-01\
+Iteration = 16 Scaled Residual: 1.460286e-02 Max \cf6 error\cf4 : 9.776314e-01 tot_\cf6 error\cf4 : 3.216488e-01\
+Iteration = 17 Scaled Residual: 1.402425e-02 Max \cf6 error\cf4 : 9.575030e-01 tot_\cf6 error\cf4 : 2.818923e-01\
+Iteration = 18 Scaled Residual: 1.392465e-02 Max \cf6 error\cf4 : 9.200318e-01 tot_\cf6 error\cf4 : 2.394839e-01\
+Iteration = 19 Scaled Residual: 1.415007e-02 Max \cf6 error\cf4 : 8.511669e-01 tot_\cf6 error\cf4 : 1.928182e-01\
+Iteration = 20 Scaled Residual: 1.361719e-02 Max \cf6 error\cf4 : 7.363090e-01 tot_\cf6 error\cf4 : 1.448968e-01\
+Iteration = 21 Scaled Residual: 1.077798e-02 Max \cf6 error\cf4 : 5.923874e-01 tot_\cf6 error\cf4 : 1.087575e-01\
+Iteration = 22 Scaled Residual: 7.002171e-03 Max \cf6 error\cf4 : 4.708630e-01 tot_\cf6 error\cf4 : 9.114596e-02\
+Iteration = 23 Scaled Residual: 5.318712e-03 Max \cf6 error\cf4 : 3.768957e-01 tot_\cf6 error\cf4 : 8.213873e-02\
+Iteration = 24 Scaled Residual: 5.646855e-03 Max \cf6 error\cf4 : 2.944021e-01 tot_\cf6 error\cf4 : 7.270558e-02\
+Iteration = 25 Scaled Residual: 4.466583e-03 Max \cf6 error\cf4 : 2.395815e-01 tot_\cf6 error\cf4 : 6.305827e-02\
+Iteration = 26 Scaled Residual: 3.571272e-03 Max \cf6 error\cf4 : 1.991596e-01 tot_\cf6 error\cf4 : 5.697432e-02\
+Iteration = 27 Scaled Residual: 3.550759e-03 Max \cf6 error\cf4 : 1.679948e-01 tot_\cf6 error\cf4 : 5.018634e-02\
+Iteration = 28 Scaled Residual: 2.741925e-03 Max \cf6 error\cf4 : 1.449357e-01 tot_\cf6 error\cf4 : 4.474214e-02\
+Iteration = 29 Scaled Residual: 2.846452e-03 Max \cf6 error\cf4 : 1.262752e-01 tot_\cf6 error\cf4 : 3.884086e-02\
+Iteration = 30 Scaled Residual: 2.332711e-03 Max \cf6 error\cf4 : 1.129202e-01 tot_\cf6 error\cf4 : 3.382959e-02\
+Iteration = 31 Scaled Residual: 2.196570e-03 Max \cf6 error\cf4 : 9.564822e-02 tot_\cf6 error\cf4 : 2.827074e-02\
+Iteration = 32 Scaled Residual: 2.043985e-03 Max \cf6 error\cf4 : 8.251808e-02 tot_\cf6 error\cf4 : 2.396176e-02\
+Iteration = 33 Scaled Residual: 1.617555e-03 Max \cf6 error\cf4 : 6.890872e-02 tot_\cf6 error\cf4 : 1.951261e-02\
+Iteration = 34 Scaled Residual: 1.631729e-03 Max \cf6 error\cf4 : 6.106589e-02 tot_\cf6 error\cf4 : 1.558619e-02\
+Iteration = 35 Scaled Residual: 1.377777e-03 Max \cf6 error\cf4 : 5.614954e-02 tot_\cf6 error\cf4 : 1.241458e-02\
+Iteration = 36 Scaled Residual: 1.095673e-03 Max \cf6 error\cf4 : 4.408835e-02 tot_\cf6 error\cf4 : 9.481816e-03\
+Iteration = 37 Scaled Residual: 9.952353e-04 Max \cf6 error\cf4 : 3.673471e-02 tot_\cf6 error\cf4 : 7.182083e-03\
+Iteration = 38 Scaled Residual: 8.211844e-04 Max \cf6 error\cf4 : 2.951329e-02 tot_\cf6 error\cf4 : 5.550511e-03\
+Iteration = 39 Scaled Residual: 6.184327e-04 Max \cf6 error\cf4 : 2.297169e-02 tot_\cf6 error\cf4 : 4.343368e-03\
+Iteration = 40 Scaled Residual: 4.703485e-04 Max \cf6 error\cf4 : 1.723169e-02 tot_\cf6 error\cf4 : 3.471559e-03\
+Iteration = 41 Scaled Residual: 3.930578e-04 Max \cf6 error\cf4 : 1.181521e-02 tot_\cf6 error\cf4 : 2.826963e-03\
+Iteration = 42 Scaled Residual: 3.335203e-04 Max \cf6 error\cf4 : 7.766572e-03 tot_\cf6 error\cf4 : 2.310206e-03\
+Iteration = 43 Scaled Residual: 2.714100e-04 Max \cf6 error\cf4 : 5.281213e-03 tot_\cf6 error\cf4 : 1.847590e-03\
+Iteration = 44 Scaled Residual: 2.174650e-04 Max \cf6 error\cf4 : 4.731291e-03 tot_\cf6 error\cf4 : 1.439275e-03\
+Iteration = 45 Scaled Residual: 1.729802e-04 Max \cf6 error\cf4 : 4.339838e-03 tot_\cf6 error\cf4 : 1.123701e-03\
+Iteration = 46 Scaled Residual: 1.378083e-04 Max \cf6 error\cf4 : 3.702228e-03 tot_\cf6 error\cf4 : 9.003655e-04\
+Iteration = 47 Scaled Residual: 1.112295e-04 Max \cf6 error\cf4 : 2.870217e-03 tot_\cf6 error\cf4 : 7.280826e-04\
+Iteration = 48 Scaled Residual: 9.045360e-05 Max \cf6 error\cf4 : 2.184791e-03 tot_\cf6 error\cf4 : 5.763364e-04\
+Iteration = 49 Scaled Residual: 7.190977e-05 Max \cf6 error\cf4 : 1.759942e-03 tot_\cf6 error\cf4 : 4.435578e-04\
+Iteration = 50 Scaled Residual: 5.633507e-05 Max \cf6 error\cf4 : 1.734443e-03 tot_\cf6 error\cf4 : 3.418905e-04\
+\
+Starting Benchmarking Phase...\
+Performing 38 CG sets	 expected time:   60.0 seconds	 expected Perf:      47.9 GF (24.0 GF_per)\
+2017-11-10 06:28:20.575\
+progress = 2.7% 	    1.6 /   60.0 sec elapsed 	   58.4 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 5.3% 	    3.2 /   60.0 sec elapsed 	   56.8 sec remain 	    47.908 GF 	 23.954 GF_per\
+progress = 8.0% 	    4.8 /   60.0 sec elapsed 	   55.2 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 10.6% 	    6.4 /   60.0 sec elapsed 	   53.6 sec remain 	    47.911 GF 	 23.956 GF_per\
+progress = 13.3% 	    8.0 /   60.0 sec elapsed 	   52.0 sec remain 	    47.906 GF 	 23.953 GF_per\
+progress = 16.0% 	    9.6 /   60.0 sec elapsed 	   50.4 sec remain 	    47.907 GF 	 23.953 GF_per\
+progress = 18.6% 	   11.2 /   60.0 sec elapsed 	   48.8 sec remain 	    47.908 GF 	 23.954 GF_per\
+progress = 21.3% 	   12.8 /   60.0 sec elapsed 	   47.2 sec remain 	    47.908 GF 	 23.954 GF_per\
+progress = 23.9% 	   14.4 /   60.0 sec elapsed 	   45.6 sec remain 	    47.908 GF 	 23.954 GF_per\
+progress = 26.6% 	   16.0 /   60.0 sec elapsed 	   44.0 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 29.3% 	   17.6 /   60.0 sec elapsed 	   42.4 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 31.9% 	   19.2 /   60.0 sec elapsed 	   40.8 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 34.6% 	   20.7 /   60.0 sec elapsed 	   39.3 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 37.2% 	   22.3 /   60.0 sec elapsed 	   37.7 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 39.9% 	   23.9 /   60.0 sec elapsed 	   36.1 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 42.6% 	   25.5 /   60.0 sec elapsed 	   34.5 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 45.2% 	   27.1 /   60.0 sec elapsed 	   32.9 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 47.9% 	   28.7 /   60.0 sec elapsed 	   31.3 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 50.5% 	   30.3 /   60.0 sec elapsed 	   29.7 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 53.2% 	   31.9 /   60.0 sec elapsed 	   28.1 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 55.9% 	   33.5 /   60.0 sec elapsed 	   26.5 sec remain 	    47.910 GF 	 23.955 GF_per\
+progress = 58.5% 	   35.1 /   60.0 sec elapsed 	   24.9 sec remain 	    47.910 GF 	 23.955 GF_per\
+progress = 61.2% 	   36.7 /   60.0 sec elapsed 	   23.3 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 63.8% 	   38.3 /   60.0 sec elapsed 	   21.7 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 66.5% 	   39.9 /   60.0 sec elapsed 	   20.1 sec remain 	    47.909 GF 	 23.954 GF_per\
+progress = 69.2% 	   41.5 /   60.0 sec elapsed 	   18.5 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 71.8% 	   43.1 /   60.0 sec elapsed 	   16.9 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 74.5% 	   44.7 /   60.0 sec elapsed 	   15.3 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 77.1% 	   46.3 /   60.0 sec elapsed 	   13.7 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 79.8% 	   47.9 /   60.0 sec elapsed 	   12.1 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 82.5% 	   49.5 /   60.0 sec elapsed 	   10.5 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 85.1% 	   51.1 /   60.0 sec elapsed 	    8.9 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 87.8% 	   52.7 /   60.0 sec elapsed 	    7.3 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 90.4% 	   54.3 /   60.0 sec elapsed 	    5.7 sec remain 	    47.909 GF 	 23.955 GF_per\
+progress = 93.1% 	   55.9 /   60.0 sec elapsed 	    4.1 sec remain 	    47.910 GF 	 23.955 GF_per\
+progress = 95.8% 	   57.5 /   60.0 sec elapsed 	    2.5 sec remain 	    47.910 GF 	 23.955 GF_per\
+progress = 98.4% 	   59.1 /   60.0 sec elapsed 	    0.9 sec remain 	    47.909 GF 	 23.955 GF_per\
+\
+Completed Benchmarking Phase... elapsed time:   60.7 seconds\
+2017-11-10 06:29:21.229\
+\
+Number of CG sets:	38\
+Iterations per set:	50\
+scaled res mean:	5.633507e-05\
+scaled res variance:	0.000000e+00\
+\
+Total Time: 6.065260e+01 sec\
+Setup        Overhead: 0.73%\
+Optimization Overhead: 0.74%\
+Convergence  Overhead: 0.00%\
+\
+2x1x1 process grid\
+128x128x128 local domain\
+SpMV  =   38.8 GF ( 244.4 GB/s Effective)   19.4 GF_per ( 122.2 GB/s Effective)\
+SymGS =   52.7 GF ( 407.1 GB/s Effective)   26.4 GF_per ( 203.5 GB/s Effective)\
+total =   48.6 GF ( 368.8 GB/s Effective)   24.3 GF_per ( 184.4 GB/s Effective)\
+final =   47.9 GF ( 363.4 GB/s Effective)   24.0 GF_per ( 181.7 GB/s Effective)\
+\
+end of application...\
+2017-11-10 06:29:21.256\
+ ****** running HPCG binary=xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_8_17 on 4 GPUs *****************************\
+ ****** running HPCG binary=xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_8_17 on 8 GPUs *****************************\
+final =   47.9 GF ( 363.4 GB/s Effective)   24.0 GF_per ( 181.7 GB/s Effective)\
+}

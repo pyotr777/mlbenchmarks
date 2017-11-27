@@ -1,0 +1,9 @@
+Reedbush-L x001. P100x4 2017-11-27_15:16:00
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 4 slots 
+that were requested by the application:
+  ./xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_8_17
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
