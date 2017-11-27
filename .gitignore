@@ -5,5 +5,8 @@
 *.tgz
 *.edf
 *.trc
+HPCG/**/results/
+HPCG/**/results/*
+HPCG/**/*.sh.*
 /Tensorflow-HP/benchmarks/
 
