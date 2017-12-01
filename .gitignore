@@ -5,8 +5,12 @@
 *.tgz
 *.edf
 *.trc
+*.nvvp
+*.png
+*.log
+*.tsv
 HPCG/**/results/
 HPCG/**/results/*
 HPCG/**/*.sh.e*
 /Tensorflow-HP/benchmarks/
-
+/cuda_samples/
