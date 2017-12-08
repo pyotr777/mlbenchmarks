@@ -14,5 +14,6 @@
 HPCG/**/results/
 HPCG/**/results/*
 HPCG/**/*.sh.e*
+/Yoshi/reedbush/dataset/
 /Tensorflow-HP/benchmarks/
 /cuda_samples/
