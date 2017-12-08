@@ -6,7 +6,7 @@
 cd $PBS_O_WORKDIR
 . /etc/profile.d/modules.sh
 module load cuda9/9.0.176 openmpi/1.10.2/gnu
-PROCS=4
+PROCS=2
 DATETIME="$(date +%F_%H:%M:%S)"
 echo "Reedbush-L $(hostname). P100x$PROCS $DATETIME"
 cp hpcg.dat_128x128x128_60 hpcg.dat
