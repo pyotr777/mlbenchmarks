@@ -13,7 +13,8 @@
 *.deb
 HPCG/**/results/
 HPCG/**/results/*
-HPCG/**/*.sh.e*
+HPCG/**/*.sh.*
 /Yoshi/reedbush/dataset/
+Yoshi/**/*.sh.*
 /Tensorflow-HP/benchmarks/
 /cuda_samples/

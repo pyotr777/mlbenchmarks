@@ -17,7 +17,11 @@ sudo apt-get install -y cuda-8-0
 # Use CUDA
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 export PATH="$PATH:/usr/local/cuda/bin"
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $HOME/.bashrc
+echo "export PATH=$PATH" >> $HOME/.bashrc
 
+# Install CUDNN
+sudo dpkg -i libcudnn6_6.0.21-1+cuda8.0_amd64.deb
 
 # Install TF
 pip install -U pip

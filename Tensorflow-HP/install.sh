@@ -9,7 +9,7 @@ fi
 
 remote="$1"
 
-scp _install.sh libcudnn6* $remote:
+scp install_ubuntu.sh libcudnn6* $remote:
 ssh $remote ./install_ubuntu.sh
 
 echo "Installation script finished."
