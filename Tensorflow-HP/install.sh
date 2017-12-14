@@ -8,8 +8,9 @@ if [[ $# -lt 1 ]]; then
 fi
 
 remote="$1"
+INSTALLSCRIPT="ubuntu_install.sh"
 
-scp install_ubuntu.sh libcudnn6* $remote:
-ssh $remote ./install_ubuntu.sh
+scp $INSTALLSCRIPT ../CUDNN7/libcudnn7_* $remote:
+ssh $remote ./$INSTALLSCRIPT
 
 echo "Installation script finished."

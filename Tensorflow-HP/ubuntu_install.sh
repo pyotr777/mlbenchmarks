@@ -7,21 +7,30 @@ set -x
 sudo apt-get update && sudo apt-get install -y git libcupti-dev python-pip python-dev clang
 
 # Install CUDA 8
-if [[ ! -f cuda-repo-ubuntu1604_8.0.61-1_amd64.deb ]]; then
-	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+#if [[ ! -f cuda-repo-ubuntu1604_8.0.61-1_amd64.deb ]]; then
+#	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+#fi
+#sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+#sudo apt-get update
+#sudo apt-get install -y cuda-8-0
+
+# Install CUDA 9 Toolkit
+if [[ ! -f cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb ]]; then
+	wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb
+	mv cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 fi
-sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 sudo apt-get update
-sudo apt-get install -y cuda-8-0
+sudo apt-get install -y --allow-unauthenticated cuda
 
 # Use CUDA
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 export PATH="$PATH:/usr/local/cuda/bin"
-echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $HOME/.bashrc
-echo "export PATH=$PATH" >> $HOME/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:\$LD_LIBRARY_PATH" >> $HOME/.bashrc
+echo "export PATH=\$PATH:/usr/local/cuda/bin" >> $HOME/.bashrc
 
-# Install CUDNN
-sudo dpkg -i libcudnn6_6.0.21-1+cuda8.0_amd64.deb
+# Install CUDNN 7
+sudo dpkg -i libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb
 
 # Install TF
 pip install -U pip

@@ -19,4 +19,4 @@ sudo apt-get update
 sudo apt-get install -y --allow-unauthenticated cuda
 sudo ln -s  /usr/local/cuda-9.0 /usr/local/cuda
 echo "export PATH=/usr/local/cuda/bin/:$PATH" >> $HOME/.bashrc
-echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib:$LD_LIBRARY_PATH" >> $HOME/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> $HOME/.bashrc
