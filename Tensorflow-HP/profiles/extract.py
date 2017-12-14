@@ -5,9 +5,9 @@
 import re
 import numpy as np
 
-file = "M60_dram_flop.log"
-metric = "flop_sp_efficiency"
-
+file = "M60_dram_flop_wgrad_alg0_engine.log"
+metric = "dram_utilization"
+print file, metric
 
 avg_value = "([0-9\.]+)[\)\%]+$"
 avg_value_giga = "([0-9\.]+)GB/s$"
@@ -16,7 +16,7 @@ avg_value_kilo = "([0-9\.]+)KB/s$"
 avg_value_ = "([0-9\.]+)B/s$"
 
 patterns = [re.compile(avg_value), re.compile(avg_value_giga), re.compile(avg_value_mega), re.compile(avg_value_kilo), re.compile(avg_value_)]
-multiplayers = [1, 1, 1E+3, 1E+6, 1E+9]
+dividers = [1, 1, 1E+3, 1E+6, 1E+9]
 
 pattern = re.compile(metric)
 picked_values=[]
@@ -24,12 +24,16 @@ picked_values=[]
 for i, line in enumerate(open(file)):
     match = pattern.search(line)
     if match:
-        print line
+        print line,
         for m, pattern2 in enumerate(patterns):
             match2 = pattern2.findall(line)
             if len(match2) > 0 :
-                print match2[0], multiplayers[m]
-                picked_values.append(float(match2[0]) / float(multiplayers[m]))
+                print match2[0],
+                if (dividers[m] != 1):
+                    print "/",dividers[m]
+                else:
+                    print ""
+                picked_values.append(float(match2[0]) / float(dividers[m]))
                 break
 
 print picked_values
