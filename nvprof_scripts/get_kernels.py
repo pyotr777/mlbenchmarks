@@ -3,7 +3,7 @@
 import csv
 import re
 
-print "v.45"
+print "v.46"
 
 def parseKernaleName(name):
     end = name.find("<")
@@ -13,12 +13,16 @@ def parseKernaleName(name):
     if start >=0:
         start += 1
         name = name[start:]
+    start = name.rfind(" ")
+    if start >=0:
+        start += 1
+        name = name[start:]
     return name
 
 activation_pattern = re.compile("GPU activities", re.IGNORECASE)
 
 kernels = []
-threshold = 1
+threshold = 4
 
 filename = "nvprof.log"
 
