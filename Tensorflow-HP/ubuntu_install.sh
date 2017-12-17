@@ -30,7 +30,8 @@ echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:\$LD_LIBRARY_PATH" >> $HOME/.
 echo "export PATH=\$PATH:/usr/local/cuda/bin" >> $HOME/.bashrc
 
 # Install CUDNN 7
-sudo dpkg -i libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb
+#sudo dpkg -i libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb
+sudo dpkg -i libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb
 
 # Install TF
 pip install -U pip
