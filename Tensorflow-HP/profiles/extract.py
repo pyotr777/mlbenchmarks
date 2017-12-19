@@ -8,7 +8,7 @@ import csv
 
 print "v.03"
 
-filename = "nvprof_kernel.dram_write_throughput.log"
+filename = "computeBOffsetsKernel_dram.log"
 
 print "Reading",filename
 
