@@ -1,0 +1,157 @@
+31 templated_functions_MULTI_TAUGPU_TIME
+# Name Calls Subrs Excl Incl ProfileCalls # <metadata><attribute><name>Metric Name</name><value>TAUGPU_TIME</value></attribute><attribute><name>CPU Cores</name><value>8</value></attribute><attribute><name>CPU MHz</name><value>2701.242</value></attribute><attribute><name>CPU Type</name><value>Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz</value></attribute><attribute><name>CPU Vendor</name><value>GenuineIntel</value></attribute><attribute><name>CWD</name><value>/home/ubuntu/benchmarks/scripts/tf_cnn_benchmarks</value></attribute><attribute><name>Cache Size</name><value>46080 KB</value></attribute><attribute><name>Command Line</name><value>python tf_cnn_benchmarks.py --num_gpus=1 --batch_size=32 --model=resnet50 --num_batches=3 --num_warmup_batches=1</value></attribute><attribute><name>Ending Timestamp</name><value>1513566154202703</value></attribute><attribute><name>Executable</name><value>/usr/bin/python2.7</value></attribute><attribute><name>Hostname</name><value>ip-172-31-59-213</value></attribute><attribute><name>Local Time</name><value>2017-12-18T03:02:03+00:00</value></attribute><attribute><name>Memory Size</name><value>125827876 kB</value></attribute><attribute><name>Node Name</name><value>ip-172-31-59-213</value></attribute><attribute><name>OMP_CHUNK_SIZE</name><value>1</value></attribute><attribute><name>OMP_DYNAMIC</name><value>off</value></attribute><attribute><name>OMP_MAX_THREADS</name><value>16</value></attribute><attribute><name>OMP_NESTED</name><value>off</value></attribute><attribute><name>OMP_NUM_PROCS</name><value>16</value></attribute><attribute><name>OMP_SCHEDULE</name><value>UNKNOWN</value></attribute><attribute><name>OS Machine</name><value>x86_64</value></attribute><attribute><name>OS Name</name><value>Linux</value></attribute><attribute><name>OS Release</name><value>4.4.0-1041-aws</value></attribute><attribute><name>OS Version</name><value>#50-Ubuntu SMP Wed Nov 15 22:18:17 UTC 2017</value></attribute><attribute><name>Starting Timestamp</name><value>1513566121634647</value></attribute><attribute><name>TAU Architecture</name><value>default</value></attribute><attribute><name>TAU Config</name><value> -arch=x86_64 -prefix=/home/ubuntu/TAU -openmp -cuda=/usr/local/cuda -bfd=download</value></attribute><attribute><name>TAU Makefile</name><value>/home/ubuntu/TAU/x86_64/lib/Makefile.tau-cupti-openmp</value></attribute><attribute><name>TAU Version</name><value>2.27-git</value></attribute><attribute><name>TAU_BFD_LOOKUP</name><value>on</value></attribute><attribute><name>TAU_CALLPATH</name><value>off</value></attribute><attribute><name>TAU_CALLPATH_DEPTH</name><value>2</value></attribute><attribute><name>TAU_CALLSITE_DEPTH</name><value>1</value></attribute><attribute><name>TAU_COMPENSATE</name><value>off</value></attribute><attribute><name>TAU_CUDA_BINARY_EXE</name><value></value></attribute><attribute><name>TAU_CUPTI_API</name><value>runtime</value></attribute><attribute><name>TAU_EBS_KEEP_UNRESOLVED_ADDR</name><value>off</value></attribute><attribute><name>TAU_IBM_BG_HWP_COUNTERS</name><value>off</value></attribute><attribute><name>TAU_MAX_THREADS</name><value>128</value></attribute><attribute><name>TAU_MEASURE_TAU</name><value>off</value></attribute><attribute><name>TAU_MEMDBG_PROTECT_ABOVE</name><value>off</value></attribute><attribute><name>TAU_MEMDBG_PROTECT_BELOW</name><value>off</value></attribute><attribute><name>TAU_MEMDBG_PROTECT_FREE</name><value>off</value></attribute><attribute><name>TAU_OPENMP_RUNTIME</name><value>on</value></attribute><attribute><name>TAU_OPENMP_RUNTIME_EVENTS</name><value>on</value></attribute><attribute><name>TAU_OPENMP_RUNTIME_STATES</name><value>off</value></attribute><attribute><name>TAU_OUTPUT_CUDA_CSV</name><value>off</value></attribute><attribute><name>TAU_PAPI_MULTIPLEXING</name><value>off</value></attribute><attribute><name>TAU_PROFILE</name><value>on</value></attribute><attribute><name>TAU_PROFILE_FORMAT</name><value>profile</value></attribute><attribute><name>TAU_SAMPLING</name><value>off</value></attribute><attribute><name>TAU_SHOW_MEMORY_FUNCTIONS</name><value>off</value></attribute><attribute><name>TAU_SIGNALS_GDB</name><value>off</value></attribute><attribute><name>TAU_THROTTLE</name><value>on</value></attribute><attribute><name>TAU_THROTTLE_NUMCALLS</name><value>100000</value></attribute><attribute><name>TAU_THROTTLE_PERCALL</name><value>10</value></attribute><attribute><name>TAU_TRACE</name><value>off</value></attribute><attribute><name>TAU_TRACE_FORMAT</name><value>tau</value></attribute><attribute><name>TAU_TRACK_CUDA_CDP</name><value>off</value></attribute><attribute><name>TAU_TRACK_CUDA_INSTRUCTIONS</name><value></value></attribute><attribute><name>TAU_TRACK_CUDA_SASS</name><value>off</value></attribute><attribute><name>TAU_TRACK_HEADROOM</name><value>off</value></attribute><attribute><name>TAU_TRACK_HEAP</name><value>on</value></attribute><attribute><name>TAU_TRACK_IO_PARAMS</name><value>off</value></attribute><attribute><name>TAU_TRACK_MEMORY_FOOTPRINT</name><value>off</value></attribute><attribute><name>TAU_TRACK_MEMORY_LEAKS</name><value>on</value></attribute><attribute><name>TAU_TRACK_SIGNALS</name><value>off</value></attribute><attribute><name>TAU_TRACK_UNIFIED_MEMORY</name><value>off</value></attribute><attribute><name>Timestamp</name><value>1513566123418595</value></attribute><attribute><name>UTC Time</name><value>2017-12-18T03:02:03Z</value></attribute><attribute><name>pid</name><value>74581</value></attribute><attribute><name>tid</name><value>74581</value></attribute><attribute><name>username</name><value>ubuntu</value></attribute></metadata>
+".TAU application" 1 35393 15167390 19283360 0 GROUP="TAU_USER" 
+"cudaGetDevice" 66 0 140 140 0 GROUP="TAU_USER" 
+"cudaFree" 2 0 8 8 0 GROUP="TAU_USER" 
+"cudaGetDeviceProperties" 1 0 137 137 0 GROUP="TAU_USER" 
+"cudaGetDeviceCount" 1 0 39 39 0 GROUP="TAU_USER" 
+"cudaConfigureCall" 4761 0 11142 11142 0 GROUP="TAU_USER" 
+"cudaSetupArgument" 21161 0 35644 35644 0 GROUP="TAU_USER" 
+"cudaLaunch" 4761 14283 378117 1827604 0 GROUP="TAU_USER" 
+"cudaEventCreate" 4774 0 40578 40578 0 GROUP="TAU_USER" 
+"cudaEventSynchronize" 4761 0 24301 24301 0 GROUP="TAU_USER" 
+"cudaDeviceSynchronize" 4762 0 1384770 1384770 0 GROUP="TAU_USER" 
+"cudaMemcpyAsync" 273 0 7504 7504 0 GROUP="TAU_USER" 
+"cudaDeviceGetAttribute" 90 0 202 202 0 GROUP="TAU_USER" 
+"cudaMalloc" 4 0 445 445 0 GROUP="TAU_USER" 
+"cudaMemcpy" 1 0 35 35 0 GROUP="TAU_USER" 
+"cudaEventCreateWithFlags" 25 0 143 143 0 GROUP="TAU_USER" 
+"cudaFuncGetAttributes" 64 0 341 341 0 GROUP="TAU_USER" 
+"cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags" 64 0 183 183 0 GROUP="TAU_USER" 
+"cudaPeekAtLastError" 64 0 154 154 0 GROUP="TAU_USER" 
+"cudaStreamCreateWithFlags" 8 0 2218140 2218140 0 GROUP="TAU_USER" 
+"cudaDeviceGetStreamPriorityRange" 1 0 22 22 0 GROUP="TAU_USER" 
+"cudaStreamCreateWithPriority" 1 0 78 78 0 GROUP="TAU_USER" 
+"cudaMemsetAsync" 97 0 1262 1262 0 GROUP="TAU_USER" 
+"cudaHostAlloc" 1 0 691 691 0 GROUP="TAU_USER" 
+"cudaHostGetDevicePointer" 1 0 18 18 0 GROUP="TAU_USER" 
+"cudaEventRecord" 1133 0 4184 4184 0 GROUP="TAU_USER" 
+"cudaBindTexture" 164 0 1127 1127 0 GROUP="TAU_USER" 
+"cudaGetLastError" 2114 0 4580 4580 0 GROUP="TAU_USER" 
+"cudaUnbindTexture" 164 0 933 933 0 GROUP="TAU_USER" 
+"cudaStreamWaitEvent" 344 0 897 897 0 GROUP="TAU_USER" 
+"cudaEventDestroy" 13 0 155 155 0 GROUP="TAU_USER" 
+0 aggregates
+121 userevents
+# eventname numevents max min mean sumsqr
+"Heap Memory Used (KB) at Entry" 49677 1554968.310546875 627387.884765625 1469803.40861872 1.100970896277761E+17
+"Heap Memory Used (KB) at Entry : .TAU application" 1 627387.884765625 627387.884765625 627387.884765625 393615557950.6852
+"Heap Memory Used (KB) at Entry : cudaGetDevice" 66 1553344.271484375 855697.9609375 1204343.554746686 103749074969015
+"Heap Memory Used (KB) at Exit" 49676 1554968.349609375 627387.884765625 1469834.40494852 1.100983753148394E+17
+"Heap Memory Used (KB) at Exit : cudaGetDevice" 66 1553344.271484375 855697.9609375 1204343.554746686 103749074969015
+"Increase in Heap Memory (KB)" 10078 687346.03125 0.0078125 69.19734731205969 472466069138.0526
+"Bytes copied from Host to Device" 1 112 112 112 12544
+"Heap Memory Used (KB) at Entry : cudaFree" 2 1543482.712890625 1543323.220703125 1543402.966796875 4764185448553.67
+"Heap Allocate" 789950 11775920 1 1112.128747389075 1471876906045466
+"Heap Memory Used (KB)" 1087541 1554968.951171875 627388.541015625 1261814.710156906 1.795356455376876E+18
+"Heap Free" 296569 11775920 2 525.0713392161689 465754139123816
+"Heap Memory Used (KB) at Exit : cudaFree" 2 1543482.712890625 1543323.220703125 1543402.966796875 4764185448553.67
+"Heap Allocate : .TAU application" 70436 114688 4 44.51672440229428 23512042302
+"Heap Free : .TAU application" 67455 233288 3 48.97518345563709 118639389243
+"Heap Memory Used (KB) at Entry : cudaGetDeviceProperties" 1 627388.541015625 627388.541015625 627388.541015625 393616381397.7146
+"Heap Memory Used (KB) at Exit : cudaGetDeviceProperties" 1 627388.541015625 627388.541015625 627388.541015625 393616381397.7146
+"Heap Memory Used (KB) at Entry : cudaGetDeviceCount" 1 627387.884765625 627387.884765625 627387.884765625 393615557950.6852
+"Heap Memory Used (KB) at Exit : cudaGetDeviceCount" 1 627387.884765625 627387.884765625 627387.884765625 393615557950.6852
+"Heap Memory Used (KB) at Entry : cudaConfigureCall" 4761 1554967.896484375 627448.0185546875 1459767.686617586 1.04410843612863E+16
+"Heap Allocate : cudaConfigureCall" 6 552 16 226.6666666666667 628864
+"Heap Memory Used (KB) at Exit : cudaConfigureCall" 4761 1554967.896484375 627448.6513671875 1459767.687006898 1.044108436508448E+16
+"Increase in Heap Memory (KB) : cudaConfigureCall" 10 0.6328125 0.0078125 0.2197265625 1.049577713012695
+"Heap Memory Used (KB) at Entry : cudaSetupArgument" 21161 1554967.896484375 627448.6513671875 1480994.498796845 4.742165857275303E+16
+"Heap Allocate : cudaSetupArgument" 10 4720 8 631.2 23061824
+"Heap Memory Used (KB) at Exit : cudaSetupArgument" 21161 1554967.896484375 627448.6982421875 1480994.499046189 4.742165858789561E+16
+"Increase in Heap Memory (KB) : cudaSetupArgument" 26 4.2265625 0.0078125 0.2530048076923077 18.5294189453125
+"Heap Memory Used (KB) at Entry : cudaLaunch" 4761 1554967.896484375 627448.6982421875 1459767.688038432 1.044108438002555E+16
+"Heap Allocate : cudaLaunch" 9571 4194304 1 1797.028001253788 70368770851645
+"Heap Memory Used (KB) at Entry : cudaLaunch => cudaEventCreate" 4761 1554967.896484375 627448.70703125 1459767.688081917 1.044108438034324E+16
+"Heap Allocate : cudaLaunch => cudaEventCreate" 14275 49192 24 128.8641681260946 2687198080
+"Heap Memory Used (KB) at Exit : cudaLaunch => cudaEventCreate" 4761 1554968.263671875 627449.07421875 1459768.065542297 1.044108963455186E+16
+"Increase in Heap Memory (KB) : cudaLaunch => cudaEventCreate" 4761 49.890625 0.1640625 0.3774603795814955 3130.948861122131
+"Heap Memory Used (KB) at Entry : cudaLaunch => cudaEventSynchronize" 4761 1554968.310546875 627449.12109375 1459768.112249921 1.044109028394279E+16
+"Heap Memory Used (KB) at Exit : cudaLaunch => cudaEventSynchronize" 4761 1554968.310546875 627449.12109375 1459768.112222641 1.044109028363847E+16
+"Heap Memory Used (KB) at Entry : cudaLaunch => cudaDeviceSynchronize" 4761 1554968.310546875 627449.12109375 1459768.112170746 1.044109028262034E+16
+"Heap Memory Used (KB) at Exit : cudaLaunch => cudaDeviceSynchronize" 4761 1554968.310546875 627449.12109375 1459768.113406371 1.044109029538231E+16
+"Heap Memory Used (KB) at Exit : cudaLaunch" 4761 1554968.349609375 627449.9091796875 1459769.391099436 1.044110909116209E+16
+"Increase in Heap Memory (KB) : cudaLaunch" 4758 4571.9453125 0.02734375 1.704388907497898 21499171.59840965
+"Heap Memory Used (KB) at Entry : cudaMemcpyAsync" 273 1553355.37890625 627449.9169921875 640197.0962897779 114573762857757.2
+"Heap Allocate : cudaMemcpyAsync" 1641 48 8 30.62522851919561 1799808
+"Heap Memory Used (KB) at Exit : cudaMemcpyAsync" 273 1553355.86328125 627450.1044921875 640197.2882540637 114573835887026.7
+"Increase in Heap Memory (KB) : cudaMemcpyAsync" 273 3.03125 0.1796875 0.1919642857142857 18.2537841796875
+"Heap Free : cudaSetupArgument" 8 392 8 93 183360
+"Decrease in Heap Memory (KB)" 214 0.6240234375 0.0078125 0.05939690420560748 2.882335662841797
+"Decrease in Heap Memory (KB) : cudaLaunch => cudaDeviceSynchronize" 6 0.203125 0.0390625 0.1002604166666667 0.07867431640625
+"Heap Memory Used (KB) at Entry : cudaDeviceGetAttribute" 90 1553344.271484375 855697.9609375 1187820.434505208 137826701714291.8
+"Heap Memory Used (KB) at Exit : cudaDeviceGetAttribute" 90 1553344.271484375 855697.9609375 1187820.434505208 137826701714291.8
+"Heap Memory Used (KB) at Entry : cudaMalloc" 4 1543392.408203125 1543314.720703125 1543370.791015625 9527973598445.887
+"Heap Allocate : cudaMalloc" 44 448 4 128.8181818181818 1030800
+"Heap Memory Used (KB) at Exit : cudaMalloc" 4 1543393.228515625 1543317.396484375 1543372.174804688 9527990683858.852
+"Increase in Heap Memory (KB) : cudaMalloc" 4 2.67578125 0.8203125 1.3837890625 9.990982055664062
+"Heap Memory Used (KB) at Entry : cudaMemcpy" 1 1543388.384765625 1543388.384765625 1543388.384765625 2382047706229.445
+"Bytes copied from Host to Device : cudaMemcpy" 1 112 112 112 12544
+"Heap Allocate : cudaMemcpy" 3 48 16 29.33333333333333 3136
+"Heap Memory Used (KB) at Exit : cudaMemcpy" 1 1543388.470703125 1543388.470703125 1543388.470703125 2382047971499.331
+"Increase in Heap Memory (KB) : cudaMemcpy" 1 0.0859375 0.0859375 0.0859375 0.00738525390625
+"Heap Memory Used (KB) at Entry : cudaDeviceSynchronize" 1 1543388.470703125 1543388.470703125 1543388.470703125 2382047971499.331
+"Heap Memory Used (KB) at Exit : cudaDeviceSynchronize" 1 1543388.470703125 1543388.470703125 1543388.470703125 2382047971499.331
+"Heap Memory Used (KB) at Entry : cudaEventCreateWithFlags" 25 1543395.626953125 1543317.396484375 1543366.075234375 59549471086265.56
+"Heap Allocate : cudaEventCreateWithFlags" 50 168 160 164 1345600
+"Heap Memory Used (KB) at Exit : cudaEventCreateWithFlags" 25 1543395.947265625 1543317.716796875 1543366.395546875 59549495804240.42
+"Increase in Heap Memory (KB) : cudaEventCreateWithFlags" 25 0.3203125 0.3203125 0.3203125 2.56500244140625
+"Heap Memory Used (KB) at Entry : cudaFuncGetAttributes" 64 1553344.271484375 855697.9609375 1204490.731018066 100634587234479
+"Heap Memory Used (KB) at Exit : cudaFuncGetAttributes" 64 1553344.271484375 855697.9609375 1204490.731018066 100634587234479
+"Heap Memory Used (KB) at Entry : cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags" 64 1553344.271484375 855697.9609375 1204490.731018066 100634587234479
+"Heap Memory Used (KB) at Exit : cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags" 64 1553344.271484375 855697.9609375 1204490.731018066 100634587234479
+"Heap Memory Used (KB) at Entry : cudaPeekAtLastError" 64 1553345.177734375 855698.5625 1204491.419387817 100634693717314.6
+"Heap Memory Used (KB) at Exit : cudaPeekAtLastError" 64 1553345.177734375 855698.5625 1204491.419387817 100634693717314.6
+"Decrease in Heap Memory (KB) : cudaSetupArgument" 16 0.328125 0.0078125 0.08135986328125 0.2031793594360352
+"Increase in Heap Memory (KB) : cudaLaunch => cudaDeviceSynchronize" 9 3.3046875 0.015625 0.7204861111111112 14.4996337890625
+"Decrease in Heap Memory (KB) : cudaConfigureCall" 6 0.078125 0.0078125 0.05729166666666666 0.0238037109375
+"Decrease in Heap Memory (KB) : cudaLaunch => cudaEventSynchronize" 4 0.2861328125 0.046875 0.167236328125 0.1473627090454102
+"Decrease in Heap Memory (KB) : cudaLaunch" 3 0.6240234375 0.1748046875 0.4029947916666667 0.5881900787353516
+"Increase in Heap Memory (KB) : cudaLaunch => cudaEventSynchronize" 8 0.125 0.015625 0.0673828125 0.04840087890625
+"Heap Memory Used (KB) at Entry : cudaStreamCreateWithFlags" 8 1543309.986328125 855944.607421875 1457380.709960938 17405068710973.63
+"Heap Allocate : cudaStreamCreateWithFlags" 693647 11775920 2 1234.436456872156 1401481904918783
+"Heap Free : cudaStreamCreateWithFlags" 228652 11775920 2 666.5088125185872 465635495952621
+"Heap Memory Used (KB) at Exit : cudaStreamCreateWithFlags" 8 1543312.353515625 1543290.638671875 1543301.678222656 19054240560512.98
+"Increase in Heap Memory (KB) : cudaStreamCreateWithFlags" 8 687346.03125 2.3671875 85920.96826171875 472444566754.4277
+"Heap Memory Used (KB) at Entry : cudaDeviceGetStreamPriorityRange" 1 1543312.353515625 1543312.353515625 1543312.353515625 2381813020513.938
+"Heap Memory Used (KB) at Exit : cudaDeviceGetStreamPriorityRange" 1 1543312.353515625 1543312.353515625 1543312.353515625 2381813020513.938
+"Heap Memory Used (KB) at Entry : cudaStreamCreateWithPriority" 1 1543312.353515625 1543312.353515625 1543312.353515625 2381813020513.938
+"Heap Allocate : cudaStreamCreateWithPriority" 21 272 8 115.4285714285714 386240
+"Heap Memory Used (KB) at Exit : cudaStreamCreateWithPriority" 1 1543314.720703125 1543314.720703125 1543314.720703125 2381820327138.965
+"Increase in Heap Memory (KB) : cudaStreamCreateWithPriority" 1 2.3671875 2.3671875 2.3671875 5.60357666015625
+"Heap Memory Used (KB) at Entry : cudaMemsetAsync" 97 1554885.275390625 1543317.396484375 1550515.593568782 233198220793337.6
+"Heap Memory Used (KB) at Exit : cudaMemsetAsync" 97 1554885.314453125 1543317.396484375 1550515.603716978 233198223845306
+"Heap Memory Used (KB) at Entry : cudaHostAlloc" 1 1543320.279296875 1543320.279296875 1543320.279296875 2381837484488.984
+"Heap Allocate : cudaHostAlloc" 27 1024 4 169.9259259259259 1919952
+"Heap Free : cudaHostAlloc" 2 1024 552 788 1353280
+"Heap Memory Used (KB) at Exit : cudaHostAlloc" 1 1543323.220703125 1543323.220703125 1543323.220703125 2381846563561.467
+"Increase in Heap Memory (KB) : cudaHostAlloc" 1 2.94140625 2.94140625 2.94140625 8.651870727539062
+"Heap Memory Used (KB) at Entry : cudaHostGetDevicePointer" 1 1543323.220703125 1543323.220703125 1543323.220703125 2381846563561.467
+"Heap Memory Used (KB) at Exit : cudaHostGetDevicePointer" 1 1543323.220703125 1543323.220703125 1543323.220703125 2381846563561.467
+"Heap Memory Used (KB) at Entry : cudaEventRecord" 1133 1554963.841796875 1543483.162109375 1549337.328716281 2719718303011590
+"Heap Memory Used (KB) at Exit : cudaEventRecord" 1133 1554963.841796875 1543483.162109375 1549337.328716281 2719718303011590
+"Heap Memory Used (KB) at Entry : cudaBindTexture" 164 1554885.314453125 1543483.927734375 1548169.582144388 393081650550094.3
+"Heap Allocate : cudaBindTexture" 154 24 24 24 88704
+"Heap Memory Used (KB) at Exit : cudaBindTexture" 164 1554885.337890625 1543483.951171875 1548169.604152773 393081661725784.5
+"Increase in Heap Memory (KB) : cudaBindTexture" 154 0.0234375 0.0234375 0.0234375 0.0845947265625
+"Heap Memory Used (KB) at Entry : cudaGetLastError" 2114 1554967.876953125 1543485.063476562 1549986.108050127 5078819036578006
+"Heap Memory Used (KB) at Exit : cudaGetLastError" 2114 1554967.876953125 1543485.063476562 1549986.108061214 5078819036650820
+"Heap Memory Used (KB) at Entry : cudaUnbindTexture" 164 1554885.791015625 1543485.063476562 1548170.072730088 393081899647279.8
+"Heap Free : cudaUnbindTexture" 164 24 16 23.70731707317073 92544
+"Heap Memory Used (KB) at Exit : cudaUnbindTexture" 164 1554885.767578125 1543485.040039062 1548170.049578411 393081887890894.4
+"Decrease in Heap Memory (KB) : cudaUnbindTexture" 164 0.0234375 0.015625 0.02315167682926829 0.0882568359375
+"Heap Memory Used (KB) at Entry : cudaStreamWaitEvent" 344 1549542.407226562 1543501.521484375 1548573.62865927 824940402625075.8
+"Heap Memory Used (KB) at Exit : cudaStreamWaitEvent" 344 1549542.407226562 1543501.521484375 1548573.62865927 824940402625075.8
+"Heap Free : cudaLaunch" 249 1024 16 26.47389558232932 1423104
+"Heap Memory Used (KB) at Entry : cudaEventCreate" 13 1549533.961914062 1548493.340820312 1549011.811448317 31192690934161.27
+"Heap Allocate : cudaEventCreate" 39 168 48 125.3333333333333 729664
+"Heap Memory Used (KB) at Exit : cudaEventCreate" 13 1549534.329101562 1548493.708007812 1549012.178635817 31192705722385.16
+"Increase in Heap Memory (KB) : cudaEventCreate" 13 0.3671875 0.3671875 0.3671875 1.75274658203125
+"Heap Memory Used (KB) at Entry : cudaEventDestroy" 13 1549537.500976562 1548495.557617188 1549014.589618389 31192802831009.43
+"Heap Free : cudaEventDestroy" 39 168 48 125.3333333333333 729664
+"Heap Memory Used (KB) at Exit : cudaEventDestroy" 13 1549537.133789062 1548495.190429688 1549014.222430889 31192788042762.52
+"Decrease in Heap Memory (KB) : cudaEventDestroy" 13 0.3671875 0.3671875 0.3671875 1.75274658203125
+"Heap Allocate : cudaMemsetAsync" 26 40 8 38.76923076923077 40064
+"Increase in Heap Memory (KB) : cudaMemsetAsync" 25 0.046875 0.0390625 0.039375 0.038818359375
+"Increase in Heap Memory (KB) : cudaGetLastError" 1 0.0390625 0.0390625 0.0390625 0.00152587890625
+"Decrease in Heap Memory (KB) : cudaGetLastError" 2 0.0078125 0.0078125 0.0078125 0.0001220703125
