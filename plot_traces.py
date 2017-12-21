@@ -7,13 +7,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import os.path
-#import sys
+import datetime
+from cycler import cycler
 
-print "v.37"
+print "v.0.57"
 
 min_duration = 0.0002
-maxrows = 10000
-
+maxrows = 500000
+subplots = 6
 
 # Class object for information about series (E.g. "CUDA memcpy HtoD Pageble Device")
 # Name and index are defined on an instance creation (in __init__ function),
@@ -24,8 +25,7 @@ class Series:
     durations = []
     values = []
     index = 0   # column index
-    axis = 1    # Plot axis (1 or 2)
-    subplot = 1 # Subplot number (1 or 2)
+    subplot = 1 # Subplot number
 
     def __init__(self, name, index = 0):
         self.name = name
@@ -33,7 +33,6 @@ class Series:
         self.values = []
         self.timestamps = []
         self.durations = []
-        axis = 1
         subplot = 1
 
     def fill(self,timestamp, duration, value):
@@ -44,7 +43,7 @@ class Series:
         self.values.append(value)
 
     def printme(self):
-        print "name=",self.name,"length",len(self.timestamps),"plot",self.subplot,"axis",self.axis
+        print "name=",self.name,"length",len(self.timestamps),"plot",self.subplot
         # for i, val in enumerate(self.timestamps):
         #     print self.timestamps[i],self.values[i]
 
@@ -63,11 +62,10 @@ def getSeriesByName(series_arr, name, index):
 # Returns an array of Series class instances,
 # where for existing names existing instances are used,
 # and for new names new instances are created.
-def getSeriesArray(series_arr, names, indexes, axes, subplots):
+def getSeriesArray(series_arr, names, indexes, subplots):
     new_series = []
     for i, val in enumerate(names):
         series = getSeriesByName(series_arr,names[i], indexes[i])
-        series.axis = axes[i]
         series.subplot = subplots[i]
         new_series.append(series)
     return new_series
@@ -80,11 +78,10 @@ def getCudaSeries(series_arr, line):
     base_name = line[name_field_index]+" "+line[src_field_index] +line[dst_field_index]
     names = [ base_name + " Throughput(GB/s)"]
     col_indexes = [throughput_field_index]
-    axes = [1]
-    if line[name_field_index].find("DtoD") > 0:
-        axes = [2]
     subplots = [1]
-    return getSeriesArray(series_arr,names,col_indexes, axes, subplots)
+    if line[name_field_index].find("DtoD") > 0 or line[name_field_index].find("memset") > 0:
+        subplots = [2]
+    return getSeriesArray(series_arr,names,col_indexes, subplots)
 
 
 # Returns an array of Series class instances
@@ -95,9 +92,8 @@ def getKernelSeries(series_arr, line):
     base_name = "Stream" + line[stream_index] # Put all kernels in one series
     names = [base_name + " Static SMem(KB)", base_name + " Dynamic SMem(B)"]
     col_indexes = [SSMem_field_index, DSMem_field_index]
-    axes = [1,2]
-    subplots = [2,2]
-    return getSeriesArray(series_arr,names,col_indexes, axes, subplots)
+    subplots = [3,3]
+    return getSeriesArray(series_arr,names,col_indexes, subplots)
 
 # Save data from CSV file record
 # to Series class instance.
@@ -121,7 +117,6 @@ print "Reading",file1,file2
 
 
 series_arr1 = [] # Array of Series class instances
-
 
 
 # Reading nvprof trace
@@ -149,7 +144,6 @@ with open(filename, "rb") as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
         if rowcounter > maxrows:
-            csvfile.close()
             # print len(series_arr1)
             for series in series_arr1:
                 series.printme()
@@ -170,7 +164,7 @@ with open(filename, "rb") as csvfile:
         rowcounter += 1
     csvfile.close()
 
-print "CUDA array length", len(series_arr1)
+print "nvprof array length", len(series_arr1)
 # print series_arr1
 
 img_name = trace_dir+".pdf"
@@ -182,92 +176,118 @@ fig_size = plt.rcParams["figure.figsize"]
 fig_size[0] = 15
 fig_size[1] = 10
 plt.rcParams["figure.figsize"] = fig_size
-fig = plt.figure()
-ax11 = fig.add_subplot(311)
-ax11.set_title("nvprof "+trace_dir + " memory throughput")
-ax12 = ax11.twinx()
-ax21 = fig.add_subplot(312)
-ax22 = ax21.twinx()
-ax21.set_title("nvprof "+trace_dir + " Shared memory")
-colors=[["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"],
-    ["#9fe0b6","#00ae42","#cde67e","#20d2c4","#00aac7","#0055bb"]]
-color_index = [0,0]
+
+fig, axarr = plt.subplots(subplots,sharex=True)
+#fig.subplots_adjust(hspace=0)
+axarr[0].set_title("nvprof "+trace_dir)
+
+# colors=[["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"],
+#     ["#9fe0b6","#00ae42","#cde67e","#20d2c4","#00aac7","#0055bb"]]
+#colors=["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"]
+colors=["#39a6f4","#fdb94c","#49dd4c","#6bd5de","#f78ae6","#ff5000"]
+art = []
+
+rightax = axarr[2].twinx()
+rightax.set_prop_cycle(cycler('color',colors))
+
 for series in series_arr1:
     x = np.array(series.timestamps, dtype = float)
     y = np.array(series.values, dtype = float)
     w = np.array(series.durations, dtype = float)
     #print series.name,x,y, w
-    #ax.scatter(x,y,s=0.5,alpha=0.5,label=series.name)
-    #ax.plot(x,y,linewidth=0.5,alpha=0.5,label=series.name)
-
-    if series.subplot == 1:
-        if series.axis == 1:
-            axis = ax11
-            color = colors[0][color_index[0]]
-            color_index[0] += 1
-            if color_index[0] >= 6:
-                color_index[0] = 0
-        else:
-            axis = ax12
-            print color_index[1]
-            color = colors[1][color_index[1]]
-            color_index[1] += 1
-            if color_index[1] >= 6:
-                color_index[1] = 0
+    #axarr.scatter(x,y,s=0.5,alpha=0.5,label=series.name)
+    #axarr.plot(x,y,linewidth=0.5,alpha=0.5,label=series.name)
+    if series.name.find("Dynamic") > 0:
+        axis = rightax
     else:
-        if series.axis == 1:
-            axis = ax21
-            color = colors[0][color_index[0]]
-            color_index[0] += 1
-            if color_index[0] >= 6:
-                color_index[0] = 0
-        else:
-            axis = ax22
-            color = colors[1][color_index[1]]
-            color_index[1] += 1
-            if color_index[1] >= 6:
-                color_index[1] = 0
+        axis = axarr[series.subplot-1]
+    axis.bar(x,y,w,alpha=0.9,label=series.name)
 
-    axis.bar(x,y,w,color=color,alpha=0.9,label=series.name)
 
-ax11.legend(loc="upper left")
-ax12.legend(loc="upper right")
-ax21.legend(loc="upper left")
-ax22.legend(loc="upper right")
-ax11.set_yscale('log')
-ax12.set_yscale('log')
-ax21.set_yscale('log')
-ax22.set_yscale('log')
-plt.savefig(img_name)
+for axis in axarr:
+    axis.legend()
+    axis.xaxis.grid(color="#e0e0e0", linestyle="--",linewidth=0.5)
+    axis.xaxis.set_major_locator(plt.MaxNLocator(24))
+
+right_legend = rightax.legend(loc = 'upper left', bbox_to_anchor=(1.02,1))
+art.append(right_legend)
+
+# Creates an array of Series instances
+def parseSeriesNames(line):
+    skip_columns = 2 # Skip first 2 columns
+    columns = line[skip_columns:]
+    print columns
+    series = [None for i in range(len(columns))]
+    for i,title in enumerate(columns):
+        series[i] = Series(title,i+skip_columns)
+    return series
+
+start = 0
+# Parse date from readable format to seconds
+def parseTime(date_time):
+    global start
+    dt_obj = datetime.datetime.strptime(date_time, "%Y/%m/%d %H:%M:%S.%f")
+    seconds = 0
+    if start == 0:
+        start = dt_obj
+    else:
+        seconds = (dt_obj - start).total_seconds()
+    return seconds
+
+pat = re.compile("[0-9\.]+")
+# Extract float number from a string
+def parseFloat(str):
+    global pat
+    f = pat.search(str)
+    if f is not None:
+        d = float(f.group())
+        return d
+    return None
+
 
 # Reading nvidia-smi trace
 # File must be of the following format:
 #   first line - column titles,
 #   first column - timestamps.
 
-# filename = file1
-# series_arr2 = []
-# time_field_index = 0
-# mem_total_field_index = 2
-# mem_used_field_index = 3
-# gpu_util_field_index = 4
-# mem_util_field_index = 4
-# SM_clock_field_index = 6
+filename = file1
+series_arr2 = []
+time_field_index = 0
 
-# with open(filename, "rb") as csvfile:
-#     reader = csv.reader(csvfile)
-#     titles = reader.next()
-#     series_arr2 = parseSeriesNames(titles) # array of instances of class Series
-#     for line in reader:
-#         timestamp = parseTime(line[time_field_index])
-#         for series in series_arr2:
-#             fillSeries(series,line)
+with open(filename, "rb") as csvfile:
+    reader = csv.reader(csvfile)
+    titles = reader.next()
+    series_arr2 = parseSeriesNames(titles) # array of instances of class Series
+    rowcounter=1
+    for line in reader:
+        timestamp = parseTime(line[time_field_index])
+        for series in series_arr2:
+            series.timestamps.append(timestamp)
+            series.values.append(parseFloat(line[series.index]))
+            series.subplot = 4
+            if series.name.find("utilization") >= 0:
+                series.subplot = 5
+            elif series.name.find("clocks") >= 0:
+                series.subplot = 6
+        if rowcounter > maxrows:
+            break
+        rowcounter += 1
 
-#     csvfile.close()
+    csvfile.close()
 
-# plotSeries(series_arr1, series_arr2)
+print "nvidia-smi array length", len(series_arr2)
+for series in series_arr2:
+    x = np.array(series.timestamps, dtype = float)
+    y = np.array(series.values, dtype = float)
+    axis = axarr[series.subplot-1]
+    axis.plot(x,y,alpha=0.9,label=series.name)
+
+axarr[3].set_title("nvidia-smi "+trace_dir)
+
+for axis in axarr:
+    axis.legend()
 
 
-
+plt.savefig(img_name, bbox_extra_artists=art, bbox_inches='tight')
 
 
