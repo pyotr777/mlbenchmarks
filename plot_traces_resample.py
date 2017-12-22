@@ -107,6 +107,7 @@ with open(filename, "rb") as csvfile:
                     #end = pd.to_datetime(float(line[0]) + float(line[1]), unit='s')
                     # df.loc[start] = [float(line[throughput_field_index]), float(line[size_field_index]), float(line[duration_field_index])]
                     # Do not store size and duration
+                    print float(line[throughput_field_index])
                     df.loc[start] = [float(line[throughput_field_index])]
                 else:
                     #series_arr = getKernelSeries(series_arr1,line)
