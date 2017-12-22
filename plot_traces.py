@@ -4,15 +4,17 @@
 
 import re
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import csv
 import os.path
 import datetime
 from cycler import cycler
 
-print "v.0.57"
+print "v.0.58"
 
-min_duration = 0.0002
+min_duration = 0.001
 maxrows = 500000
 subplots = 6
 
