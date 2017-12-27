@@ -13,7 +13,7 @@ import datetime
 from cycler import cycler
 import pandas as pd
 
-print "v.0.60"
+print "v.0.70"
 
 trace_dir = "Tensorflow-HP"
 filename1 = "nvidia-smi-tfhp.csv"
@@ -24,7 +24,6 @@ filename2 = "nvprof-trace-tfhp.csv"
 
 img_name = trace_dir+".pdf"
 
-min_duration = 0.001
 maxrows = 500
 subplots = 6
 
@@ -37,7 +36,7 @@ class extDataFrame(pd.DataFrame):
     subplot = 1 # subplot number
     axis = 1 # Y-axis number (1 or 2)
 
-    def __init__(self,name,columns, index = 0, subplot = 1, axis = 1):
+    def __init__(self, name, columns, index = 0, subplot = 1, axis = 1):
         self.name = name
         self.index = index
         self.subplot = subplot
@@ -67,10 +66,8 @@ file2 = os.path.join(trace_dir,filename2)
 print "Reading",file1,file2
 
 
-dataframes = [] # Array of DataFrames class instances
-
-
 # Reading nvprof trace
+
 filename = file2
 title_pattern = re.compile("^(Start|s).*")
 cuda_pattern = re.compile("\[CUDA .*\]")
@@ -88,7 +85,7 @@ dst_field_index = 14
 context_index = 16
 stream_index = 17
 
-
+dataframes = [] # Array of DataFrames class instances
 rowcounter = 1
 
 with open(filename, "rb") as csvfile:
@@ -102,24 +99,41 @@ with open(filename, "rb") as csvfile:
                 if cuda_pattern.search(line[name_field_index]) is not None:
                     #print line
                     name = line[name_field_index]+" "+line[src_field_index] +line[dst_field_index]
+                    name = name.replace("CUDA memcpy ","")
+                    name = name.replace("CUDA ","")
                     df = getDataframe(name)
                     start = pd.to_datetime(line[0], unit='s')
-                    #end = pd.to_datetime(float(line[0]) + float(line[1]), unit='s')
-                    # df.loc[start] = [float(line[throughput_field_index]), float(line[size_field_index]), float(line[duration_field_index])]
                     # Do not store size and duration
-                    print float(line[throughput_field_index])
+                    #print float(line[throughput_field_index])
                     df.loc[start] = [float(line[throughput_field_index])]
-                else:
-                    #series_arr = getKernelSeries(series_arr1,line)
-                    #print len(line)
-                    #print line[name_field_index]
-                    print "kernel:",line
-                # Fill series instance with corresponding fields of the CSV file line
         rowcounter += 1
     csvfile.close()
 
 print "nvprof array length", len(dataframes)
+print "dataframes:"
+for df in dataframes:
+    print df.name
 
+
+# colors=[["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"],
+#     ["#9fe0b6","#00ae42","#cde67e","#20d2c4","#00aac7","#0055bb"]]
+#colors=["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"]
+colors=["#39a6f4","#fdb94c","#49dd4c","#6bd5de","#f78ae6","#ff5000"]
+
+# Concatenate array of dataframes into one dataframe
+dataframe = []
+dataframe = dataframes[0]['Throughput']
+max_ =  dataframe.max()
+column_names = [dataframes[0].name + " "+ str(max_)]
+for df in dataframes[1:]:
+    print df['Throughput'].max()
+    max_ = df['Throughput'].max()
+    column_names.append(df.name + " "+ str(max_))
+    df = df['Throughput']
+    
+    dataframe = pd.concat([dataframe,df], axis=1)
+
+dataframe.columns = column_names
 
 plt.interactive(False)
 #plt.style.use('ggplot')
@@ -129,17 +143,12 @@ fig, axarr = plt.subplots(subplots,sharex=True)
 #fig.subplots_adjust(hspace=0)
 axarr[0].set_title("nvprof "+trace_dir)
 
-# colors=[["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"],
-#     ["#9fe0b6","#00ae42","#cde67e","#20d2c4","#00aac7","#0055bb"]]
-#colors=["#f9ea62","#ce8900","#ffad74","#ff9015","#ff5000","#95361d"]
-colors=["#39a6f4","#fdb94c","#49dd4c","#6bd5de","#f78ae6","#ff5000"]
-art = []
+# Box plot for nvprof dataframes
+dataframe.plot.box(logy=True,rot=45)
 
-rightax = axarr[2].twinx()
-rightax.set_prop_cycle(cycler('color',colors))
 
 for df in dataframes:
-    sum_ms = df.Throughput.resample("ms").sum()
+    sum_ms = df.Throughput.resample("1000ms").sum()
     print sum_ms.shape
     #axarr.scatter(x,y,s=0.5,alpha=0.5,label=series.name)
     #axarr.plot(x,y,linewidth=0.5,alpha=0.5,label=series.name)
@@ -147,8 +156,6 @@ for df in dataframes:
         axis = rightax
     else:
         axis = axarr[sum_ms.subplot-1]
-
-
 
     # TODO:
     axis.plot(x,y,w,alpha=0.9,label=series.name)
