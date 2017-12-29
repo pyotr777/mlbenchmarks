@@ -13,7 +13,7 @@ import datetime
 from cycler import cycler
 import pandas as pd
 
-print "v.0.75"
+print "v.0.80"
 
 trace_dir = "Tensorflow-HP"
 filename1 = "nvidia-smi-tfhp.csv"
@@ -22,7 +22,7 @@ filename2 = "nvprof-trace-tfhp.csv"
 # filename1 = "nvidia-smi-hpcg.csv"
 # filename2 = "nvprof-trace-hpcg.csv"
 
-img_name = trace_dir+".pdf"
+img_name = trace_dir
 
 maxrows = 5000
 subplots = 5
@@ -61,6 +61,12 @@ def getDataframe(name, subplot = 1):
     print "Dataframe "+name+" created."
     dataframes.append(df_n)
     return df_n
+
+
+# Save current plot to a file
+def saveFig(img_name):
+    print "saveing to "+ img_name
+    plt.savefig(img_name, bbox_inches='tight')
 
 
 file1 = os.path.join(trace_dir,filename1)
@@ -138,16 +144,17 @@ plt.interactive(False)
 plt.rcParams['figure.figsize'] = 20,15
 
 # Plot BOX chart
-fig, axarr = plt.subplots(subplots)
+fig, axis = plt.subplots(1)
 
-axarr[0].set_title("nvprof "+trace_dir)
-axis = axarr[0]
+axis.set_title("nvprof "+trace_dir)
 # Box plot for nvprof dataframes
 dataframe.plot.box(logy=True,rot=45, ax = axis)
 axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
+saveFig(img_name+"_box.pdf")
+
 
 # Plot BAR chart
-fig, axarr = plt.subplots(subplots,sharex=True)
+fig, axarr = plt.subplots(3, sharex = True)
 axarr[0].set_title("nvprof "+trace_dir)
 for df in dataframes:
     axis = axarr[df.subplot-1]
@@ -177,6 +184,7 @@ axis = axarr[2]
 resampled.plot.bar(stacked=True,logy=True, ax = axis)
 axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
 
+saveFig(img_name+"_nvprof.pdf")
 
 start = 0
 # Parse date from readable format to seconds
@@ -219,17 +227,17 @@ print columns
 for column in columns:
     smi_data[smi_data.columns[column]] = smi_data[smi_data.columns[column]].apply(parseFloat)
 
+fig, axarr = plt.subplots(3)
 sub = smi_data.iloc[:,[2,3]]
-print sub[:2]
-axis = axarr[3]
+
+axis = axarr[0]
 sub.plot(ax = axis)
+axis.set_title("nvidia-smi "+trace_dir)
 
 axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
 axis.xaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
 axis.xaxis.set_major_locator(plt.MaxNLocator(24))
 
-
-print "saveing to "+ img_name
-plt.savefig(img_name, bbox_inches='tight')
+saveFig(img_name+"_smi.pdf")
 
 
