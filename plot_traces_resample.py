@@ -14,7 +14,7 @@ from cycler import cycler
 import pandas as pd
 import matplotlib.ticker as ticker
 
-print "v.0.87"
+print "v.0.90"
 
 trace_dir = "Tensorflow-HP"
 filename1 = "nvidia-smi-tfhp.csv"
@@ -125,10 +125,11 @@ for df in dataframes:
 
 colors=["#5988c7","#e3a94d","#8db763","#7aced4","#8e92ea","#ce63a1"]
 
-# Concatenate array of dataframes into one dataframe.
+# Concatenate array of dataframes into several dataframe - one for each subplot.
 # Throughput column of each dataframe will be distinct column in the new dataframe.
-dataframe = []
-dataframe = dataframes[0]['Throughput']
+dataframe_con = []
+...
+dataframe_con[dataframes.subplot] = dataframes[0]['Throughput']
 max_ =  dataframe.max()
 column_names = [dataframes[0].name + " "+ str(max_)]
 for df in dataframes[1:]:
@@ -155,7 +156,8 @@ saveFig(img_name+"_box.pdf")
 
 
 # Plot LINE charts
-fig, axarr = plt.subplots(2, sharex = True)
+plot_resampled = False
+fig, axarr = plt.subplots(2) #, sharex = True)
 axarr[0].set_title("nvprof "+trace_dir)
 for df in dataframes:
     axis = axarr[df.subplot-1]
@@ -164,12 +166,13 @@ for df in dataframes:
     #print x,y
     axis.plot(x,y,alpha=0.9,label=df.name) #,drawstyle="steps-post")
     
-    resampled = df.resample("500ms").max()
-    x = np.array(resampled.index, dtype = float)
-    y = np.array(resampled.iloc[:,0], dtype = float)
-    #print x,y
-    axis.plot(x,y,alpha=0.5,label=df.name+"_res",linestyle="--")
-    
+    if (plot_resampled):
+        resampled = df.resample("500ms").max()
+        x = np.array(resampled.index, dtype = float)
+        y = np.array(resampled.iloc[:,0], dtype = float)
+        #print x,y
+        axis.plot(x,y,alpha=0.5,label=df.name+"_res",linestyle="--")
+        
 
 for axis in axarr:
     axis.legend()
@@ -180,16 +183,17 @@ axarr[1].set_yscale('log')
 saveFig(img_name+"_nvprof.pdf")
 
 # Plot BAR chart
-fig, axis = plt.subplots(1)
+fig, axes = plt.subplots(2, sharex = True)
 resampled = dataframe.resample("200ms").max()
 resampled = resampled.fillna(0)
-resampled.plot.bar(stacked=True,logy=True)
-ax = plt.gca()
-ax.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
+axis = axes[0]
+resampled.plot.bar(stacked=True, ax = axis) #,logy=True) log scale causes distortions on stacked bar.
+#ax = plt.gca()
+axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
 
 ticklabels = ['']*len(resampled.index)
 ticklabels[::2] = [item.strftime('%M:%S.%f') for item in resampled.index[::2]]
-ax.xaxis.set_major_formatter(ticker.FixedFormatter(ticklabels))
+axis.xaxis.set_major_formatter(ticker.FixedFormatter(ticklabels))
 plt.gcf().autofmt_xdate()
 
 saveFig(img_name+"_bar.pdf")
