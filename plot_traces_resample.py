@@ -12,8 +12,9 @@ import os.path
 import datetime
 from cycler import cycler
 import pandas as pd
+import matplotlib.ticker as ticker
 
-print "v.0.80"
+print "v.0.87"
 
 trace_dir = "Tensorflow-HP"
 filename1 = "nvidia-smi-tfhp.csv"
@@ -122,7 +123,7 @@ print "dataframes:"
 for df in dataframes:
     print df.name,df.shape
 
-colors=["#39a6f4","#fdb94c","#49dd4c","#6bd5de","#f78ae6","#ff5000"]
+colors=["#5988c7","#e3a94d","#8db763","#7aced4","#8e92ea","#ce63a1"]
 
 # Concatenate array of dataframes into one dataframe.
 # Throughput column of each dataframe will be distinct column in the new dataframe.
@@ -153,20 +154,17 @@ axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
 saveFig(img_name+"_box.pdf")
 
 
-# Plot BAR chart
-fig, axarr = plt.subplots(3, sharex = True)
+# Plot LINE charts
+fig, axarr = plt.subplots(2, sharex = True)
 axarr[0].set_title("nvprof "+trace_dir)
 for df in dataframes:
     axis = axarr[df.subplot-1]
     x = np.array(df.index, dtype = float)
     y = np.array(df.loc[:,'Throughput'], dtype = float)
     #print x,y
-    axis.plot(x,y,alpha=0.9,label=df.name,drawstyle="steps-post")
+    axis.plot(x,y,alpha=0.9,label=df.name) #,drawstyle="steps-post")
     
     resampled = df.resample("500ms").max()
-    print resampled.shape
-    #axis = axarr[df.subplot-1+2]
-    #print resampled
     x = np.array(resampled.index, dtype = float)
     y = np.array(resampled.iloc[:,0], dtype = float)
     #print x,y
@@ -179,12 +177,22 @@ for axis in axarr:
     axis.xaxis.set_major_locator(plt.MaxNLocator(24))
 axarr[0].set_yscale('log')
 axarr[1].set_yscale('log')
-
-axis = axarr[2]
-resampled.plot.bar(stacked=True,logy=True, ax = axis)
-axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
-
 saveFig(img_name+"_nvprof.pdf")
+
+# Plot BAR chart
+fig, axis = plt.subplots(1)
+resampled = dataframe.resample("200ms").max()
+resampled = resampled.fillna(0)
+resampled.plot.bar(stacked=True,logy=True)
+ax = plt.gca()
+ax.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
+
+ticklabels = ['']*len(resampled.index)
+ticklabels[::2] = [item.strftime('%M:%S.%f') for item in resampled.index[::2]]
+ax.xaxis.set_major_formatter(ticker.FixedFormatter(ticklabels))
+plt.gcf().autofmt_xdate()
+
+saveFig(img_name+"_bar.pdf")
 
 start = 0
 # Parse date from readable format to seconds
