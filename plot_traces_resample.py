@@ -7,82 +7,27 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import csv
+#import csv
 import os.path
 import datetime
 from cycler import cycler
 import pandas as pd
 import matplotlib.ticker as ticker
+import sys
 
-print "v.0.90"
-
-trace_dir = "Tensorflow-HP"
-filename1 = "nvidia-smi-tfhp.csv"
-filename2 = "nvprof-trace-tfhp.csv"
-# trace_dir = "HPCG"
-# filename1 = "nvidia-smi-hpcg.csv"
-# filename2 = "nvprof-trace-hpcg.csv"
-
-img_name = trace_dir
-
-maxrows = 5000
-subplots = 5
-
-# Class object for information about series (E.g. "CUDA memcpy HtoD Pageble Device")
-# Name and index are defined on an instance creation (in __init__ function),
-# timestamp and value are filled later.
-class extDataFrame(pd.DataFrame):
-    name = ""
-    csv_index = 0 # column index
-    subplot = 1 # subplot number
-    axis = 1 # Y-axis number (1 or 2)
-
-    def __init__(self, name, columns, subplot = 1, index = 0, axis = 1):
-        self.name = name
-        self.subplot = subplot
-        self.csv_index = index
-        self.axis = axis
-        super(extDataFrame,self).__init__(columns=columns)
-
-    def __str__(self):
-        s = "DataFrame "+self.name+"\n"
-        s = s+ super(extDataFrame,self).__str__()+"\n"
-        return s
+print "v.0.95"
 
 
-# Search dataframes list.
-# Returns existing element if name is found,
-# a new element appended to the list otherwise.
-def getDataframe(name, subplot = 1):
-    global dataframes
-    for df in dataframes:
-        if df.name == name:
-            return df
-    df_n = extDataFrame(name,["Throughput"],subplot = subplot)
-    print "Dataframe "+name+" created."
-    dataframes.append(df_n)
-    return df_n
+trace_dir1 = "Tensorflow-HP" 
+trace_dir2 = "HPCG"
+#filename1 = "nvidia-smi-tfhp.csv"
+filename1 = "nvprof-trace-tfhp.csv"
+#filename2 = "nvidia-smi-hpcg.csv"
+filename2 = "nvprof-trace-hpcg.csv"
 
+maxrows = None
 
-# Save current plot to a file
-def saveFig(img_name):
-    print "saveing to "+ img_name
-    plt.savefig(img_name, bbox_inches='tight')
-
-
-file1 = os.path.join(trace_dir,filename1)
-file2 = os.path.join(trace_dir,filename2)
-
-
-# Reading nvprof trace
-
-filename = file2
-print "Reading",filename
-title_pattern = re.compile("^(Start|s).*")
-cuda_pattern = re.compile("\[CUDA .*\]")
-# Column indexes
-# nvprof trace file
-name_field_index = 18
+# nvidia-smi trace format
 time_field_index = 0
 duration_field_index = 1
 SSMem_field_index = 9
@@ -93,6 +38,116 @@ src_field_index = 13
 dst_field_index = 14
 context_index = 16
 stream_index = 17
+name_field_index = 18
+
+file1 = os.path.join(trace_dir1,filename1)
+file2 = os.path.join(trace_dir2,filename2)
+
+print "Reading",file1,file2
+
+columns = [time_field_index, duration_field_index,
+           SSMem_field_index, DSMem_field_index,
+           size_field_index, throughput_field_index,
+           src_field_index, dst_field_index,
+           context_index, stream_index,
+           name_field_index]
+
+
+# Save current plot to a file
+def saveFig(img_name):
+    print "saveing to "+ img_name
+    plt.savefig(img_name, bbox_inches='tight')
+
+
+# Convert unique values in column "FullName" to new columns
+def mergeColumnNames(df_org):
+    df = df_org.pivot(index = 'Start', columns = 'FullName', 
+                         values = 'Throughput')
+    df = df.fillna(0)  # Fill empty cells with 0-s
+    return df
+
+
+# Add max values to column names
+def appendMaxValues2ColumnNames(df,series):
+    cols = len(df.columns)
+    col_names = []
+    for i in range(0,cols):
+        col_names.append(series+df.columns[i]+" " +'{:.3f}'.format(df.iloc[:,i].max()))
+    df.columns = col_names
+    return df
+
+
+# Plot BOX plot of DataFrame columns
+# and save to an image file
+def boxPlotDF( df, imgname):
+    # To remove zero values need to split DataFrame into Series (they will have different lengths)
+    # Convert columns to Series and add to a list
+    # Create list of column names
+    x_arr = []
+    names = []
+    for column in df: 
+        x = df[column]
+        x = x[x != 0]
+        print '{:46.44} {:8.8} '.format(column, x.shape),
+        arr = x.values
+        print '{:6d}'.format(len(arr)),
+        x_arr.append(arr)
+        names.append(column)
+        print '{:3d}'.format(len(x_arr))
+
+    # BOX plot of memcpy operations
+    plt.interactive(False)
+    plt.rcParams['figure.figsize'] = 12,8
+    fig, axis = plt.subplots(1)
+    axis.boxplot(x_arr, 0, '', labels = names)
+    plt.xticks(rotation=90)
+    #ax = plt.gca()
+    #ax.set_yscale("log")
+    axis.yaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
+    saveFig(imgname)
+
+
+# Reading nvprof trace
+print file1
+df_tf = pd.read_csv(file1, header = 0, usecols = columns, 
+                 skiprows=[0,1,2,4], nrows = maxrows)
+print df_tf.shape
+print file2
+df_hpcg = pd.read_csv(file2, header = 0, usecols = columns, 
+                 skiprows=[0,1,2,4], nrows = maxrows)
+print df_hpcg.shape
+
+# Select columns with memory operations
+df_tf_cuda = df_tf.loc[df_tf['Name'].str.contains('\[CUDA')]
+df_hpcg_cuda = df_hpcg.loc[df_hpcg['Name'].str.contains('\[CUDA')]
+
+df_tf_cuda['FullName'] = df_tf_cuda['Name'] + " " + df_tf_cuda['SrcMemType']+df_tf_cuda['DstMemType'].fillna("")
+df_hpcg_cuda['FullName'] = df_hpcg_cuda['Name'] + " " + df_hpcg_cuda['SrcMemType']+df_hpcg_cuda['DstMemType'].fillna("")
+
+df_tf_throughput = mergeColumnNames(df_tf_cuda)
+df_hpcg_throughput = mergeColumnNames(df_hpcg_cuda)
+
+df_tf_throughput = appendMaxValues2ColumnNames(df_tf_throughput,"TF")
+df_hpcg_throughput = appendMaxValues2ColumnNames(df_hpcg_throughput,"HPCG")
+
+plt.rcParams['figure.figsize'] = 12,8
+
+# Concatenate columns of two DFs into one DF
+df_full = pd.concat([df_tf_throughput,df_hpcg_throughput], axis = 1).fillna(0)
+
+# Remove "memset" columns
+df_memcpy = df_full.filter(regex=("^((?!memset).)*$"))
+df_DH = df_memcpy.filter(regex=(".*(HtoD|DtoH).*"))
+
+boxPlotDF(df_memcpy, "memcpy_box.pdf")
+boxPlotDF(df_DH, "memcpy_DHHD_box.pdf")
+
+sys.exit()
+
+
+
+
+
 
 dataframes = [] # Array of DataFrames class instances
 rowcounter = 1
@@ -128,7 +183,7 @@ colors=["#5988c7","#e3a94d","#8db763","#7aced4","#8e92ea","#ce63a1"]
 # Concatenate array of dataframes into several dataframe - one for each subplot.
 # Throughput column of each dataframe will be distinct column in the new dataframe.
 dataframe_con = []
-...
+#...
 dataframe_con[dataframes.subplot] = dataframes[0]['Throughput']
 max_ =  dataframe.max()
 column_names = [dataframes[0].name + " "+ str(max_)]
@@ -141,7 +196,7 @@ for df in dataframes[1:]:
 
 dataframe.columns = column_names
 
-plt.interactive(False)
+
 #plt.style.use('ggplot')
 plt.rcParams['figure.figsize'] = 20,15
 
