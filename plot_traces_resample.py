@@ -15,7 +15,7 @@ import pandas as pd
 import matplotlib.ticker as ticker
 import sys
 
-print "v.0.95"
+print "v.0.98"
 
 
 trace_dir1 = "Tensorflow-HP" 
@@ -90,7 +90,6 @@ def boxPlotDF( df, imgname):
         x = x[x != 0]
         print '{:46.44} {:8.8} '.format(column, x.shape),
         arr = x.values
-        print '{:6d}'.format(len(arr)),
         x_arr.append(arr)
         names.append(column)
         print '{:3d}'.format(len(x_arr))
@@ -138,9 +137,30 @@ df_full = pd.concat([df_tf_throughput,df_hpcg_throughput], axis = 1).fillna(0)
 # Remove "memset" columns
 df_memcpy = df_full.filter(regex=("^((?!memset).)*$"))
 df_DH = df_memcpy.filter(regex=(".*(HtoD|DtoH).*"))
+df_DD = df_memcpy.filter(regex=(".*DtoD.*"))
 
-boxPlotDF(df_memcpy, "memcpy_box.pdf")
+boxPlotDF(df_DD, "memcpy_DD_box.pdf")
 boxPlotDF(df_DH, "memcpy_DHHD_box.pdf")
+
+
+# Plot memory operation profiles
+df_DD_TF = df_DD.filter(regex=("^TF.*"))
+df_DD_HPCG = df_DD.filter(regex=("^HPCG.*"))
+
+df_DH_TF = df_DH.filter(regex=("^TF.*"))
+df_DH_HPCG = df_DH.filter(regex=("^HPCG.*"))
+
+plt.rcParams['figure.figsize'] = 14,12
+fig, axarr = plt.subplots(4)
+df_DD_TF.plot(drawstyle="steps-post",linewidth=0.5,alpha=0.7,ax = axarr[0])
+df_DD_HPCG.plot(drawstyle="steps-post",linewidth=0.5,alpha=0.7,ax = axarr[1])
+df_DH_TF.plot(drawstyle="steps-post",linewidth=0.5,alpha=0.7,ax = axarr[2])
+df_DH_HPCG.plot(drawstyle="steps-post",linewidth=0.5,alpha=0.7,ax = axarr[3])
+for axis in axarr:
+    axis.legend()
+    axis.xaxis.grid(color="#e0e0e0", linestyle=":",linewidth=0.5)
+    axis.xaxis.set_major_locator(plt.MaxNLocator(24))
+saveFig("memcpy_graph.pdf")
 
 sys.exit()
 
