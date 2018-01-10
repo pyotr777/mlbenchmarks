@@ -5,7 +5,6 @@
 *.tgz
 *.edf
 *.trc
-*.nvvp
 *.png
 *.pdf
 *.log

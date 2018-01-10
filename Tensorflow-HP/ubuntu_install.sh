@@ -3,6 +3,8 @@
 # Install required packages to run Tensorflow and TF HP benchmark.
 # Execute on remote machine whete TF will be installed.
 set -x
+TF_PIP="tf-nightly-gpu"
+#TF_PIP="tf"
 
 sudo apt-get update && sudo apt-get install -y git libcupti-dev python-pip python-dev clang
 
@@ -35,7 +37,7 @@ sudo dpkg -i libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb
 
 # Install TF
 pip install -U pip
-pip install --user tf-nightly-gpu
+pip install --user $TF_PIP
 
 INSTALL_FROM_SOURCE=""
 
