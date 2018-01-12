@@ -15,7 +15,7 @@ if [[ $# -lt 1 ]]; then
 fi
 
 echo "Installing Chainer and Cifar100 benchmark on $1"
-FILES=("install_ubuntu.sh" "../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run.sh")
+FILES=("install_ubuntu.sh" "../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run.sh" "../comb_profile.sh")
 for F in ${FILES[@]}; do
 	echo "Copying $F"
 	scp $F $1:
@@ -23,3 +23,4 @@ done
 
 set -ex
 ssh $1 ./install_ubuntu.sh
+echo "Installation finished. Login with ssh $1 and run ./run.sh"
