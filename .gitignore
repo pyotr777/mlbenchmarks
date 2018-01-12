@@ -10,6 +10,7 @@
 *.log
 *.tsv
 *.deb
+*.nvvp
 HPCG/**/results/
 HPCG/**/results/*
 HPCG/**/*.sh.*

@@ -7,10 +7,13 @@ if [[ $# -lt 1 ]]; then
     exit 1
 fi
 
-remote="$1"
 INSTALLSCRIPT="ubuntu_install.sh"
 
-scp $INSTALLSCRIPT ../CUDNN7/libcudnn7_* $remote:
-ssh $remote ./$INSTALLSCRIPT
+FILES=("$INSTALLSCRIPT" "../CUDNN7/libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb" "run.sh" "../comb_profile.sh")
+for F in ${FILES[@]}; do
+	echo "Copying $F"
+	scp $F $1:
+done
+ssh $1 ./$INSTALLSCRIPT
 
 echo "Installation script finished."

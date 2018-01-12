@@ -1,2 +1,0 @@
-==44903== NVPROF is profiling process 44903, command: python train_cifar.py -d cifar100 -g 0 -b 1024 -e 2
-==44903== Profiling application: python train_cifar.py -d cifar100 -g 0 -b 1024 -e 2
