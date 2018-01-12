@@ -13,7 +13,7 @@
 HPCG/**/results/
 HPCG/**/results/*
 HPCG/**/*.sh.*
-/Yoshi/reedbush/dataset/
-Yoshi/**/*.sh.*
+/Chainer/reedbush/dataset/
+Chainer/**/*.sh.*
 /Tensorflow-HP/benchmarks/
 /cuda_samples/

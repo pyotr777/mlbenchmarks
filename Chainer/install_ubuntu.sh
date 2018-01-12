@@ -20,6 +20,9 @@ if [[ ! -a /usr/local/cuda/include/cudnn.h ]]; then
 	sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so /usr/local/cuda/lib64/libcudnn.so
 fi
 
+# Install nvprof
+sudo apt-get install nvidia-profiler
+
 # Install python pakcages
 pip install -U pip
 pip install -U --user cupy chainer
@@ -29,7 +32,9 @@ set +e
 git clone https://github.com/chainer/chainer
 
 # Download CIFAR dataset and test Chainer
-cd chainer/examples/cifar
-set -x
-python train_cifar.py -d cifar100 -g 0 -b 1024 -e 1
+cd chainer
+git checkout v4.0.0b2
+echo "Installation finished. Login with ssh $1 and run ./run.sh"
+#set -x
+#python train_cifar.py -d cifar100 -g 0 -b 1024 -e 1
 
