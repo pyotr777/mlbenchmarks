@@ -24,10 +24,16 @@ if [[ ! -a /usr/local/cuda/include/cudnn.h ]]; then
 	sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so /usr/local/cuda/lib64/libcudnn.so
 fi
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
-export PATH="$PATH:/usr/local/cuda/bin"
-echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:\$LD_LIBRARY_PATH" >> $HOME/.bashrc
-echo "export PATH=\$PATH:/usr/local/cuda/bin" >> $HOME/.bashrc
+cudainpath=$(echo $PATH | grep -i cuda)
+if [[ -z "$cudainpath" ]];then
+	export PATH="$PATH:/usr/local/cuda/bin"
+	echo "export PATH=\$PATH:/usr/local/cuda/bin" >> $HOME/.bashrc
+fi
+cudainldpath=$(echo $LD_LIBRARY_PATH | grep -i cuda/lib64)
+if [[ -z "$cudainldpath" ]]; then
+	export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+	echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:\$LD_LIBRARY_PATH" >> $HOME/.bashrc
+fi
 
 # Install python pakcages
 pip install -U pip
