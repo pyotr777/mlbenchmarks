@@ -17,7 +17,8 @@ fi
 ADDRESS=$1
 shift
 
-INSTALLER="ubuntu_install_chainer.sh"
+INSTALLERS=( "../ubuntu_install_cuda9cudnn7.sh" "install_chainer.sh" )
+FILES=("../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run_cifar.sh" "../comb_profile.sh")
 
 function copy_files {
 	FILES=$1
@@ -43,13 +44,13 @@ function copy_files {
 }
 
 echo "Installing Chainer and Cifar100 benchmark on $ADDRESS"
-FILES=("$INSTALLER" "../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run_cifar.sh" "../comb_profile.sh")
 
-#REMOTE_FILES=$(ssh $ADDRESS ls -1 2>/dev/null)
-#echo "Remote files: ${REMOTE_FILES[@]}"
 copy_files $FILES $ADDRESS
+copy_files $INSTALLERS $ADDRESS
 
 
 set -ex
-ssh $ADDRESS ./$INSTALLER
+for INSTALLER in ${INSTALLER[@]}; do
+	ssh $ADDRESS ./$INSTALLER
+done
 echo "Installation finished. Login with ssh $ADDRESS and run ./run.sh"

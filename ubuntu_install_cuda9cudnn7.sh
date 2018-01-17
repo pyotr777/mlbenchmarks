@@ -14,7 +14,6 @@ sudo dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 sudo apt-get update
 sudo apt-get install -y --allow-unauthenticated cuda
 
-
 # Install CUDNN
 sudo dpkg -i libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb
 # If not installed libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb Cupy complains "cuDNN is not enabled"
@@ -23,7 +22,7 @@ if [[ ! -a /usr/local/cuda/include/cudnn.h ]]; then
 	sudo ln -s /usr/include/cudnn.h /usr/local/cuda/include/cudnn.h
 	sudo ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so /usr/local/cuda/lib64/libcudnn.so
 fi
-
+set +e
 cudainpath=$(echo $PATH | grep -i cuda)
 if [[ -z "$cudainpath" ]];then
 	export PATH="$PATH:/usr/local/cuda/bin"
@@ -34,17 +33,4 @@ if [[ -z "$cudainldpath" ]]; then
 	export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 	echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:\$LD_LIBRARY_PATH" >> $HOME/.bashrc
 fi
-
-# Install python pakcages
-pip install -U pip
-pip install -U --user cupy chainer
-set +e
-
-# Clone Chainer
-git clone https://github.com/chainer/chainer
-
-# Download CIFAR dataset and test Chainer
-cd chainer
-git checkout v4.0.0b2
-
 
