@@ -17,12 +17,13 @@ fi
 ADDRESS=$1
 shift
 
-INSTALLERS=( "../ubuntu_install_cuda9cudnn7.sh" "ubuntu_install_tfhp.sh" )
+INSTALLERS=("../ubuntu_install_cuda9cudnn7.sh" "ubuntu_install_tfhp.sh")
 FILES=("../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run_tfhp.sh" "../comb_profile.sh")
 
 function copy_files {
-	FILES=$1
-	ADDR=$2
+	ADDR=$1
+	shift
+	FILES=("$@")
 	REMOTE_FILES=$(ssh $ADDR ls -1 2>/dev/null)
 	echo "Files ${FILES[@]}"
 	echo "Copy to $ADDR"
@@ -45,8 +46,8 @@ function copy_files {
 
 echo "Installing Tensorflow and TF HP benchmark on $ADDRESS"
 
-copy_files $FILES $ADDRESS
-copy_files $INSTALLERS $ADDRESS
+copy_files "$ADDRESS" "${FILES[@]}"
+copy_files "$ADDRESS" "${INSTALLERS[@]}"
 
 
 set -ex
