@@ -1,6 +1,6 @@
 #!/bin/bash
 #location of HPL
-HPCG_DIR=`pwd`
+HPCG_DIR="hpcg3.1"
 
 usage="$0 <MPI procs>"
 
@@ -49,6 +49,10 @@ nvidia-smi
 
 #***********************************
 
+if [ ! -a "hpcg.dat_128x128x128_60" ] && [ -d "$HPCG_DIR" ]; then
+	cd "$HPCG_DIR"
+fi
+
 # Note the hpcg.dat file defines the grid size and running time paramters. For an official subimssion you should use the longer (1 hr+) run time. Benchmark result should typically be about same as the shorter (1 min) run time.
 cp hpcg.dat_128x128x128_60 hpcg.dat
 #cp hpcg.dat_256x256x256_60 hpcg.dat        # 60 sec run
@@ -65,7 +69,7 @@ MPIFLAGS="--mca btl tcp,sm,self"   # just to get rid of warning on psg cluster n
 HPCG_BIN=xhpcg-3.1_gcc_485_cuda90176_ompi_1_10_2_sm_35_sm_50_sm_60_sm_70_ver_10_8_17
 
 echo " ****** running HPCG binary=$HPCG_BIN on $PROCS GPUs ***************************** "
-mpirun -np $PROCS $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_2_gpu-$DATETIME-output.txt
+mpirun --allow-run-as-root -np $PROCS $MPIFLAGS $HPCG_BIN | tee ./results/xhpcg_2_gpu-$DATETIME-output.txt
 #echo " ****** running HPCG binary=$HPCG_BIN on 4 GPUs ***************************** "
 #mpirun -np 4 $MPIFLAGS $HPCG_DIR/$HPCG_BIN | tee ./results/xhpcg_4_gpu-$DATETIME-output.txt
 #echo " ****** running HPCG binary=$HPCG_BIN on 8 GPUs ***************************** "

@@ -18,3 +18,5 @@ HPCG/**/*.sh.*
 Chainer/**/*.sh.*
 /Tensorflow-HP/benchmarks/
 /cuda_samples/
+/Centos/
+
