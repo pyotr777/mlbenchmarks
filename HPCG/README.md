@@ -13,8 +13,9 @@ Install and run HPCG benchmark on a remote computer.
 
 ### install.sh usage
 
-It will install MPI, NVIDIA drivers and CUDA Toolkit required to run HPCG.
-After that the remote computer is restarted and HPCG is installed.
+```install.sh <remote address>```
+
+Run on local computer. The script will install MPI, NVIDIA drivers and CUDA Toolkit required to run HPCG. After that remote computer is restarted and HPCG is installed.
 
 ### run.sh usage
 

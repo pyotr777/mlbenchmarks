@@ -64,11 +64,11 @@ while test $# -gt 0; do
 done
 
 if [ "$NUM_GPUS" -gt 0 ]; then
-	IMAGE="tensorflow/tensorflow:latest-gpu"
+	IMAGE="tensorflow/tensorflow:nightly-gpu"
 	PIP="tf-nightly-gpu"
 	GPU_OPTION="--num_gpus=$NUM_GPUS"
 else
-	IMAGE="tensorflow/tensorflow:latest"
+	IMAGE="tensorflow/tensorflow:nightly"
 	PIP="tf-nightly"
 	GPU_OPTION="--device=cpu --data_format=NHWC"
 fi
