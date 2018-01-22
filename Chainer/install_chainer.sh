@@ -10,6 +10,6 @@ git clone https://github.com/chainer/chainer
 # Download CIFAR dataset and test Chainer
 cd chainer
 git checkout v4.0.0b2
-#pip isntall .
+pip isntall --user .
 
 

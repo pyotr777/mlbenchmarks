@@ -53,4 +53,4 @@ copy_files "$ADDRESS" "${INSTALLERS[@]}"
 for INSTALLER in ${INSTALLERS[@]}; do
 	ssh $ADDRESS ./$(basename $INSTALLER)
 done
-echo "Installation finished. Login with ssh $ADDRESS and run ./run.sh"
+echo "Installation finished. Login with ssh $ADDRESS and run ./run_cifar.sh"
