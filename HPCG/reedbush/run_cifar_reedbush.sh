@@ -6,10 +6,8 @@
 cd $PBS_O_WORKDIR
 . /etc/profile.d/modules.sh
 module load intel cuda chainer
-export CHAINER_DATASET_ROOT=/lustre/gi96/i96005/chainer/dataset
-pwd
-ls -l
-cd chainer/examples/cifar/
-nvcc --version
-nvidia-smi
-python train_cifar.py -d cifar100 -g 0 -b 1024 -e 10
+export CHAINER_DATASET_ROOT=/lustre/gi96/i96005/chainer/cifar100
+mkdir -p cifar
+cd cifar
+cp chainer/examples/cifar/* .
+python train_cifar.py -d cifar100 -g 0 -b 512 -e 10
