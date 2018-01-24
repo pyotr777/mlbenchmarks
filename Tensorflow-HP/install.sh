@@ -18,7 +18,7 @@ ADDRESS=$1
 shift
 
 INSTALLERS=("../ubuntu_install_cuda9cudnn7.sh" "ubuntu_install_tfhp.sh")
-FILES=("../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run_tfhp.sh" "../comb_profile.sh")
+FILES=("../CUDNN7/libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.5.15-1+cuda9.0_amd64.deb" "run_tfhp.sh" "../comb_profile.sh")
 
 function copy_files {
 	ADDR=$1
@@ -51,8 +51,9 @@ copy_files "$ADDRESS" "${INSTALLERS[@]}"
 
 
 set -ex
-for INSTALLER in ${INSTALLER[@]}; do
-	ssh $ADDRESS ./$INSTALLER
+for INSTALLER in ${INSTALLERS[@]}; do
+	FILENAME=$(basename $INSTALLER)
+	ssh $ADDRESS ./$FILENAME
 done
 echo "Installation finished. Login with ssh $ADDRESS and run ./run.sh"
 
