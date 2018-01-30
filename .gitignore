@@ -9,8 +9,10 @@
 *.pdf
 *.log
 *.tsv
+*.csv
 *.deb
 *.nvvp
+*.sh.*
 HPCG/**/results/
 HPCG/**/results/*
 HPCG/**/*.sh.*
