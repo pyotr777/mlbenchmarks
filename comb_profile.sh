@@ -23,13 +23,14 @@ fi
 
 command="$1"
 profile="$2"
-smi_trace="nvidia-smi-$profile.csv"
-nvprof_trace="nvprof-trace-$profile-%p.csv"
+smi_trace="$profile-nvidia-smi.csv"
+nvprof_trace="$profile-nvprof-trace-%p.csv"
 echo "Using file names: $smi_trace and $nvprof_trace"
 
 # Start nvidia-smi
 echo "Starting nvidia-smi"
-nvidia-smi -lms 100 --query-gpu=timestamp,name,memory.total,memory.used,utilization.gpu,utilization.memory --format=csv > $smi_trace &
+#nvidia-smi -lms 100 --query-gpu=timestamp,name,memory.total,memory.used,utilization.gpu,utilization.memory --format=csv > $smi_trace &
+python parse_nvsmi.py nvidia-smi -q -x -lms 100 > $smi_trace &
 SMI_PID=$(echo $!)
 $command
 kill $SMI_PID
