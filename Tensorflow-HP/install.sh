@@ -17,8 +17,8 @@ fi
 ADDRESS=$1
 shift
 
-INSTALLERS=("../ubuntu_install_cuda9cudnn7.sh" "ubuntu_install_tfhp.sh")
-FILES=("../CUDNN7/libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.5.15-1+cuda9.0_amd64.deb" "run_tfhp.sh" "../comb_profile.sh")
+INSTALLERS=("../ubuntu_install_cuda9.1cudnn7.sh" "install_tfhp.sh")
+FILES=("../CUDNN7/libcudnn7_7.0.5.15-1+cuda9.1_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.5.15-1+cuda9.1_amd64.deb" "run_tfhp.sh" "../comb_profile.sh")
 
 function copy_files {
 	ADDR=$1
