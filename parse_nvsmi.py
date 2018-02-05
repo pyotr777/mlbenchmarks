@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Parse nvidia-smi output into CSV format.
+# Parse nvidia-smi -q output into CSV format.
 # Output line by line in real time.
 
 # Ver. 0.9 2018/02/02
