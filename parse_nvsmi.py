@@ -12,6 +12,7 @@ import argparse
 usage='''
 python parse_nvsmi.py [-h] <command>
 '''
+debug=False
 
 parser = argparse.ArgumentParser(usage=usage)
 parser.add_argument("command", help="Command to profile with nvidia-smi",nargs='*')
@@ -66,6 +67,16 @@ header_printed = False
 def XML2string(block):
     global header_printed
     dom = xmltodict.parse(block)
+    if debug:
+        # Check existense
+        print "Dom object:",type(dom)
+        print "nvidia_smi_log exists?", "nvidia_smi_log" in dom, type(dom["nvidia_smi_log"])
+        print "gpu exists?","gpu" in dom["nvidia_smi_log"], type(dom["nvidia_smi_log"]["gpu"])
+        print "processes exists?", "processes" in dom["nvidia_smi_log"]["gpu"], type(dom["nvidia_smi_log"]["gpu"]["processes"])
+        #print "process_info exists?", "process_info" in dom["nvidia_smi_log"]["gpu"]["processes"]
+    if dom["nvidia_smi_log"]["gpu"]["processes"] is None:
+        print "No running processes"
+        return
     procs = getProcs(dom["nvidia_smi_log"]["gpu"]["processes"]["process_info"])
     if not header_printed:
         print "time nvsmi,time python,gpu,PCI sent,PCI recv,GPU util,Memory util,"+memoryJoin(procs)

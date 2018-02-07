@@ -10,6 +10,8 @@ $(basename $0) <command to profile> <profile name>
 USAGEBLOCK
 )
 
+SAMPLE_RATE=50 #ms
+
 if [[ $# -lt 1 ]]; then
     echo "$usage"
     exit 1
@@ -30,10 +32,11 @@ echo "Using file names: $smi_trace and $nvprof_trace"
 # Start nvidia-smi
 echo "Starting nvidia-smi"
 #nvidia-smi -lms 100 --query-gpu=timestamp,name,memory.total,memory.used,utilization.gpu,utilization.memory --format=csv > $smi_trace &
-python parse_nvsmi.py nvidia-smi -q -x -lms 100 > $smi_trace &
+python parse_nvsmi.py nvidia-smi -q -x -lms $SAMPLE_RATE > $smi_trace &
 SMI_PID=$(echo $!)
+echo "Nvidia-smi started with PID $SMI_PID"
 $command
-kill $SMI_PID
+kill -6 $SMI_PID
 echo "nvidia-smi finished"
 
 echo "Starting nvprof"
