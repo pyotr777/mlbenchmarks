@@ -4,13 +4,9 @@
 # Execute on the machine whete TF will be installed.
 set -e
 TF_PIP="tf-nightly-gpu"
-#TF_PIP="tensorflow"
-
-#sudo apt-get update && sudo apt-get install -y git libcupti-dev python-pip python-dev clang
 
 # Install TF
 pip install -U pip
-#pip install --user $TF_PIP
 pip install --ignore-installed --no-cache-dir --upgrade --user $TF_PIP
 
 # Install TF HP benchmark

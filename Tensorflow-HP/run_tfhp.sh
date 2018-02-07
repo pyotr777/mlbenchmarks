@@ -15,7 +15,7 @@ USAGEBLOCK
 
 # Defaults
 NUM_GPUS=1
-BATCH=16
+BATCH=32
 
 while test $# -gt 0; do
 	case "$1" in
