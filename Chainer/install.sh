@@ -18,7 +18,6 @@ ADDRESS=$1
 shift
 
 INSTALLERS=("../ubuntu_install_cuda9cudnn7.sh" "install_chainer.sh")
-#FILES=("../CUDNN7/libcudnn7_7.0.4.31-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.4.31-1+cuda9.0_amd64.deb" "run_cifar.sh" "../comb_profile.sh")
 FILES=("../CUDNN7/libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb" "../CUDNN7/libcudnn7-dev_7.0.5.15-1+cuda9.0_amd64.deb" "run_cifar.sh" "../comb_profile.sh")
 
 set -e
