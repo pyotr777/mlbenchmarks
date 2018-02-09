@@ -3,7 +3,7 @@
 # Install Tensorflow and TF HP benchmark.
 # Execute on the machine whete TF will be installed.
 set -e
-TF_PIP="tf-nightly-gpu"
+TF_PIP="tf-nightly-gpu==1.6.0.dev20180206"
 
 # Install TF
 pip install -U pip
