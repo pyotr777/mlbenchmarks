@@ -24,7 +24,7 @@ nvidia-smi
 ./run_hpcg.sh 1
 
 # Chainer CIFAR100
-./run_cifar.sh -e 10
+./run_cifar.sh -e 10 -b 512
 
 # CUDA samples
 cd NVIDIA_CUDA-9.0_Samples/1_Utilities/bandwidthTest
