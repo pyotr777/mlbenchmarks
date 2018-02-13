@@ -14,7 +14,7 @@ USAGEBLOCK
 
 # Defaults
 EPOCHS=2
-BATCH=512
+BATCH=256
 
 while test $# -gt 0; do
 	case "$1" in
