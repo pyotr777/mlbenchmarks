@@ -21,7 +21,7 @@ start=$(date +%s)
 
 echo "Installing HPCG3.1, Chainer v4.0.0b2 and Tensorflow tf-nightly-gpu on $ADDRESS."
 
-INSTALLERS=("ubuntu_install_cuda9cudnn7.sh" "Chainer/install_chainer.sh" "HPCG/install-mpi.sh" "HPCG/install-hpcg3.1.sh" "Tensorflow-HP/install_tfhp.sh")
+INSTALLERS=("ubuntu_install_cuda9cudnn7.sh" "Chainer/install_chainer.sh" "HPCG/install-mpi-ubuntu.sh" "HPCG/install-hpcg3.1.sh" "Tensorflow-HP/install_tfhp.sh")
 FILES=("CUDNN7/libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb" "CUDNN7/libcudnn7-dev_7.0.5.15-1+cuda9.0_amd64.deb" "Chainer/run_cifar.sh" "HPCG/run_hpcg.sh" "Tensorflow-HP/run_tfhp.sh" "comb_profile.sh"  "run_all_benchmarks.sh")
 
 set -e
