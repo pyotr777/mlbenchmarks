@@ -5,7 +5,7 @@
 #PBS -l walltime=00:15:00
 
 EPOCHS=10
-BATCH=1024
+BATCH=512
 cd $PBS_O_WORKDIR
 . /etc/profile.d/modules.sh
 #module load intel cuda9 anaconda3
@@ -16,9 +16,8 @@ source activate chainer4
 DATETIME="$(date +%F_%H%M%S)"
 echo "Reedbush-H $(hostname). P100x$PROCS $DATETIME"
 
-
+cd chainer/examples/cifar/
 nvcc --version
 nvidia-smi
-ls -l
-cd chainer/examples/cifar
+pip freeze | grep -i chainer
 python train_cifar.py -d cifar100 -g 0 -b $BATCH -e $EPOCHS

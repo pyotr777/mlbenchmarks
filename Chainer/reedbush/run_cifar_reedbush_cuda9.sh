@@ -13,4 +13,5 @@ ls -l
 cd chainer/examples/cifar/
 nvcc --version
 nvidia-smi
-python train_cifar.py -d cifar100 -g 0 -b 1024 -e 10
+pip freeze | grep -i chainer
+python train_cifar.py -d cifar100 -g 0 -b 512 -e 10
