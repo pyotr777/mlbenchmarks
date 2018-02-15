@@ -21,4 +21,4 @@ Chainer/**/*.sh.*
 /Tensorflow-HP/benchmarks/
 /cuda_samples/
 /Centos/
-
+/Chainer/chainer/
