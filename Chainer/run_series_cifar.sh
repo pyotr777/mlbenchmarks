@@ -3,8 +3,8 @@
 # Run Chainer CIFAR100 with different batch-sizes
 
 
-batchsizes=(32 64 128 256 384 512 640 768 896 1024)
-EPOCHS=2
+batchsizes=(32 64 80 128 256 384 512 640 1024)
+EPOCHS=10
 
 for batchsize in "${batchsizes[@]}"; do
 	echo $batchsize
