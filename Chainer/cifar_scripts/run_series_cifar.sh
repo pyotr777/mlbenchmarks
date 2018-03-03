@@ -11,6 +11,6 @@ EPOCHS=100
 for batchsize in "${batchsizes[@]}"; do
 	for learnrate in "${learnrates[@]}"; do
 		echo "b $batchsize l $learnrate"
-	    ./run_cifar_flextime.sh -b $batchsize -l $learnrate -e $EPOCHS --accuracy 1 #2>/dev/null
+	    ./run_cifar_flextime.sh -b $batchsize -l $learnrate -e $EPOCHS --accuracy 0.6 #2>/dev/null
 	done
 done
