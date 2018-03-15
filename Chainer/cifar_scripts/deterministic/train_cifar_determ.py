@@ -68,7 +68,7 @@ def main():
         train, test = get_cifar100()
     else:
         raise RuntimeError('Invalid dataset choice.')
-    model = L.Classifier(models.VGG.VGG(class_labels,use_cudnn=False))
+    model = L.Classifier(models.VGG.VGG(class_labels))#,use_cudnn=False))
 
     # Import model
     model_file="VGG.npz"

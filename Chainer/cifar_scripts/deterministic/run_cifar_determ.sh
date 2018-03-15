@@ -1,5 +1,7 @@
 #!/bin/bash
-# Run train_cifar sample on GPU with CIFAR100 dataset
+# Run train_cifar_determ.py sample with CIFAR100 dataset
 
-#python chainer/examples/cifar/train_cifar_debug.py --debug -d cifar100 -g 0 $@
-python chainer/examples/cifar/train_cifar_determ.py -d cifar100 -g 0 $@
+N=3
+for i in $(seq 1 $N);do
+	python chainer/examples/cifar/train_cifar_determ.py -d cifar100 $@
+done
