@@ -46,12 +46,11 @@ def main():
 
     #chainer.using_config('cudnn_deterministic', True)
     chainer.global_config.cudnn_deterministic = True
-    print(chainer.global_config.cudnn_deterministic)
+    print("Deterministic cuDNN is",chainer.global_config.cudnn_deterministic)
     seed=0
     random.seed(seed)
     np.random.seed(seed)
     cp.random.seed(seed)
-    print("Deterministic cuDNN")
 
     print('')
 
@@ -70,18 +69,18 @@ def main():
         raise RuntimeError('Invalid dataset choice.')
     model = L.Classifier(models.VGG.VGG(class_labels))#,use_cudnn=False))
 
-    # Import model
-    model_file="VGG.npz"
-    if args.load:
-        chainer.serializers.load_npz(model_file,model)
-        print("Loaded model from ", model_file)
+    # # Import model
+    # model_file="VGG.npz"
+    # if args.load:
+    #     chainer.serializers.load_npz(model_file,model)
+    #     print("Loaded model from ", model_file)
 
 
-    # Export model
-    if args.export:
-        model.to_cpu()
-        chainer.serializers.save_npz(model_file,model)
-        print("Model saved to",model_file)
+    # # Export model
+    # if args.export:
+    #     model.to_cpu()
+    #     chainer.serializers.save_npz(model_file,model)
+    #     print("Model saved to",model_file)
 
 
 
