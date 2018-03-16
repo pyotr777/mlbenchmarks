@@ -62,20 +62,21 @@ def runTask(task,gpu):
 
 gpus = 8
 batch = 512
-lr = 0.15
-epochs = 2#500
+#lr = 0.15
+epochs = 500
 runs = 24
 tasks = []
-for run in range(0,24):
-    logfile="logs/series/cifar_e{}_run_{}.log".format(epochs,run)
+for run in range(0,runs):
+    logfile="logs/series/cifar_adam_e{}_run_{}.log".format(epochs,run)
+    print "Logs:",logfile
     if os.path.isfile(logfile):
         print "file",logfile,"exists."
         continue
     f = open(logfile,"w+")
-    f.write("b{} l{}\n".format(batch,lr))
+    f.write("b{}\n".format(batch))
     f.close()
-    #task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e 5 -b {} -l {} ".format(batch,lr),"logfile":logfile}
-    task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
+    #task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
+    task = {"comm":"python chainer/examples/cifar/train_cifar_adamoptimizer.py -d cifar100 -e {} -b {}".format(epochs,batch),"logfile":logfile}
     tasks.append(task)
 
 print "Have",len(tasks),"tasks"
