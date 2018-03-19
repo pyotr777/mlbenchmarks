@@ -6,8 +6,8 @@
 
 batchsize=512
 learnrate=0.15
-EPOCHS=10
-N=26
+EPOCHS=3
+N=2
 cd $PBS_O_WORKDIR
 . /etc/profile.d/modules.sh
 
@@ -22,9 +22,7 @@ cd chainer/examples/cifar/
 nvcc --version
 nvidia-smi
 pip freeze | grep -i chainer
-for run in $(seq 1 $((N/2))); do
-	echo "run $((run*2-1))/$N"
-	python train_cifar.py -d cifar100 -g 0 -b $batchsize -l $learnrate -e $EPOCHS  & #2>/dev/null
-	echo "run $((run*2))/$N"
-	python train_cifar.py -d cifar100 -g 1 -b $batchsize -l $learnrate -e $EPOCHS
+for run in $(seq 1 $N))); do
+	echo "run $run"
+	python train_cifar_determ.py -d cifar100 -g 0 -b $batchsize -l $learnrate -e $EPOCHS
 done

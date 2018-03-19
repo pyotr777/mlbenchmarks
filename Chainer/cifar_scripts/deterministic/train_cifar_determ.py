@@ -44,7 +44,7 @@ def main():
     print('# Minibatch-size: {}'.format(args.batchsize))
     print('# epoch: {}'.format(args.epoch))
 
-    #chainer.using_config('cudnn_deterministic', True)
+    chainer.using_config('cudnn_deterministic', True)
     chainer.global_config.cudnn_deterministic = True
     print("Deterministic cuDNN is",chainer.global_config.cudnn_deterministic)
     seed=0
