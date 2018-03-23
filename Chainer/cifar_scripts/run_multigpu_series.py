@@ -64,10 +64,13 @@ gpus = 8
 batch = 512
 lr = 0.15
 epochs = 500
-runs = 64
+runs = 24
 tasks = []
-for run in range(24,runs):
-    logfile="logs/series/cifar_e{}_run_{}.log".format(epochs,run)
+print "Running ",runs,"runs for",epochs,"epochs with batch size",batch,"and lr",lr
+print "Fix LR after several reductions: 4 times reduce LR by 1/2 after 25 epochs, than fix LR."
+for run in range(0,runs):
+    logfile="logs/series/cifar_fixLR_e{}_run_{}.log".format(epochs,run)
+    # logfile="logs/series/cifar_e{}_run_{}.log".format(epochs,run)
     # logfile="logs/series/cifar_adam_e{}_run_{}.log".format(epochs,run)
     print "Logs:",logfile
     if os.path.isfile(logfile):
@@ -76,8 +79,9 @@ for run in range(24,runs):
     f = open(logfile,"w+")
     f.write("b{}\n".format(batch))
     f.close()
-    task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
-    #task = {"comm":"python chainer/examples/cifar/train_cifar_adamoptimizer.py -d cifar100 -e {} -b {}".format(epochs,batch),"logfile":logfile}
+    task = {"comm":"python chainer/examples/cifar/train_cifar_fix_lr.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
+    # task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
+    # task = {"comm":"python chainer/examples/cifar/train_cifar_adamoptimizer.py -d cifar100 -e {} -b {}".format(epochs,batch),"logfile":logfile}
     tasks.append(task)
 
 print "Have",len(tasks),"tasks"

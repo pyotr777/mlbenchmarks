@@ -9,5 +9,5 @@ N=25
 
 for run in $(seq 1 $N); do
 	echo "run $run/$N"
-	python chainer/examples/cifar/train_cifar.py -d cifar100 -g 0 -b $batchsize -l $learnrate -e $EPOCHS #2>/dev/null
+	python chainer/examples/cifar/train_cifar_fix_lr.py -d cifar100 -g 0 -b $batchsize -l $learnrate -e $EPOCHS #2>/dev/null
 done
