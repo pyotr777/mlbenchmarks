@@ -59,14 +59,14 @@ def runTask(task,gpu):
 
 
 gpus = 8
-batchsizes=[32, 48, 64, 80, 128, 256, 384, 512, 640]
+batchsizes=[32, 48, 64, 80, 128, 256, 384, 512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664]
 #batchsizes=[256, 512]
-learnrates=[0.15, 0.1, 0.05, 0.025, 0.01, 0.005, 0.001]
+learnrates=[0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.025, 0.01, 0.005, 0.001]
 epochs=100
 tasks = []
 for batch in batchsizes:
     for lr in learnrates:
-        logfile="logs/cifar_log_b{}_l{}.log".format(batch,lr)
+        logfile="logs/flextime//0_6x100/experiment01/cifar_log_b{}_l{:.3f}.log".format(batch,lr)
         if os.path.isfile(logfile):
             print "file",logfile,"exists."
             continue
