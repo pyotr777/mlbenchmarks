@@ -15,15 +15,20 @@ import random
 # Returns True if GPU #i is not used.
 # Uses nvidia-smi command to monitor GPU SM usage.
 def GPUisFree(i):
-    command = "nvidia-smi dmon -c 2 -d 2 -i {} -s u".format(i)
-    nvsmi_pattern = re.compile(r"^\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)")
+    command = "nvidia-smi pmon -c 2 -d 2 -i {} -s u".format(i)
+    #nvsmi_pattern = re.compile(r"^\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)") # dmon
+    nvsmi_pattern = re.compile(r"^\s+(\d+)\s+([0-9\-]+)\s+([CG\-])\s+([0-9\-]+)\s")
     proc = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, shell=False)
-    u = 0
+    u = 1
     for line in iter(proc.stdout.readline, b''):
         print line,
-        m = nvsmi_pattern.match(line)
+        m = nvsmi_pattern.search(line)
         if m:
-            u += int(m.group(2))
+            pid = m.group(2)
+            if pid == "-":
+                u = 0
+            else:
+                u += int(m.group(2))
     if u < 1:
         return True
     return False
@@ -56,7 +61,7 @@ def runTask(task,gpu):
     # IMPORTANT: remote double spaces or they will become empty arguments!
     command = re.sub('\s+',' ',command).strip()
     print "Starting ",command.split(" ")
-    pid = subprocess.Popen(command.split(" "),stdout=f,bufsize=1).pid
+    pid = subprocess.Popen(command.split(" "),stdout=f,stderr=None, bufsize=1).pid
     print pid
 
 
@@ -73,9 +78,7 @@ for run in range(runs):
             if os.path.isfile(logfile):
                 print "file",logfile,"exists."
                 continue
-            f = open(logfile,"w+")
-            f.write("b{} l{}\n".format(batch,lr))
-            f.close()
+            
             task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
             tasks.append(task)
 
@@ -84,6 +87,9 @@ gpu = -1
 for i in range(0,len(tasks)):
     #print "Preapare",tasks[i]["comm"],">",tasks[i]["logfile"]
     gpu = getNextFreeGPU(gpu+1)
+    f = open(tasks[i]["logfile"],"w+")
+    f.write("b{} l{}\n".format(batch,lr))
+    f.close()
     runTask(tasks[i],gpu)
     time.sleep(15)
 
