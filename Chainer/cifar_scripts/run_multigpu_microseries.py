@@ -78,8 +78,8 @@ for run in range(runs):
             if os.path.isfile(logfile):
                 print "file",logfile,"exists."
                 continue
-            
-            task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
+
+            task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e {} -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile,"batchsize":batch,"lr":lr}
             tasks.append(task)
 
 print "Have",len(tasks),"tasks"
@@ -88,7 +88,7 @@ for i in range(0,len(tasks)):
     #print "Preapare",tasks[i]["comm"],">",tasks[i]["logfile"]
     gpu = getNextFreeGPU(gpu+1)
     f = open(tasks[i]["logfile"],"w+")
-    f.write("b{} l{}\n".format(batch,lr))
+    f.write("b{} l{}\n".format(tasks[i]["batch"],tasks[i]["lr"]))
     f.close()
     runTask(tasks[i],gpu)
     time.sleep(15)
