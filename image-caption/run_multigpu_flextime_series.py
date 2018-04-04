@@ -16,7 +16,7 @@ import os
 # Returns True if GPU #i is not used.
 # Uses nvidia-smi command to monitor GPU SM usage.
 def GPUisFree(i):
-    command = "nvidia-smi pmon -c 4 -d 2 -i {} -s u".format(i)
+    command = "nvidia-smi pmon -c 4 -d 1 -i {} -s u".format(i)
     #nvsmi_pattern = re.compile(r"^\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)") # dmon
     nvsmi_pattern = re.compile(r"^\s+(\d+)\s+([0-9\-]+)\s+([CG\-])\s+([0-9\-]+)\s")
     proc = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, shell=False)
@@ -74,14 +74,16 @@ def runTask(task,gpu):
 
 gpus = 8
 runs = 3
-samples=1000
-epochs=5
+samples= 1000
+epochs = 20
+loss_target = 5.8
 tasks = []
-logdir = "logs/microseries/val_"+str(epochs)+"epoch"
+logdir = "logs/flextime/loss"+str(loss_target)+"_"+str(epochs)+"epoch"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
+
 for run in range(runs):
-    batchsizes = [2, 4, 8, 12, 16, 20, 24, 28]
+    batchsizes = [2, 4, 8, 12, 16, 20, 24, 28,]
     learnrates=[0.0001, 0.0005, 0.001, 0.002, 0.003, 0.004]
     for batch in batchsizes:
         for lr in learnrates:
@@ -89,7 +91,7 @@ for run in range(runs):
             if os.path.isfile(logfile):
                 print("file",logfile,"exists.")
                 continue
-            comm = "python train_gen.py --logger_comment {sm}smps_BS{bs}_LR{lr}_WD0.001 --early_stopping --batch_size {bs} -l {lr} --weight_decay 0.001 --model resnet50 --use_samples {sm} --max_epoch {ep} --first_save 5 --save_step 5".format(bs=batch, lr=lr, sm=samples, ep=epochs)
+            comm = "python train_gen_flextime.py --early_stopping --batch_size {bs} -l {lr} --weight_decay 0.001 --model resnet50 --use_samples {sm} --max_epoch {ep} --loss_target {target}".format(bs=batch, lr=lr, sm=samples, ep=epochs, target=loss_target)
             print(comm)
             task = {"comm":comm,"logfile":logfile,"batch":batch,"lr":lr}
             tasks.append(task)
@@ -97,8 +99,7 @@ for run in range(runs):
 print("Have",len(tasks),"tasks")
 gpu = -1
 for i in range(0,len(tasks)):
-    #i = 12
-    #print("Preapare",tasks[i]["comm"],">",tasks[i]["logfile"])
+    #print "Preapare",tasks[i]["comm"],">",tasks[i]["logfile"]
     gpu = getNextFreeGPU(gpu+1)
     f = open(tasks[i]["logfile"],"w+")
     f.write("b{} l{}\n".format(tasks[i]["batch"],tasks[i]["lr"]))
