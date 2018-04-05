@@ -81,7 +81,8 @@ logdir = "logs/microseries/val_"+str(epochs)+"epoch"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
 for run in range(runs):
-    batchsizes = [2, 4, 8, 12, 16, 20, 24, 28]
+    #batchsizes = [2, 4, 8, 12, 16, 20, 24, 28]
+    batchsizes = [32, 36]
     learnrates=[0.0001, 0.0005, 0.001, 0.002, 0.003, 0.004]
     for batch in batchsizes:
         for lr in learnrates:
