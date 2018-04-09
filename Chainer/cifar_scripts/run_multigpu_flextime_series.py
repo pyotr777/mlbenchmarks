@@ -13,15 +13,20 @@ import os
 # Returns True if GPU #i is not used.
 # Uses nvidia-smi command to monitor GPU SM usage.
 def GPUisFree(i):
-    command = "nvidia-smi dmon -c 3 -d 2 -i {} -s u".format(i)
-    nvsmi_pattern = re.compile(r"^\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)")
+    command = "nvidia-smi pmon -c 4 -d 1 -i {} -s u".format(i)
+    nvsmi_pattern = re.compile(r"^\s+(\d+)\s+([0-9\-]+)\s+([CG\-])\s+([0-9\-]+)\s")
     proc = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, shell=False)
     u = 0
     for line in iter(proc.stdout.readline, b''):
-        print line,
-        m = nvsmi_pattern.match(line)
+        line = line.decode('utf-8')
+        m = nvsmi_pattern.search(line)
         if m:
-            u += int(m.group(2))
+            print ".",
+            pid = m.group(2)
+            if pid == "-":
+                u = 0
+            else:
+                u += int(m.group(2))
     if u < 1:
         return True
     return False
@@ -43,7 +48,7 @@ def getNextFreeGPU(start=0):
             if GPUisFree(i):
                 return i
             print "busy"
-            time.sleep(1)
+            time.sleep(5)
 
 
 # Runs a task on specified GPU
@@ -59,30 +64,35 @@ def runTask(task,gpu):
 
 
 gpus = 8
+runs = 2
 batchsizes=[32, 48, 64, 80, 128, 256, 384, 512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664]
 #batchsizes=[256, 512]
 learnrates=[0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.025, 0.01, 0.005, 0.001]
 epochs=100
+acc_target = 0.6
 tasks = []
-for batch in batchsizes:
-    for lr in learnrates:
-        logfile="logs/flextime//0_6x100/experiment01/cifar_log_b{}_l{:.3f}.log".format(batch,lr)
-        if os.path.isfile(logfile):
-            print "file",logfile,"exists."
-            continue
-        f = open(logfile,"w+")
-        f.write("b{} l{}\n".format(batch,lr))
-        f.close()
-        #task = {"comm":"python chainer/examples/cifar/train_cifar.py -d cifar100 -e 5 -b {} -l {} ".format(batch,lr),"logfile":logfile}
-        task = {"comm":"python chainer/examples/cifar/train_cifar_flextime.py -d cifar100 -e {} --accuracy 0.6 -b {} -l {} ".format(epochs,batch,lr),"logfile":logfile}
-        tasks.append(task)
+logdir = "logs/flextime/acc{}x{}epoch/experiment01".format(acc_target,epochs)
+for run in range(runs):
+    for batch in batchsizes:
+        for lr in learnrates:
+            logfile=os.path.join(logdir,"cifar_log_b{}_l{}_{:02d}.log".format(batch,lr,run))
+            if os.path.isfile(logfile):
+                print "file",logfile,"exists."
+                continue
+            comm = "python chainer/examples/cifar/train_cifar_flextime.py -d cifar100 -e {} --accuracy 0.6 -b {} -l {} ".format(epochs,batch,lr)
+            print comm
+            task = {"comm":,"logfile":logfile, "batch":batch, "lr":lr}
+            tasks.append(task)
 
 print "Have",len(tasks),"tasks"
 gpu = -1
 for i in range(0,len(tasks)):
     #print "Preapare",tasks[i]["comm"],">",tasks[i]["logfile"]
     gpu = getNextFreeGPU(gpu+1)
+    f = open(tasks[i]["logfile"],"w+")
+    f.write("b{} l{}\n".format(tasks[i]["batch"],tasks[i]["lr"]))
+    f.close()
     runTask(tasks[i],gpu)
-    time.sleep(7)
-
+    print "{}/{}".format(i,len(tasks))
+    time.sleep(5)
 
