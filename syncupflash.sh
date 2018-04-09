@@ -37,7 +37,7 @@ while test $# -gt 0; do
             shift
             break;;
         *)
-            echo "Unknown parameter $1";
+            echo "Unknown option $1";
             echo "$usage"
             exit 1
             ;;

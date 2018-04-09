@@ -22,10 +22,10 @@ def GPUisFree(i):
     proc = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, shell=False)
     u = 1
     for line in iter(proc.stdout.readline, b''):
-        print(".",end="")
         line = line.decode('utf-8')
         m = nvsmi_pattern.search(line)
         if m:
+            print(".",end="")
             pid = m.group(2)
             if pid == "-":
                 u = 0
@@ -73,18 +73,17 @@ def runTask(task,gpu):
 
 
 gpus = 8
-runs = 3
+runs = 2
 samples= 1000
-epochs = 50
-loss_target = 5.8
+epochs = 100
+loss_target = 5.4
 tasks = []
 logdir = "logs/flextime/loss"+str(loss_target)+"_"+str(epochs)+"epoch"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
-
+batchsizes = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44]
+learnrates=[0.0001, 0.0005, 0.001, 0.0025, 0.005, 0.0075, 0.01]
 for run in range(runs):
-    batchsizes = [2, 4, 8, 12, 16, 20, 24, 28, 32, 36]
-    learnrates=[0.0001, 0.0005, 0.001, 0.002, 0.003, 0.004]
     for batch in batchsizes:
         for lr in learnrates:
             logfile=os.path.join(logdir,"imagecaption_b{}_l{}_smp{}_{:02d}.log".format(batch,lr,samples,run))
@@ -105,6 +104,7 @@ for i in range(0,len(tasks)):
     f.write("b{} l{}\n".format(tasks[i]["batch"],tasks[i]["lr"]))
     f.close()
     runTask(tasks[i],gpu)
+    print("{}/{}".format(i,len(tasks)))
     time.sleep(5)
 
 
