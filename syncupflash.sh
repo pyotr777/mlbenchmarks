@@ -16,7 +16,7 @@ USAGEBLOCK
 
 # Default parameteres
 FLASH_PATH="/Volumes/WENDE32GB/MLbenchmark_logs"
-RSYNC_OPTIONS="-avc"
+RSYNC_OPTIONS="-avcz"
 
 while test $# -gt 0; do
     case "$1" in
@@ -28,7 +28,7 @@ while test $# -gt 0; do
             FLASH_PATH="$2";shift;
             ;;
         -n)
-            RSYNC_OPTIONS="-anvc"
+            RSYNC_OPTIONS=$RSYNC_OPTIONS"n"
             ;;
         --debug)
             debug=YES
@@ -36,6 +36,9 @@ while test $# -gt 0; do
         --)
             shift
             break;;
+        -*)
+            MORE_OPTIONS="$1"
+            ;;
         *)
             echo "Unknown option $1";
             echo "$usage"
@@ -50,6 +53,14 @@ if [[ ! -d "$FLASH_PATH" ]]; then
     exit 1
 fi
 
-echo $RSYNC_OPTIONS
+echo "$RSYNC_OPTIONS $MORE_OPTIONS"
 set -x
-rsync $RSYNC_OPTIONS --include="logs" --include="Chainer" --include="combine_profiles" --include="image-caption" --include="*.csv" --include="*.nvvp" --include="*.log" --exclude="*" . $FLASH_PATH
+rsync $RSYNC_OPTIONS $MORE_OPTIONS \
+    --prune-empty-dirs \
+    --exclude=".*" \
+    --filter="+ nvvp/*" --filter="+ */nvvp/" \
+    --filter="+ logs/*/*/*/*" --filter="+ logs/*/*/*" --filter="+ logs/*/*" --filter="+ logs/*" --filter="+ */logs/" \
+    --include="CUDNN7/*" --include="CUDNN7" \
+    --include="combine_profiles" --include="Chainer" --include="image-caption" \
+    --include="*.csv" --include="*.nvvp" --include="*.log" \
+    --exclude="*" . $FLASH_PATH
