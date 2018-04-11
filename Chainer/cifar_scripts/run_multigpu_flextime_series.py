@@ -72,6 +72,8 @@ epochs=100
 acc_target = 0.6
 tasks = []
 logdir = "logs/flextime/acc{}x{}epoch/experiment01".format(acc_target,epochs)
+if not os.path.exists(logdir):
+    os.makedirs(logdir)
 for run in range(runs):
     for batch in batchsizes:
         for lr in learnrates:

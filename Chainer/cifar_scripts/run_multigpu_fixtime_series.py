@@ -44,7 +44,7 @@ def getNextFreeGPU(start=0):
                 #print "skip",i
                 continue
             start = 0
-            print "checking GPU ",i
+            print "checking GPU",i,
             if GPUisFree(i):
                 return i
             print "busy"
@@ -64,15 +64,18 @@ def runTask(task,gpu):
 
 
 gpus = 8
-runs = 2
+runs = 1
 batchsizes=[32, 48, 64, 80, 128, 256, 384, 512, 640, 768, 896, 1024, 1152, 1280, 1408, 1536, 1664]
 #batchsizes=[256, 512]
 learnrates=[0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.025, 0.01, 0.005, 0.001]
+#learnrates=[0.1,0.01]
 #epochs=100
 time_limit = 1800
 #acc_target = 0.6
 tasks = []
 logdir = "logs/fixtime/time_limit"+str(time_limit)+"s"
+if not os.path.exists(logdir):
+    os.makedirs(logdir)
 for run in range(runs):
     for batch in batchsizes:
         for lr in learnrates:
@@ -80,9 +83,9 @@ for run in range(runs):
             if os.path.isfile(logfile):
                 print "file",logfile,"exists."
                 continue
-            comm = "python chainer/examples/cifar/train_cifar_fixtime.py -d cifar100 -b {} -l {} --time_limit {tl}".format(epochs,batch,lr, tl=time_limit)
+            comm = "python chainer/examples/cifar/train_cifar_fixtime.py -d cifar100 -b {} -l {} --time_limit {tl}".format(batch,lr, tl=time_limit)
             print comm
-            task = {"comm":,"logfile":logfile, "batch":batch, "lr":lr}
+            task = {"comm":comm,"logfile":logfile, "batch":batch, "lr":lr}
             tasks.append(task)
 
 print "Have",len(tasks),"tasks"
