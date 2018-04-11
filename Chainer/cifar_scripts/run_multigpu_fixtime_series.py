@@ -13,20 +13,16 @@ import os
 # Returns True if GPU #i is not used.
 # Uses nvidia-smi command to monitor GPU SM usage.
 def GPUisFree(i):
-    command = "nvidia-smi pmon -c 4 -d 1 -i {} -s u".format(i)
-    nvsmi_pattern = re.compile(r"^\s+(\d+)\s+([0-9\-]+)\s+([CG\-])\s+([0-9\-]+)\s")
+    command = "nvidia-smi dmon -c 3 -d 2 -i {} -s u".format(i)
+    nvsmi_pattern = re.compile(r"^\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)")
     proc = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, shell=False)
     u = 0
     for line in iter(proc.stdout.readline, b''):
-        line = line.decode('utf-8')
-        m = nvsmi_pattern.search(line)
+        #print line,
+        m = nvsmi_pattern.match(line)
         if m:
             print ".",
-            pid = m.group(2)
-            if pid == "-":
-                u = 0
-            else:
-                u += int(m.group(2))
+            u += int(m.group(2))
     if u < 1:
         return True
     return False
