@@ -30,8 +30,8 @@ def GPUisFree(i):
 
 
 # Returns GPU info
-def getGPUinfo(query="name,memory.total"):
-    command = "nvidia-smi -i 2 --query-gpu={} --format=csv,noheader".format(query)
+def getGPUinfo(i,query="name,memory.total"):
+    command = "nvidia-smi -i {} --query-gpu={} --format=csv,noheader".format(i,query)
     proc = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, shell=False)
     output = ""
     for line in iter(proc.stdout.readline, b''):
@@ -41,19 +41,25 @@ def getGPUinfo(query="name,memory.total"):
 
 
 # Returns number of a free GPU.
-# gpus is a number or list of numbers.
-def getNextFreeGPU(gpus):
+# gpus  -- GPU number or list of numbers.
+# start -- number of GPU to start with.
+def getNextFreeGPU(gpus,start=-1):
     if not isinstance(gpus,list):
         gpus = [gpus]
-
+    if start > gpus[-1]: 
+        # Rewind to GPU 0
+        start = 0
     while True:
         for i in range(0,len(gpus)):
             gpu = gpus[i]
+            if gpu < start:
+                continue
             print("checking GPU",gpu,end="")
             if GPUisFree(gpu):
                 return gpu
             print("busy")
-            time.sleep(5)
+            time.sleep(3)
+            start = -1 # Next loop check from 1
 
 
 # Runs a task on specified GPU

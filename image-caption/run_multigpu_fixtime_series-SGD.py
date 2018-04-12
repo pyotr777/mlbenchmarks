@@ -35,11 +35,12 @@ for run in range(runs):
             tasks.append(task)
 
 print("Have",len(tasks),"tasks")
-gpu = -1
+gpus = range(0,8)
+gpu = -1 # Number of GPU to start check
 for i in range(0,len(tasks)):
     #print "Preapare",tasks[i]["comm"],">",tasks[i]["logfile"]
-    gpu = multigpuexec.getNextFreeGPU(gpu+1)
-    gpu_info = multigpuexec.getGPUinfo()
+    gpu = multigpuexec.getNextFreeGPU(gpus, start=gpu+1)
+    gpu_info = multigpuexec.getGPUinfo(gpu)
     f = open(tasks[i]["logfile"],"w+")
     f.write("b{} l{}\n".format(tasks[i]["batch"],tasks[i]["lr"]))
     f.write("GPU: {}\n".format(gpu_info))
