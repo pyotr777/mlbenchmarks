@@ -100,6 +100,8 @@ def train(args, cfg):
     #         generator.parameters(),
     #         lr = lr,
     #         weight_decay = weight_decay)
+    if args.verbosity > 0:
+        print("Sheduler step: {}, scheduler gamma: {}".format(cfg['scheduler_step_size'],cfg['scheduler_gamma']))
     if cfg['scheduler_step_size']:
         converter_scheduler = torch.optim.lr_scheduler.StepLR(converter_optimizer, step_size=cfg['scheduler_step_size'], gamma=cfg['scheduler_gamma'])
         generator_scheduler = torch.optim.lr_scheduler.StepLR(generator_optimizer, step_size=cfg['scheduler_step_size'], gamma=cfg['scheduler_gamma'])
@@ -123,10 +125,13 @@ def train(args, cfg):
     while not timelimit_reached:
         start_time = time.time()
         loss_epoch = 0.0
+        if args.verbosity > 2:
+            print("Loading samples")
         for j, (v, c_input, c_target, lengths) in enumerate(train_loader):
             samples = j * batch_size
             if maxsamples > 0 and samples > maxsamples:
-                #print("epoch break at",samples,"samples")
+                if args.verbosity > 0:
+                    print("epoch break at",samples,"samples")
                 break
             v = Variable(v, requires_grad=False)
             c_input = Variable(c_input, requires_grad=False)
@@ -148,19 +153,29 @@ def train(args, cfg):
                 torch.nn.utils.clip_grad_norm(converter.parameters(), cfg['max_norm'])
                 torch.nn.utils.clip_grad_norm(generator.parameters(), cfg['max_norm'])
             #encoder_optimizer.step()
+            if args.verbosity > 2:
+                print("Start converter step")
             converter_optimizer.step()
+            if args.verbosity > 2:
+                print("Start generator step")
             generator_optimizer.step()
 
             loss_epoch += loss.data[0]
             loss_epoch = loss_epoch/2
             cnt += 1
             writer.add_scalar('Train/loss_iter', loss.data[0], cnt)
+            if args.verbosity > 1:
+                print("Train/loss_iter",loss.data[0], cnt)
 
 
         writer.add_scalar('Train/loss_epoch', loss_epoch, i+1)
         print('{:d}, {:f}, {:f}'.format(i+1, time.time() - start_time, loss_epoch))
         if cfg['scheduler_step_size']:
+            if args.verbosity > 2:
+                print("Start converter_scheduler step")
             converter_scheduler.step()
+            if args.verbosity > 2:
+                print("Start generator_scheduler step")
             generator_scheduler.step()
 
         # Stop when max target loss or max epoch count is reached
@@ -176,7 +191,8 @@ def train(args, cfg):
                 print("Time limit reached")
                 timelimit_reached = True
             else:
-                print("Elapsed: {}s".format(elapsed))
+                if args.verbosity > 0:
+                    print("Elapsed: {}s".format(elapsed))
 
         i += 1
 
@@ -233,6 +249,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=20)
     parser.add_argument('--metric_base', type=str, default='CIDEr')
     parser.add_argument('--beam_size', type=int, default=5)
+    parser.add_argument("-v", "--verbosity", action="count", default=0, help="increase output verbosity")
 
     args = parser.parse_args()
     args.cuda = not args.disable_cuda and torch.cuda.is_available()
