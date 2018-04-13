@@ -12,6 +12,7 @@
 *.csv
 *.deb
 *.nvvp
+*.pyc
 *.sh.*
 HPCG/**/results/
 HPCG/**/results/*
