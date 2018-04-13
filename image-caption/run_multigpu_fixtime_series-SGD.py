@@ -12,27 +12,30 @@ import multigpuexec
 
 
 gpus = range(0,8)
-print(gpus)
-runs = 2
+runs = 1
 samples= 1000
-time_limit = 1800
+time_limit = 3600
 tasks = []
-logdir = "logs/fixtime/SGD/time_limit"+str(time_limit)+"s"
+logdir = "logs/fixtime/SGD/LRWDchange_time_limit"+str(time_limit)+"s"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
-batchsizes = [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52]
-learnrates=[0.0001, 0.0002, 0.00035, 0.0005, 0.001, 0.0025, 0.005, 0.0075, 0.01]
+batchsizes = [40]
+learnrates=[0.1, 0.5, 0.9]
+weightdecay=[1,0.1,0.01,0.001,0]
+sss = 100
+sg = 0.7
 for run in range(runs):
     for batch in batchsizes:
         for lr in learnrates:
-            logfile=os.path.join(logdir,"imagecaption_b{}_l{}_smp{}_{:02d}.log".format(batch,lr,samples,run))
-            if os.path.isfile(logfile):
-                print("file",logfile,"exists.")
-                continue
-            comm = "python train_gen_fixtime_SGD.py --early_stopping --batch_size {bs} -l {lr} --weight_decay 0.001 --model resnet50 --use_samples {sm} --time_limit {tl}".format(bs=batch, lr=lr, sm=samples, tl=time_limit)
-            print(comm)
-            task = {"comm":comm,"logfile":logfile,"batch":batch,"lr":lr}
-            tasks.append(task)
+            for wd in weightdecay:
+                logfile=os.path.join(logdir,"imagecaption_b{}_l{}_wd{}_smp{}_{:02d}.log".format(batch,lr,wd,samples,run))
+                if os.path.isfile(logfile):
+                    print("file",logfile,"exists.")
+                    continue
+                comm = "python train_gen_fixtime_SGD.py --early_stopping -v --scheduler_step_size {sss} --scheduler_gamma {sg} --batch_size {bs} -l {lr} --weight_decay {wd} --model resnet50 --use_samples {sm} --time_limit {tl}".format(sss=sss, sg=sg, bs=batch, lr=lr, wd=wd, sm=samples, tl=time_limit)
+                print(comm)
+                task = {"comm":comm,"logfile":logfile,"batch":batch,"lr":lr}
+                tasks.append(task)
 
 print("Have",len(tasks),"tasks")
 gpus = range(0,8)
@@ -46,7 +49,7 @@ for i in range(0,len(tasks)):
     f.write("GPU: {}\n".format(gpu_info))
     f.close()
     multigpuexec.runTask(tasks[i],gpu,verbose=False)
-    print("{}/{}".format(i,len(tasks)))
+    print("{}/{}".format(i+1,len(tasks)))
     time.sleep(5)
 
 

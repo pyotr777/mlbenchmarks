@@ -100,11 +100,24 @@ def train(args, cfg):
     #         generator.parameters(),
     #         lr = lr,
     #         weight_decay = weight_decay)
+    scheduler_step_size = 0
+    if args.scheduler_step_size:
+        scheduler_step_size = args.scheduler_step_size
+    else:
+        scheduler_step_size = cfg['scheduler_step_size']
+
+    scheduler_gamma = 0
+    if args.scheduler_gamma:
+        scheduler_gamma = args.scheduler_gamma
+    else:
+        scheduler_gamma = cfg['scheduler_gamma']
+
+
     if args.verbosity > 0:
-        print("Sheduler step: {}, scheduler gamma: {}".format(cfg['scheduler_step_size'],cfg['scheduler_gamma']))
+        print("Sheduler step: {}, scheduler gamma: {}".format(scheduler_step_size,scheduler_gamma))
     if cfg['scheduler_step_size']:
-        converter_scheduler = torch.optim.lr_scheduler.StepLR(converter_optimizer, step_size=cfg['scheduler_step_size'], gamma=cfg['scheduler_gamma'])
-        generator_scheduler = torch.optim.lr_scheduler.StepLR(generator_optimizer, step_size=cfg['scheduler_step_size'], gamma=cfg['scheduler_gamma'])
+        converter_scheduler = torch.optim.lr_scheduler.StepLR(converter_optimizer, step_size=scheduler_step_size, gamma=scheduler_gamma)
+        generator_scheduler = torch.optim.lr_scheduler.StepLR(generator_optimizer, step_size=scheduler_step_size, gamma=scheduler_gamma)
     criterion = nn.CrossEntropyLoss()
 
     # training
@@ -177,6 +190,8 @@ def train(args, cfg):
             if args.verbosity > 2:
                 print("Start generator_scheduler step")
             generator_scheduler.step()
+            if args.verbosity > 0:
+                print("Generator scheduler LR: {}".format(generator_scheduler.get_lr()))
 
         # Stop when max target loss or max epoch count is reached
         if loss_target is not None:
@@ -237,6 +252,8 @@ if __name__ == '__main__':
     parser.add_argument('--use_samples',type=int, default=0, help="Limit number of samples to use for test and training")
     parser.add_argument('--loss_target', type=float, default=None)
     parser.add_argument('--time_limit', type=int, default=1800, help="Execution time limit in seconds")
+    parser.add_argument('--scheduler_step_size', type=int, default=None, help="Reduce LR every step_size epochs")
+    parser.add_argument('--scheduler_gamma', type=float, default=None, help="LR reduction coefficient (should be <1)")
 
     # for generate
     parser.add_argument('--val_file', type=str, default='./data/val.enc.json',
