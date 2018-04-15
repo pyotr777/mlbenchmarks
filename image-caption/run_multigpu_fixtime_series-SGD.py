@@ -14,14 +14,14 @@ import multigpuexec
 gpus = range(0,8)
 runs = 1
 samples= 1000
-time_limit = 3000
+time_limit = 60 * 60 * 14  # 14 hours
 tasks = []
-logdir = "logs/fixtime/SGD/BSLRchange_time_limit"+str(time_limit)+"s"
+logdir = "logs/fixtime/SGD/BSLRWD_time_limit"+str(time_limit)+"s"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
-batchsizes = [40,60,80,100]
-learnrates=[0.8, 0.9, 1, 1.1]
-weightdecay=[0.00001]
+batchsizes = [50,70]
+learnrates=[ 1, 1.1]
+weightdecay=[0.00001, 0]
 sss = 200
 sg = 0.7
 for run in range(runs):
