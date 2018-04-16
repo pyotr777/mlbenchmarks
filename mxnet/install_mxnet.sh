@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script will start container with tensorflow/tensorflow:latest-gpu image
+# This script will start container with mxnet/python:gpu image
 # And run benchmarks in it.
 
 usage=$(cat <<USAGEBLOCK
