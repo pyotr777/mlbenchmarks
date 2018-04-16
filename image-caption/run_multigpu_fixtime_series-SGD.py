@@ -11,19 +11,19 @@ import os
 import multigpuexec
 
 
-gpus = range(0,8)
+gpus = range(7,8)
 runs = 1
 samples= 1000
-time_limit = 60 * 60 * 14  # 14 hours
+time_limit = 60 * 60 * 1  # 1 hours
 tasks = []
-logdir = "logs/fixtime/SGD/BSLRWD_time_limit"+str(time_limit)+"s"
+logdir = "logs/fixtime/SGD/BS_time_limit"+str(time_limit)+"s"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
-batchsizes = [50,70]
-learnrates=[ 1, 1.1]
-weightdecay=[0.00001, 0]
-sss = 200
-sg = 0.7
+batchsizes = [70, 80]
+learnrates=[1]
+weightdecay=[0]
+sss = 500
+sg = 0.9
 for run in range(runs):
     for batch in batchsizes:
         for lr in learnrates:
@@ -38,7 +38,7 @@ for run in range(runs):
                 tasks.append(task)
 
 print("Have",len(tasks),"tasks")
-gpus = range(0,8)
+
 gpu = -1 # Number of GPU to start check
 for i in range(0,len(tasks)):
     #print "Preapare",tasks[i]["comm"],">",tasks[i]["logfile"]

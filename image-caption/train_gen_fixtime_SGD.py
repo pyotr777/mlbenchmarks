@@ -58,7 +58,7 @@ def train(args, cfg):
     if args.early_stopping:
         val_loader = torch.utils.data.DataLoader(
             load_mscoco(args.image_dir, args.val_file, dataset_type='test'),
-            batch_size = batch_size,
+            batch_size = cfg['batch_size'], # Use BS from config for validation
             shuffle=False,
             collate_fn=collate_gen_test,
             num_workers=args.num_workers)
