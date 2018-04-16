@@ -24,4 +24,7 @@ Chainer/**/*.sh.*
 /Centos/
 /Chainer/chainer/
 **/logs/
+!Chainer/logs/
+!Chainer/logs/**/*.sh
+
 
