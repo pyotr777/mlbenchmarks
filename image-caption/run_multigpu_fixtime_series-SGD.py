@@ -11,32 +11,34 @@ import os
 import multigpuexec
 
 
-gpus = range(1,8)
+gpus = range(0,8)
 runs = 1
 samples= 1000
-time_limit = int(60 * 60 * 9)
+time_limit = int(60 * 60 * 1)
 tasks = []
-logdir = "logs/fixtime/SGD/LRWD_time_limit"+str(time_limit)+"s"
+logdir = "logs/fixtime/SGD/time_limit"+str(time_limit)+"s_"+str(samples)+"samples"
 if not os.path.exists(logdir):
     os.makedirs(logdir)
 print("Logs are in",logdir)
-batchsizes = [30]
-learnrates=[0.9, 1, 1.1]
-weightdecay=[0.0001, 0.0002]
-sss = 300
-sg = 0.8
+batchsizes = [20,30]
+learnrates=[0.01,0.1,0.9, 1, 1.1]
+weightdecay=[0.0001]
+scheduler_step_sizes = [250,500]
+scheduler_gammas = [0.8]
 for run in range(runs):
     for batch in batchsizes:
         for lr in learnrates:
             for wd in weightdecay:
-                logfile=os.path.join(logdir,"imagecaption_b{}_l{}_wd{}_smp{}_{:02d}.log".format(batch,lr,wd,samples,run))
-                if os.path.isfile(logfile):
-                    print("file",logfile,"exists.")
-                    continue
-                comm = "python train_gen_fixtime_SGD.py --early_stopping -v --scheduler_step_size {sss} --scheduler_gamma {sg} --batch_size {bs} -l {lr} --weight_decay {wd} --model resnet50 --use_samples {sm} --time_limit {tl}".format(sss=sss, sg=sg, bs=batch, lr=lr, wd=wd, sm=samples, tl=time_limit)
-                print(comm)
-                task = {"comm":comm,"logfile":logfile,"batch":batch,"lr":lr}
-                tasks.append(task)
+                for sss in scheduler_step_sizes:
+                    for sg in scheduler_gammas:
+                        logfile=os.path.join(logdir,"imagecaption_b{}_l{}_wd{}_sss{}_sg{}_{:02d}.log".format(batch,lr,wd,sss,sg,run))
+                        if os.path.isfile(logfile):
+                            print("file",logfile,"exists.")
+                            continue
+                        comm = "python train_gen_fixtime_SGD.py --early_stopping -v --scheduler_step_size {sss} --scheduler_gamma {sg} --batch_size {bs} -l {lr} --weight_decay {wd} --model resnet50 --use_samples {sm} --time_limit {tl}".format(sss=sss, sg=sg, bs=batch, lr=lr, wd=wd, sm=samples, tl=time_limit)
+                        print(comm)
+                        task = {"comm":comm,"logfile":logfile,"batch":batch,"lr":lr}
+                        tasks.append(task)
 
 print("Have",len(tasks),"tasks")
 
