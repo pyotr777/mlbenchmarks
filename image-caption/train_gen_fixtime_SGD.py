@@ -115,7 +115,7 @@ def train(args, cfg):
 
     if args.verbosity > 0:
         print("Sheduler step: {}, scheduler gamma: {}".format(scheduler_step_size,scheduler_gamma))
-    if cfg['scheduler_step_size']:
+    if scheduler_step_size > 0:
         converter_scheduler = torch.optim.lr_scheduler.StepLR(converter_optimizer, step_size=scheduler_step_size, gamma=scheduler_gamma)
         generator_scheduler = torch.optim.lr_scheduler.StepLR(generator_optimizer, step_size=scheduler_step_size, gamma=scheduler_gamma)
     criterion = nn.CrossEntropyLoss()
@@ -183,7 +183,7 @@ def train(args, cfg):
 
         writer.add_scalar('Train/loss_epoch', loss_epoch, i+1)
         print('{:d}, {:f}, {:f}'.format(i+1, time.time() - start_time, loss_epoch))
-        if cfg['scheduler_step_size']:
+        if scheduler_step_size > 0:
             if args.verbosity > 2:
                 print("Start converter_scheduler step")
             converter_scheduler.step()
